@@ -1,0 +1,15 @@
+## Interface: 30300
+## Title: Auto Combat Logger
+## Notes: Automatically enables or disables combat logging when in a raid.
+## Author: Talryn
+## Version: @project-version@
+## SavedVariables: AutoCombatLoggerDB
+## OptionalDeps: Ace3, LibDataBroker-1.1, LibDBIcon-1.0
+## X-Embeds: Ace3
+## X-Category: Interface Enhancements 
+
+embeds.xml
+
+Locale\Locales.xml
+
+AutoCombatLogger.lua
