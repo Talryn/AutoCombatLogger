@@ -4,7 +4,7 @@
 ## Author: Talryn
 ## Version: @project-version@
 ## SavedVariables: AutoCombatLoggerDB
-## OptionalDeps: Ace3, LibDataBroker-1.1, LibDBIcon-1.0
+## OptionalDeps: Ace3, LibDataBroker-1.1, LibDBIcon-1.0, LibBabble-Zone-3.0
 ## X-Embeds: Ace3
 ## X-Category: Interface Enhancements 
 
