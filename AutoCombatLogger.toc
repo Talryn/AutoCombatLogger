@@ -1,4 +1,5 @@
 ## Interface: 30300
+## X-Compatible-With: 40000
 ## Title: Auto Combat Logger
 ## Notes: Automatically enables or disables combat logging when in a raid.
 ## Author: Talryn
