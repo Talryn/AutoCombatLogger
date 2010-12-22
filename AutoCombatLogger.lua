@@ -25,14 +25,15 @@ local RaidDifficulties = {
 local interestingRaids = {
     "The Eye of Eternity", "Icecrown Citadel", "Naxxramas", "The Obsidian Sanctum",
     "Onyxia's Lair", "The Ruby Sanctum", "Trial of the Crusader", "Ulduar",
-    "Vault of Archavon"
+    "Vault of Archavon", "Blackwing Descent",
 }
 
 -- Define which raids should have heroic modes
 local heroicRaids = {
     ["Icecrown Citadel"] = true,
     ["The Ruby Sanctum"] = true,
-    ["Trial of the Crusader"] = true
+    ["Trial of the Crusader"] = true,
+    ["Blackwing Descent"] = true,
 }
 
 local Battlegrounds = {
@@ -469,6 +470,7 @@ function AutoCombatLogger:ProcessZoneChange()
         self:EnableCombatLogging()
     elseif (type == "raid" and self.db.profile.logRaid == "Custom" and 
             difficulty and nonlocalZone and 
+            self.db.profile.selectedRaids[nonlocalZone] and
             self.db.profile.selectedRaids[nonlocalZone][difficulty]== true) then
         self:EnableCombatLogging()
     elseif (type == "party" and self.db.profile.logInstance == "Yes") then
