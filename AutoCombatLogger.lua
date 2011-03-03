@@ -26,7 +26,7 @@ local interestingRaids = {
     "The Eye of Eternity", "Icecrown Citadel", "Naxxramas", "The Obsidian Sanctum",
     "Onyxia's Lair", "The Ruby Sanctum", "Trial of the Crusader", "Ulduar",
     "Vault of Archavon", "Blackwing Descent", "Throne of the Four Winds",
-    "The Bastion of Twilight"
+    "The Bastion of Twilight", "Baradin Hold"
 }
 
 -- Define which raids should have heroic modes
