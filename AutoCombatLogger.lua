@@ -26,7 +26,7 @@ local interestingRaids = {
     "The Eye of Eternity", "Icecrown Citadel", "Naxxramas", "The Obsidian Sanctum",
     "Onyxia's Lair", "The Ruby Sanctum", "Trial of the Crusader", "Ulduar",
     "Vault of Archavon", "Blackwing Descent", "Throne of the Four Winds",
-    "The Bastion of Twilight", "Baradin Hold"
+    "The Bastion of Twilight", "Baradin Hold", "Firelands"
 }
 
 -- Define which raids should have heroic modes
@@ -37,6 +37,7 @@ local heroicRaids = {
     ["Blackwing Descent"] = true,
     ["Throne of the Four Winds"] = true,
     ["The Bastion of Twilight"] = true,
+    ["Firelands"] = true,
 }
 
 local Battlegrounds = {
