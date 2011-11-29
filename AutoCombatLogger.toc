@@ -1,4 +1,4 @@
-## Interface: 40200
+## Interface: 40300
 ## Title: Auto Combat Logger
 ## Notes: Automatically enables or disables combat logging when in a raid.
 ## Author: Talryn
