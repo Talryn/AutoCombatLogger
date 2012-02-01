@@ -19,7 +19,8 @@ local RaidDifficulties = {
     [1] = "10",
     [2] = "25",
     [3] = "10H",
-    [4] = "25H"
+    [4] = "25H",
+    [9] = "LFR25"
 }
 
 local interestingRaids = {
@@ -39,6 +40,11 @@ local heroicRaids = {
     ["The Bastion of Twilight"] = true,
     ["Firelands"] = true,
     ["Dragon Soul"] = true
+}
+
+-- Define which raids should have Raid Finder versions
+local raidFinder = {
+    ["Dragon Soul"] = true    
 }
 
 local Battlegrounds = {
@@ -74,7 +80,9 @@ for j, raid in ipairs(interestingRaids) do
     for key, difficulty in pairs(RaidDifficulties) do
         -- Don't create a value for a heroic raid if it isn't an option
         local heroic = (difficulty == "10H" or difficulty == "25H")
-        if heroic == false or (heroicRaids[raid] and heroic == true) then
+        if (heroic == false and difficulty ~= "LFR25") or 
+            (heroicRaids[raid] and heroic == true) or
+            (difficulty == "LFR25" and raidFinder[raid] == true) then
             defaults.profile.selectedRaids[raid][difficulty] = true
         end
     end
@@ -285,7 +293,9 @@ function AutoCombatLogger:GetOptions()
 
         for key, difficulty in pairs(RaidDifficulties) do
             local heroic = (difficulty == "10H" or difficulty == "25H")
-            if heroic == false or (heroicRaids[raid] and heroic == true) then
+            if (heroic == false and difficulty ~= "LFR25") or 
+                (heroicRaids[raid] and heroic == true) or
+                (difficulty == "LFR25" and raidFinder[raid] == true) then
                 options.args.raids.args[raid.."-"..difficulty] = {
                     name = difficulty,
                     desc = Zone[raid].." ("..difficulty..")",
@@ -455,7 +465,7 @@ function AutoCombatLogger:ZONE_CHANGED_NEW_AREA()
 end
 
 function AutoCombatLogger:ProcessZoneChange()
-    -- Check that the zone has been set.  If not, schedule and event to retry.
+    -- Check that the zone has been set.  If not, schedule an event to retry.
     local zone = GetRealZoneText()
     if not zone or zone == "" then
         -- Keep trying to find the zone information every 5 seconds.
@@ -517,6 +527,12 @@ function AutoCombatLogger:GetCurrentInstanceInfo()
         -- the last return values to determine heroic.
         if isDynamic and isDynamic == true and dynamicDifficulty == 1 then
             difficulty = difficulty.."H"
+        end
+        
+        -- Check if it is LFR/RF
+        if IsPartyLFG() and IsInLFGDungeon() and 
+            instanceDifficulty == 2 and maxPlayers == 25 then
+            difficulty = "LFR25"
         end
     end
 
