@@ -1,6 +1,6 @@
 ## Interface: 40300
 ## Title: Auto Combat Logger
-## Notes: Automatically enables or disables combat logging when in a raid.
+## Notes: Automatically enables or disables combat logging based on location.
 ## Author: Talryn
 ## Version: @project-version@
 ## SavedVariables: AutoCombatLoggerDB
