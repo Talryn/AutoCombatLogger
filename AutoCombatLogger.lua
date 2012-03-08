@@ -83,7 +83,7 @@ for j, raid in ipairs(interestingRaids) do
         if (heroic == false and difficulty ~= "LFR25") or 
             (heroicRaids[raid] and heroic == true) or
             (difficulty == "LFR25" and raidFinder[raid] == true) then
-            defaults.profile.selectedRaids[raid][difficulty] = true
+            defaults.profile.selectedRaids[raid][difficulty] = false
         end
     end
 end
