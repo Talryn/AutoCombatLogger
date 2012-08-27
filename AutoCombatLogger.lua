@@ -4,8 +4,6 @@ local L = LibStub("AceLocale-3.0"):GetLocale("AutoCombatLogger", true)
 
 local LDB = LibStub("LibDataBroker-1.1")
 local icon = LibStub("LibDBIcon-1.0")
-local Zone = LibStub("LibBabble-Zone-3.0"):GetLookupTable()
-local ReverseZone = LibStub("LibBabble-Zone-3.0"):GetReverseLookupTable()
 
 local DEBUG = false
 
@@ -15,12 +13,45 @@ local BLUE = "|cff0198e1"
 local ORANGE = "|cffff9933"
 local WHITE = "|cffffffff"
 
+local Zones = {
+	[527] = "The Eye of Eternity",
+	[604] = "Icecrown Citadel",
+	[535] = "Naxxramas",
+	[531] = "The Obsidian Sanctum",
+	[718] = "Onyxia's Lair",
+	[609] = "The Ruby Sanctum",
+	[543] = "Trial of the Crusader",
+	[529] = "Ulduar",
+	[532] = "Vault of Archavon",
+	[754] = "Blackwing Descent",
+	[773] = "Throne of the Four Winds",
+	[758] = "The Bastion of Twilight",
+	[752] = "Baradin Hold",
+	[800] = "Firelands",
+	[824] = "Dragon Soul",
+}
+
+local ReverseZones = {}
+for k,v in pairs(Zones) do
+	ReverseZones[v] = k
+end
+
+--[[
 local RaidDifficulties = {
     [1] = "10",
     [2] = "25",
     [3] = "10H",
     [4] = "25H",
     [9] = "LFR25"
+}
+]]--
+
+local RaidDifficulties = {
+    [3] = "10",
+    [4] = "25",
+    [5] = "10H",
+    [6] = "25H",
+    [7] = "LFR25"
 }
 
 local interestingRaids = {
@@ -63,6 +94,7 @@ local defaults = {
 			hide = true,
 		},
         verbose = false,
+		debug = false,
         logRaid = "Yes",
         selectedRaids = {},
         logInstance = "No",
@@ -127,6 +159,15 @@ local aclLDB = nil
 local update = nil
 
 local options
+
+function AutoCombatLogger:GetLocalName(raid)
+	local id = ReverseZones[raid]
+	if id then
+		return GetMapNameByID(id) or raid
+	else
+		return raid
+	end
+end
 
 function AutoCombatLogger:GetOptions()
     if options then return options end
@@ -286,7 +327,7 @@ function AutoCombatLogger:GetOptions()
     local startOrder = 40
     for i, raid in ipairs(interestingRaids) do
         options.args.raids.args[raid] = {
-            name = Zone[raid],
+            name = self:GetLocalName(raid),
             type = "header",
             order = startOrder + i*10
         }
@@ -298,7 +339,7 @@ function AutoCombatLogger:GetOptions()
                 (difficulty == "LFR25" and raidFinder[raid] == true) then
                 options.args.raids.args[raid.."-"..difficulty] = {
                     name = difficulty,
-                    desc = Zone[raid].." ("..difficulty..")",
+                    desc = self:GetLocalName(raid) .. " ("..difficulty..")",
                     type = "toggle",
                     width = "half",
                     get = function() 
@@ -317,7 +358,7 @@ function AutoCombatLogger:GetOptions()
     -- Dynamically add the battleground options
     for i, bg in ipairs(Battlegrounds) do
         options.args.bgs.args[bg] = {
-            name = Zone[bg],
+            name = self:GetLocalName(bg),
             type = "toggle",
             width = "normal",
             get = function() 
@@ -354,6 +395,12 @@ end
 function AutoCombatLogger:ChatCommand(input)
     if not input or input:trim() == "" then
         InterfaceOptionsFrame_OpenToCategory(self.optionsFrame)
+	elseif input == "debug" then
+		DEBUG = true
+		self.db.profile.debug = true
+	elseif input == "nodebug" then
+		DEBUG = false
+		self.db.profile.debug = false
     else
         LibStub("AceConfigCmd-3.0").HandleCommand(AutoCombatLogger, "acl", "AutoCombatLogger", input)
     end
@@ -362,6 +409,8 @@ end
 function AutoCombatLogger:OnInitialize()
     -- Load the settings
     self.db = LibStub("AceDB-3.0"):New("AutoCombatLoggerDB", defaults, "Default")
+
+	DEBUG = self.db.profile.debug
 
     -- Register the options table
     local config = LibStub("AceConfig-3.0")
@@ -466,18 +515,18 @@ end
 
 function AutoCombatLogger:ProcessZoneChange()
     -- Check that the zone has been set.  If not, schedule an event to retry.
-    local zone = GetRealZoneText()
-    if not zone or zone == "" then
+	local areaid = GetCurrentMapAreaID()
+    if not areaid or areaid == 0 then
         -- Keep trying to find the zone information every 5 seconds.
         self:ScheduleTimer("ProcessZoneChange", 5)
         return
     end
 
     local name, type, difficulty, maxPlayers = self:GetCurrentInstanceInfo()
-    local nonlocalZone = ReverseZone[zone]
+	local nonlocalZone = Zones[areaid]
 
     if DEBUG == true then
-        print("Zone: "..name..", Real Zone: ".. zone..", Reverse Zone: "..(nonlocalZone or ""))
+        print("Zone: "..name..", Area ID: ".. areaid ..", Non-Local: "..(nonlocalZone or ""))
         print("Type: "..type..", Difficulty: "..difficulty..", Max Players: "..maxPlayers)
     end
     
@@ -513,7 +562,7 @@ function AutoCombatLogger:GetCurrentInstanceInfo()
     }
 
     local name, type, instanceDifficulty, difficultyName, maxPlayers, 
-        dynamicDifficulty, isDynamic = GetInstanceInfo()
+        dynamicDifficulty, isDynamic, mapId = GetInstanceInfo()
 
     local difficulty = ""
     if (type == "party") then
@@ -521,34 +570,44 @@ function AutoCombatLogger:GetCurrentInstanceInfo()
     elseif (type == "raid") then
         difficulty = RaidDifficulties[instanceDifficulty] or ""
 
-        -- If we're in a dynamic instance we must determine if it's heroic 
-        -- in a different manner.  For a dynamic instance, the difficulty 
-        -- only shows the raid size and not if it is heroic.  Need to check
-        -- the last return values to determine heroic.
-        if isDynamic and isDynamic == true and dynamicDifficulty == 1 then
-            difficulty = difficulty.."H"
-        end
+        --if instanceDifficulty > 4 then
+        --    difficulty = difficulty.."H"
+        --end
         
         -- Check if it is LFR/RF
-        if IsPartyLFG() and IsInLFGDungeon() and 
-            instanceDifficulty == 2 and maxPlayers == 25 then
-            difficulty = "LFR25"
-        end
+        --if IsPartyLFG() and IsInLFGDungeon() and 
+        --    instanceDifficulty == 2 and maxPlayers == 25 then
+        --    difficulty = "LFR25"
+        --end
     end
 
     return name, type, difficulty, maxPlayers
 end
 
 function AutoCombatLogger:EnableCombatLogging()
-    if (self.db.profile.verbose) then
+    if self.db.profile.verbose then
         self:Print(L["Enabling combat logging"])
     end
 	LoggingCombat(1)
 end
 
 function AutoCombatLogger:DisableCombatLogging()
-    if (self.db.profile.verbose) then
+    if self.db.profile.verbose then
         self:Print(L["Disabling combat logging"])
     end
 	LoggingCombat(0)
+end
+
+function AutoCombatLogger:EnableChatLogging()
+    if self.db.profile.verbose then
+        self:Print(L["Enabling chat logging"])
+    end
+	LoggingChat(1)
+end
+
+function AutoCombatLogger:DisableChatLogging()
+    if self.db.profile.verbose then
+        self:Print(L["Disabling chat logging"])
+    end
+	LoggingChat(0)
 end
