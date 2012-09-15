@@ -36,16 +36,6 @@ for k,v in pairs(Zones) do
 	ReverseZones[v] = k
 end
 
---[[
-local RaidDifficulties = {
-    [1] = "10",
-    [2] = "25",
-    [3] = "10H",
-    [4] = "25H",
-    [9] = "LFR25"
-}
-]]--
-
 local RaidDifficulties = {
     [3] = "10",
     [4] = "25",
@@ -375,7 +365,6 @@ function AutoCombatLogger:GetOptions()
     -- Dynamically add the arena options
     for i, arena in ipairs(Arenas) do
         options.args.arenas.args[arena] = {
---            name = Zone[arena],
             name = arena,
             type = "toggle",
             width = "normal",
@@ -475,16 +464,9 @@ function AutoCombatLogger:OnInitialize()
 end
 
 function AutoCombatLogger:OnEnable()
-    -- Called when the addon is enabled
-
-    -- Register to receive the ZONE_CHANGED_NEW_AREA event.  This event fires
-    -- on a new zone (i.e., chat channels change).
     self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
-    -- PLAYER_DIFFICULTY_CHANGED is needed to watch for normal/heroic changes 
-    -- while inside a dynamic instance.
     self:RegisterEvent("PLAYER_DIFFICULTY_CHANGED")
 
-	-- Setup the OnUpdate to update the LDB icon
 	update = CreateFrame("Frame", nil, UIParent)
 	update:SetScript("OnUpdate",
 			function(self, elapsed)
@@ -514,10 +496,8 @@ function AutoCombatLogger:ZONE_CHANGED_NEW_AREA()
 end
 
 function AutoCombatLogger:ProcessZoneChange()
-    -- Check that the zone has been set.  If not, schedule an event to retry.
 	local areaid = GetCurrentMapAreaID()
     if not areaid or areaid == 0 then
-        -- Keep trying to find the zone information every 5 seconds.
         self:ScheduleTimer("ProcessZoneChange", 5)
         return
     end
@@ -569,16 +549,6 @@ function AutoCombatLogger:GetCurrentInstanceInfo()
         difficulty = InstanceDifficulties[instanceDifficulty] or ""
     elseif (type == "raid") then
         difficulty = RaidDifficulties[instanceDifficulty] or ""
-
-        --if instanceDifficulty > 4 then
-        --    difficulty = difficulty.."H"
-        --end
-        
-        -- Check if it is LFR/RF
-        --if IsPartyLFG() and IsInLFGDungeon() and 
-        --    instanceDifficulty == 2 and maxPlayers == 25 then
-        --    difficulty = "LFR25"
-        --end
     end
 
     return name, type, difficulty, maxPlayers
