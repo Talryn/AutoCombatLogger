@@ -17,6 +17,9 @@ L["to open/close the configuration."] = true
 L["Enabling combat logging"] = true
 L["Disabling combat logging"] = true
 
+L["Enabling chat logging"] = true
+L["Disabling chat logging"] = true
+
 L["No"] = true
 L["Yes"] = true
 L["Custom"] = true
@@ -36,3 +39,7 @@ L["Custom Settings"] = true
 L["For Custom, choose the individual raids to log below."] = true
 L["For Custom, choose the individual battlegrounds to log below."] = true
 L["For Custom, choose the individual arenas to log below."] = true
+
+L["Chat"] = true
+L["Enable"] = true
+L["ChatEnable_Desc"] = "Toggle logging of chat."

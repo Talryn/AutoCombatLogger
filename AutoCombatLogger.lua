@@ -83,6 +83,9 @@ local defaults = {
 		minimap = {
 			hide = true,
 		},
+		chat = {
+			enabled = false,
+		},
         verbose = false,
 		debug = false,
         logRaid = "Yes",
@@ -200,6 +203,29 @@ function AutoCombatLogger:GetOptions()
                     }
                 }
             },
+            chat = {
+                type = "group",
+                name = L["Chat"],
+                args = {
+                    enabled = {
+                        name = L["Enable"],
+                        desc = L["ChatEnable_Desc"],
+                        type = "toggle",
+                        set = function(info,val)
+							self.db.profile.chat.enabled = val
+							if val then
+								self:EnableChatLogging()
+							else
+								self:DisableChatLogging()
+							end
+						end,
+                        get = function(info)
+							return self.db.profile.chat.enabled
+						end,
+            			order = 1
+					},
+				},
+			},
             raids = {
                 type = "group",
                 name = "Raids",
@@ -409,6 +435,9 @@ function AutoCombatLogger:OnInitialize()
     config:RegisterOptionsTable("AutoCombatLogger", options)
 	self.optionsFrame = dialog:AddToBlizOptions(
 	    "AutoCombatLogger", "AutoCombatLogger", nil, "general")
+    config:RegisterOptionsTable("AutoCombatLogger-Chat", options.args.chat)
+    dialog:AddToBlizOptions(
+        "AutoCombatLogger-Chat", options.args.chat.name, "AutoCombatLogger")
     config:RegisterOptionsTable("AutoCombatLogger-Raids", options.args.raids)
     dialog:AddToBlizOptions(
         "AutoCombatLogger-Raids", options.args.raids.name, "AutoCombatLogger")
@@ -478,6 +507,12 @@ function AutoCombatLogger:OnEnable()
 			end)
 	
 	self:ProcessZoneChange()
+
+	if self.db.profile.chat.enabled then
+		self:EnableChatLogging()
+	else
+		self:DisableChatLogging()
+	end
 end
 
 function AutoCombatLogger:OnDisable()
@@ -528,6 +563,12 @@ function AutoCombatLogger:ProcessZoneChange()
     else
         self:DisableCombatLogging()
     end
+
+	--if self.db.profile.chat.enabled then
+	--	self:EnableChatLogging()
+	--else
+	--	self:DisableChatLogging()
+	--end
 end
 
 --- Returns information on the current instance.
