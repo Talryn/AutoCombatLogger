@@ -13,6 +13,8 @@ local BLUE = "|cff0198e1"
 local ORANGE = "|cffff9933"
 local WHITE = "|cffffffff"
 
+AutoCombatLogger.zoneTimer = nil
+
 local Zones = {
 	[527] = "The Eye of Eternity",
 	[604] = "Icecrown Citadel",
@@ -533,10 +535,13 @@ end
 function AutoCombatLogger:ProcessZoneChange()
 	local areaid = GetCurrentMapAreaID()
     if not areaid or areaid == 0 then
-        self:ScheduleTimer("ProcessZoneChange", 5)
+		if not self.zoneTimer then
+			self.zoneTimer = self:ScheduleTimer("ProcessZoneChange", 5)
+		end
         return
     end
 
+	self.zoneTimer = nil
     local name, type, difficulty, maxPlayers = self:GetCurrentInstanceInfo()
 	local nonlocalZone = Zones[areaid]
 
