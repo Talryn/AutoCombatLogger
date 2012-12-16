@@ -611,6 +611,8 @@ function AutoCombatLogger:GetCurrentInstanceInfo()
 end
 
 function AutoCombatLogger:EnableCombatLogging()
+	if LoggingCombat() then return end
+
     if self.db.profile.verbose then
         self:Print(L["Enabling combat logging"])
     end
@@ -618,6 +620,8 @@ function AutoCombatLogger:EnableCombatLogging()
 end
 
 function AutoCombatLogger:DisableCombatLogging()
+	if not LoggingCombat() then return end
+
     if self.db.profile.verbose then
         self:Print(L["Disabling combat logging"])
     end
@@ -625,6 +629,8 @@ function AutoCombatLogger:DisableCombatLogging()
 end
 
 function AutoCombatLogger:EnableChatLogging()
+	if LoggingChat() then return end
+
     if self.db.profile.verbose then
         self:Print(L["Enabling chat logging"])
     end
@@ -632,6 +638,8 @@ function AutoCombatLogger:EnableChatLogging()
 end
 
 function AutoCombatLogger:DisableChatLogging()
+	if not LoggingChat() then return end
+
     if self.db.profile.verbose then
         self:Print(L["Disabling chat logging"])
     end
