@@ -1,9 +1,14 @@
-local AutoCombatLogger = LibStub("AceAddon-3.0"):NewAddon("AutoCombatLogger", "AceConsole-3.0", "AceEvent-3.0", "AceTimer-3.0")
+local _G = getfenv(0)
 
-local L = LibStub("AceLocale-3.0"):GetLocale("AutoCombatLogger", true)
+local table = _G.table
+local pairs = _G.pairs
+local ipairs = _G.ipairs
 
-local LDB = LibStub("LibDataBroker-1.1")
-local icon = LibStub("LibDBIcon-1.0")
+local AutoCombatLogger = _G.LibStub("AceAddon-3.0"):NewAddon("AutoCombatLogger", "AceConsole-3.0", "AceEvent-3.0", "AceTimer-3.0")
+
+local L = _G.LibStub("AceLocale-3.0"):GetLocale("AutoCombatLogger", true)
+local LDB = _G.LibStub("LibDataBroker-1.1")
+local icon = _G.LibStub("LibDBIcon-1.0")
 
 local DEBUG = false
 
@@ -136,7 +141,7 @@ for i, arena in ipairs(Arenas) do
 end
 
 local function invertTable(table)
-    if type(table) ~= "table" then return end
+    if _G.type(table) ~= "table" then return end
 
     local newTable = {}
     for key, value in pairs(table) do
@@ -168,7 +173,7 @@ local options
 function AutoCombatLogger:GetLocalName(raid)
 	local id = ReverseZones[raid]
 	if id then
-		return GetMapNameByID(id) or raid
+		return _G.GetMapNameByID(id) or raid
 	else
 		return raid
 	end
@@ -421,7 +426,7 @@ end
 
 function AutoCombatLogger:ChatCommand(input)
     if not input or input:trim() == "" then
-        InterfaceOptionsFrame_OpenToCategory(self.optionsFrame)
+        _G.InterfaceOptionsFrame_OpenToCategory(self.optionsFrame)
 	elseif input == "debug" then
 		DEBUG = true
 		self.db.profile.debug = true
@@ -429,19 +434,19 @@ function AutoCombatLogger:ChatCommand(input)
 		DEBUG = false
 		self.db.profile.debug = false
     else
-        LibStub("AceConfigCmd-3.0").HandleCommand(AutoCombatLogger, "acl", "AutoCombatLogger", input)
+        _G.LibStub("AceConfigCmd-3.0").HandleCommand(AutoCombatLogger, "acl", "AutoCombatLogger", input)
     end
 end
 
 function AutoCombatLogger:OnInitialize()
     -- Load the settings
-    self.db = LibStub("AceDB-3.0"):New("AutoCombatLoggerDB", defaults, "Default")
+    self.db = _G.LibStub("AceDB-3.0"):New("AutoCombatLoggerDB", defaults, "Default")
 
 	DEBUG = self.db.profile.debug
 
     -- Register the options table
-    local config = LibStub("AceConfig-3.0")
-    local dialog = LibStub("AceConfigDialog-3.0")
+    local config = _G.LibStub("AceConfig-3.0")
+    local dialog = _G.LibStub("AceConfigDialog-3.0")
     local options = self:GetOptions()
 
     config:RegisterOptionsTable("AutoCombatLogger", options)
@@ -475,19 +480,19 @@ function AutoCombatLogger:OnInitialize()
 		icon = "Interface\\RAIDFRAME\\ReadyCheck-NotReady.blp",
 		OnClick = function(clickedframe, button)
 			if button == "RightButton" then
-				local optionsFrame = InterfaceOptionsFrame
+				local optionsFrame = _G.InterfaceOptionsFrame
 
 				if optionsFrame:IsVisible() then
 					optionsFrame:Hide()
 				else
-					InterfaceOptionsFrame_OpenToCategory(self.optionsFrame)
+					_G.InterfaceOptionsFrame_OpenToCategory(self.optionsFrame)
 				end
 			elseif button == "LeftButton" then
 				-- Toggle whether the game is logging combat
-				if LoggingCombat() then
-					LoggingCombat(false)
+				if _G.LoggingCombat() then
+					_G.LoggingCombat(false)
 				else
-					LoggingCombat(true)
+					_G.LoggingCombat(true)
 				end
 			end
 		end,
@@ -508,10 +513,10 @@ function AutoCombatLogger:OnEnable()
     self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
     self:RegisterEvent("PLAYER_DIFFICULTY_CHANGED")
 
-	update = CreateFrame("Frame", nil, UIParent)
+	update = _G.CreateFrame("Frame", nil, _G.UIParent)
 	update:SetScript("OnUpdate",
 			function(self, elapsed)
-				if LoggingCombat() then
+				if _G.LoggingCombat() then
 					aclLDB.icon = "Interface\\RAIDFRAME\\ReadyCheck-Ready.blp"
 				else
 					aclLDB.icon = "Interface\\RAIDFRAME\\ReadyCheck-NotReady.blp"
@@ -543,7 +548,7 @@ function AutoCombatLogger:ZONE_CHANGED_NEW_AREA()
 end
 
 function AutoCombatLogger:ProcessZoneChange()
-	local areaid = GetCurrentMapAreaID()
+	local areaid = _G.GetCurrentMapAreaID()
     if not areaid or areaid == 0 then
 		if not self.zoneTimer then
 			self.zoneTimer = self:ScheduleTimer("ProcessZoneChange", 5)
@@ -556,8 +561,8 @@ function AutoCombatLogger:ProcessZoneChange()
 	local nonlocalZone = Zones[areaid]
 
     if DEBUG == true then
-        print("Zone: "..name..", Area ID: ".. areaid ..", Non-Local: "..(nonlocalZone or ""))
-        print("Type: "..type..", Difficulty: "..difficulty..", Max Players: "..maxPlayers)
+        self:Print("Zone: "..name..", Area ID: ".. areaid ..", Non-Local: "..(nonlocalZone or ""))
+        self:Print("Type: "..type..", Difficulty: "..difficulty..", Max Players: "..maxPlayers)
     end
     
     if (type == "raid" and self.db.profile.logRaid == "Yes") then
@@ -598,7 +603,7 @@ function AutoCombatLogger:GetCurrentInstanceInfo()
     }
 
     local name, type, instanceDifficulty, difficultyName, maxPlayers, 
-        dynamicDifficulty, isDynamic, mapId = GetInstanceInfo()
+        dynamicDifficulty, isDynamic, mapId = _G.GetInstanceInfo()
 
     local difficulty = ""
     if (type == "party") then
@@ -611,37 +616,37 @@ function AutoCombatLogger:GetCurrentInstanceInfo()
 end
 
 function AutoCombatLogger:EnableCombatLogging()
-	if LoggingCombat() then return end
+	if _G.LoggingCombat() then return end
 
     if self.db.profile.verbose then
         self:Print(L["Enabling combat logging"])
     end
-	LoggingCombat(1)
+	_G.LoggingCombat(1)
 end
 
 function AutoCombatLogger:DisableCombatLogging()
-	if not LoggingCombat() then return end
+	if not _G.LoggingCombat() then return end
 
     if self.db.profile.verbose then
         self:Print(L["Disabling combat logging"])
     end
-	LoggingCombat(0)
+	_G.LoggingCombat(0)
 end
 
 function AutoCombatLogger:EnableChatLogging()
-	if LoggingChat() then return end
+	if _G.LoggingChat() then return end
 
     if self.db.profile.verbose then
         self:Print(L["Enabling chat logging"])
     end
-	LoggingChat(1)
+	_G.LoggingChat(1)
 end
 
 function AutoCombatLogger:DisableChatLogging()
-	if not LoggingChat() then return end
+	if not _G.LoggingChat() then return end
 
     if self.db.profile.verbose then
         self:Print(L["Disabling chat logging"])
     end
-	LoggingChat(0)
+	_G.LoggingChat(0)
 end
