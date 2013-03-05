@@ -39,6 +39,7 @@ local Zones = {
 	[896] = "Mogu'shan Vaults",
 	[897] = "Heart of Fear",
 	[886] = "Terrace of Endless Spring",
+	[930] = "Throne of Thunder",
 }
 
 local ReverseZones = {}
@@ -59,7 +60,8 @@ local interestingRaids = {
     "Onyxia's Lair", "The Ruby Sanctum", "Trial of the Crusader", "Ulduar",
     "Vault of Archavon", "Blackwing Descent", "Throne of the Four Winds",
     "The Bastion of Twilight", "Baradin Hold", "Firelands", "Dragon Soul",
-	"Mogu'shan Vaults", "Heart of Fear", "Terrace of Endless Spring"
+	"Mogu'shan Vaults", "Heart of Fear", "Terrace of Endless Spring",
+	"Throne of Thunder"
 }
 
 -- Define which raids should have heroic modes
@@ -75,6 +77,7 @@ local heroicRaids = {
 	["Mogu'shan Vaults"] = true,
 	["Heart of Fear"] = true,
 	["Terrace of Endless Spring"] = true,
+	["Throne of Thunder"] = true,
 }
 
 -- Define which raids should have Raid Finder versions
@@ -83,6 +86,7 @@ local raidFinder = {
 	["Mogu'shan Vaults"] = true,    
 	["Heart of Fear"] = true,
 	["Terrace of Endless Spring"] = true,
+	["Throne of Thunder"] = true,
 }
 
 local Battlegrounds = {
