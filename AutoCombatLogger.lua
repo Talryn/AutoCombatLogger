@@ -40,6 +40,7 @@ local Zones = {
 	[897] = "Heart of Fear",
 	[886] = "Terrace of Endless Spring",
 	[930] = "Throne of Thunder",
+	[953] = "Siege of Orgrimmar",
 }
 
 local ReverseZones = {}
@@ -52,7 +53,8 @@ local RaidDifficulties = {
     [4] = "25",
     [5] = "10H",
     [6] = "25H",
-    [7] = "LFR25"
+    [7] = "LFR25",
+	[14] = "Flex",
 }
 
 local interestingRaids = {
@@ -61,7 +63,7 @@ local interestingRaids = {
     "Vault of Archavon", "Blackwing Descent", "Throne of the Four Winds",
     "The Bastion of Twilight", "Baradin Hold", "Firelands", "Dragon Soul",
 	"Mogu'shan Vaults", "Heart of Fear", "Terrace of Endless Spring",
-	"Throne of Thunder"
+	"Throne of Thunder", "Siege of Orgrimmar"
 }
 
 -- Define which raids should have heroic modes
@@ -78,6 +80,7 @@ local heroicRaids = {
 	["Heart of Fear"] = true,
 	["Terrace of Endless Spring"] = true,
 	["Throne of Thunder"] = true,
+	["Siege of Orgrimmar"] = true,
 }
 
 -- Define which raids should have Raid Finder versions
@@ -87,6 +90,12 @@ local raidFinder = {
 	["Heart of Fear"] = true,
 	["Terrace of Endless Spring"] = true,
 	["Throne of Thunder"] = true,
+	["Siege of Orgrimmar"] = true,
+}
+
+-- Define which raids should have Flex versions
+local flexRaids = {
+	["Siege of Orgrimmar"] = true,
 }
 
 local Battlegrounds = {
@@ -126,8 +135,9 @@ for j, raid in ipairs(interestingRaids) do
     for key, difficulty in pairs(RaidDifficulties) do
         -- Don't create a value for a heroic raid if it isn't an option
         local heroic = (difficulty == "10H" or difficulty == "25H")
-        if (heroic == false and difficulty ~= "LFR25") or 
+        if (heroic == false and difficulty ~= "LFR25" and difficulty ~= "Flex") or 
             (heroicRaids[raid] and heroic == true) or
+			(difficulty == "Flex" and flexRaids[raid] == true) or
             (difficulty == "LFR25" and raidFinder[raid] == true) then
             defaults.profile.selectedRaids[raid][difficulty] = false
         end
@@ -371,8 +381,9 @@ function AutoCombatLogger:GetOptions()
 
         for key, difficulty in pairs(RaidDifficulties) do
             local heroic = (difficulty == "10H" or difficulty == "25H")
-            if (heroic == false and difficulty ~= "LFR25") or 
+            if (heroic == false and difficulty ~= "LFR25" and difficulty ~= "Flex") or 
                 (heroicRaids[raid] and heroic == true) or
+				(difficulty == "Flex" and flexRaids[raid] == true) or
                 (difficulty == "LFR25" and raidFinder[raid] == true) then
                 options.args.raids.args[raid.."-"..difficulty] = {
                     name = difficulty,
