@@ -10,6 +10,21 @@ local L = _G.LibStub("AceLocale-3.0"):GetLocale("AutoCombatLogger", true)
 local LDB = _G.LibStub("LibDataBroker-1.1")
 local icon = _G.LibStub("LibDBIcon-1.0")
 
+-- Try to remove the Git hash at the end, otherwise return the passed in value.
+local function cleanupVersion(version)
+	local iter = string.gmatch(version, "(.*)-[a-z0-9]+$")
+	if iter then
+		local ver = iter()
+		if ver and #ver >= 3 then
+			return ver
+		end
+	end
+	return version
+end
+
+local ADDON_NAME = ...
+local ADDON_VERSION = cleanupVersion("@project-version@")
+
 local DEBUG = false
 
 local GREEN = "|cff00ff00"
@@ -17,6 +32,7 @@ local YELLOW = "|cffffff00"
 local BLUE = "|cff0198e1"
 local ORANGE = "|cffff9933"
 local WHITE = "|cffffffff"
+local addonHdr = GREEN.."%s %s"
 
 AutoCombatLogger.zoneTimer = nil
 
@@ -513,7 +529,8 @@ function AutoCombatLogger:OnInitialize()
 		end,
 		OnTooltipShow = function(tooltip)
 			if tooltip and tooltip.AddLine then
-				tooltip:AddLine(GREEN .. L["Auto Combat Logger"])
+			    tooltip:AddLine(addonHdr:format(
+					_G.GetAddOnMetadata(ADDON_NAME,"Title"), ADDON_VERSION))
 				tooltip:AddLine(YELLOW .. L["Left click"] .. " " .. WHITE
 					.. L["to toggle combat logging."])
 				tooltip:AddLine(YELLOW .. L["Right click"] .. " " .. WHITE
