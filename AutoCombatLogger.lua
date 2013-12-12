@@ -531,10 +531,14 @@ function AutoCombatLogger:OnEnable()
 	update = _G.CreateFrame("Frame", nil, _G.UIParent)
 	update:SetScript("OnUpdate",
 			function(self, elapsed)
-				if _G.LoggingCombat() then
-					aclLDB.icon = "Interface\\RAIDFRAME\\ReadyCheck-Ready.blp"
-				else
-					aclLDB.icon = "Interface\\RAIDFRAME\\ReadyCheck-NotReady.blp"
+				self.lastUpdate = (self.lastUpdate or 0) + elapsed
+				if self.lastUpdate >= 5.0 then
+					self.lastUpdate = 0
+					if _G.LoggingCombat() then
+						aclLDB.icon = "Interface\\RAIDFRAME\\ReadyCheck-Ready.blp"
+					else
+						aclLDB.icon = "Interface\\RAIDFRAME\\ReadyCheck-NotReady.blp"
+					end
 				end
 			end)
 	
