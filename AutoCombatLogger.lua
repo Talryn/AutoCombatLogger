@@ -12,7 +12,7 @@ local icon = _G.LibStub("LibDBIcon-1.0")
 
 -- Try to remove the Git hash at the end, otherwise return the passed in value.
 local function cleanupVersion(version)
-	local iter = string.gmatch(version, "(.*)-[a-z0-9]+$")
+	local iter = _G.string.gmatch(version, "(.*)-[a-z0-9]+$")
 	if iter then
 		local ver = iter()
 		if ver and #ver >= 3 then
