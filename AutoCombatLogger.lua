@@ -1,4 +1,5 @@
 local _G = getfenv(0)
+local ADDON_NAME, addon = ...
 
 local table = _G.table
 local pairs = _G.pairs
@@ -22,8 +23,12 @@ local function cleanupVersion(version)
 	return version
 end
 
-local ADDON_NAME = ...
-local ADDON_VERSION = cleanupVersion("@project-version@")
+addon.addonTitle = _G.GetAddOnMetadata(ADDON_NAME,"Title")
+addon.addonVersion = cleanupVersion("@project-version@")
+
+addon.CURRENT_BUILD, addon.CURRENT_INTERNAL, 
+    addon.CURRENT_BUILD_DATE, addon.CURRENT_UI_VERSION = _G.GetBuildInfo()
+addon.WoD = addon.CURRENT_UI_VERSION >= 60000
 
 local DEBUG = false
 
@@ -57,6 +62,7 @@ local Zones = {
 	[886] = "Terrace of Endless Spring",
 	[930] = "Throne of Thunder",
 	[953] = "Siege of Orgrimmar",
+	[1011] = "Highmaul",
 }
 
 local ReverseZones = {}
@@ -65,99 +71,263 @@ for k,v in pairs(Zones) do
 end
 
 local RaidDifficulties = {
+		[1] = "5",
+		[2] = "5H",
     [3] = "10",
     [4] = "25",
     [5] = "10H",
     [6] = "25H",
     [7] = "LFR25",
-	[14] = "Flex",
+		[8] = "Challenge Mode",
+		[9] = "40",
+		[11] = "Heroic Scenario",
+		[12] = "Scenario",
+		--[14] = "Flex",
+		[14] = "Normal", -- Normal 10-30 Raid
+		[15] = "Heroic", -- Heroic 10-30 Raid
+		[16] = "Mythic 20",
+		[17] = "LFR30",
 }
 
-local interestingRaids = {
-    "The Eye of Eternity", "Icecrown Citadel", "Naxxramas", "The Obsidian Sanctum",
-    "Onyxia's Lair", "The Ruby Sanctum", "Trial of the Crusader", "Ulduar",
-    "Vault of Archavon", "Blackwing Descent", "Throne of the Four Winds",
-    "The Bastion of Twilight", "Baradin Hold", "Firelands", "Dragon Soul",
-	"Mogu'shan Vaults", "Heart of Fear", "Terrace of Endless Spring",
-	"Throne of Thunder", "Siege of Orgrimmar"
+local DifficultyOrder = {
+	["LFR30"] = 1,
+	["10"] = 2,
+	["10H"] = 3,
+	["25"] = 4,
+	["25H"] = 5,
+	["Normal"] = 6,
+	["Heroic"] = 7,
+	["Mythic 20"] = 8,
+	["40"] = 9,
 }
 
--- Define which raids should have heroic modes
-local heroicRaids = {
-    ["Icecrown Citadel"] = true,
-    ["The Ruby Sanctum"] = true,
-    ["Trial of the Crusader"] = true,
-    ["Blackwing Descent"] = true,
-    ["Throne of the Four Winds"] = true,
-    ["The Bastion of Twilight"] = true,
-    ["Firelands"] = true,
-    ["Dragon Soul"] = true,
-	["Mogu'shan Vaults"] = true,
-	["Heart of Fear"] = true,
-	["Terrace of Endless Spring"] = true,
-	["Throne of Thunder"] = true,
-	["Siege of Orgrimmar"] = true,
+-- Raids to track and the possible raid sizes.
+local Raids = {
+	["The Eye of Eternity"] = {
+		difficulties = {
+			["10"] = true,
+			["25"] = true,
+		},
+	},
+	["Naxxramas"] = {
+		tier = 7.1,
+		difficulties = {
+			["10"] = true,
+			["25"] = true,
+		},
+	},
+	["The Obsidian Sanctum"] = {
+		tier = 7.2,
+		difficulties = {
+			["10"] = true,
+			["25"] = true,
+		},
+	},
+	["Onyxia's Lair"] = {
+		difficulties = {
+			["10"] = true,
+			["25"] = true,
+		},
+	},
+	["The Ruby Sanctum"] = {
+		difficulties = {
+			["10"] = true,
+			["10H"] = true,
+			["25"] = true,
+			["25H"] = true,
+		},
+	},
+	["Ulduar"] = {
+		tier = 8,
+		difficulties = {
+			["10"] = true,
+			["25"] = true,
+		},
+	},
+	["Trial of the Crusader"] = {
+		tier = 9,
+		difficulties = {
+			["10"] = true,
+			["10H"] = true,
+			["25"] = true,
+			["25H"] = true,
+		},
+	},
+	["Vault of Archavon"] = {
+		difficulties = {
+			["10"] = true,
+			["25"] = true,
+		},
+	},
+	["Icecrown Citadel"] = {
+		tier = 10,
+		difficulties = {
+			["10"] = true,
+			["10H"] = true,
+			["25"] = true,
+			["25H"] = true,
+		},
+	},
+	["Blackwing Descent"] = {
+		tier = 11.1,
+		difficulties = {
+			["10"] = true,
+			["10H"] = true,
+			["25"] = true,
+			["25H"] = true,
+		},
+	},
+	["Throne of the Four Winds"] = {
+		tier = 11.0,
+		difficulties = {
+			["10"] = true,
+			["10H"] = true,
+			["25"] = true,
+			["25H"] = true,
+		},
+	},
+	["The Bastion of Twilight"] = {
+		tier = 11.2,
+		difficulties = {
+			["10"] = true,
+			["10H"] = true,
+			["25"] = true,
+			["25H"] = true,
+		},
+	},
+	["Baradin Hold"] = {
+		tier = 0,
+		difficulties = {
+			["10"] = true,
+			["25"] = true,
+		},
+	},
+	["Firelands"] = {
+		tier = 12,
+		difficulties = {
+			["10"] = true,
+			["10H"] = true,
+			["25"] = true,
+			["25H"] = true,
+		},
+	},
+	["Dragon Soul"] = {
+		tier = 13,
+		difficulties = {
+			["10"] = true,
+			["10H"] = true,
+			["25"] = true,
+			["25H"] = true,
+		},
+	},
+	["Mogu'shan Vaults"] = {
+		tier = 14.1,
+		difficulties = {
+			["10"] = true,
+			["10H"] = true,
+			["25"] = true,
+			["25H"] = true,
+			["LFR30"] = true,
+		},
+	},
+	["Heart of Fear"] = {
+		tier = 14.2,
+		difficulties = {
+			["10"] = true,
+			["10H"] = true,
+			["25"] = true,
+			["25H"] = true,
+			["LFR30"] = true,
+		},
+	},
+	["Terrace of Endless Spring"] = {
+		tier = 14.3,
+		difficulties = {
+			["10"] = true,
+			["10H"] = true,
+			["25"] = true,
+			["25H"] = true,
+			["LFR30"] = true,
+		},
+	},
+	["Throne of Thunder"] = {
+		tier = 15,
+		difficulties = {
+			["10"] = true,
+			["10H"] = true,
+			["25"] = true,
+			["25H"] = true,
+			["LFR30"] = true,
+		},
+	},
+	["Siege of Orgrimmar"] = {
+		tier = 16,
+		difficulties = {
+			["Mythic 20"] = true,
+			["Heroic"] = true,
+			["Normal"] = true,
+			["LFR30"] = true,
+		},
+	},
+	--["Highmaul"] = {
+	--	tier = 17.1,
+	--	difficulties = {
+	--		["Mythic 20"] = true,
+	--		["Heroic"] = true,
+	--		["Normal"] = true,
+	--		["LFR30"] = true,
+	--	},
+	--},
 }
 
--- Define which raids should have Raid Finder versions
-local raidFinder = {
-    ["Dragon Soul"] = true,
-	["Mogu'shan Vaults"] = true,    
-	["Heart of Fear"] = true,
-	["Terrace of Endless Spring"] = true,
-	["Throne of Thunder"] = true,
-	["Siege of Orgrimmar"] = true,
-}
-
--- Define which raids should have Flex versions
-local flexRaids = {
-	["Siege of Orgrimmar"] = true,
-}
+local OrderedRaids = {}
+for raid, data in pairs(Raids) do
+	table.insert(OrderedRaids, raid)
+end
+table.sort(OrderedRaids, 
+	function(a,b)
+		return (Raids[a]["tier"] or 0) > (Raids[b]["tier"] or 0)
+	end)
 
 local Battlegrounds = {
-    "Alterac Valley", "Arathi Basin", "Eye of the Storm", "Isle of Conquest", 
-    "Strand of the Ancients", "Warsong Gulch"
+	"Alterac Valley", "Arathi Basin", "Eye of the Storm", "Isle of Conquest", 
+	"Strand of the Ancients", "Warsong Gulch"
 }
 
 local Arenas = {
-    "Dalaran Sewers", "Ruins of Lordaeron", "The Circle of Blood", 
-    "The Ring of Trials", "The Ring of Valor"
+	"Dalaran Sewers", "Ruins of Lordaeron", "The Circle of Blood", 
+	"The Ring of Trials", "The Ring of Valor"
 }
 
 local defaults = {
-    profile = {
+	profile = {
 		minimap = {
 			hide = true,
 		},
 		chat = {
 			enabled = false,
 		},
-        verbose = false,
+		verbose = false,
 		debug = false,
-        logRaid = "Yes",
-        selectedRaids = {},
-        logInstance = "No",
-        logBG = "No",
-        selectedBGs = {},
-        logArena = "No",
-        selectedArenas = {},
-        logWorld = "No"
-    }
+		logRaid = "Yes",
+		selectedRaids = {},
+		logInstance = "No",
+		logBG = "No",
+		selectedBGs = {},
+		logArena = "No",
+		selectedArenas = {},
+		logWorld = "No"
+	}
 }
 
 -- Dynamically add the default raid settings
-for j, raid in ipairs(interestingRaids) do
-    defaults.profile.selectedRaids[raid] = {}
-    for key, difficulty in pairs(RaidDifficulties) do
-        -- Don't create a value for a heroic raid if it isn't an option
-        local heroic = (difficulty == "10H" or difficulty == "25H")
-        if (heroic == false and difficulty ~= "LFR25" and difficulty ~= "Flex") or 
-            (heroicRaids[raid] and heroic == true) or
-			(difficulty == "Flex" and flexRaids[raid] == true) or
-            (difficulty == "LFR25" and raidFinder[raid] == true) then
-            defaults.profile.selectedRaids[raid][difficulty] = false
-        end
-    end
+for raid, data in pairs(Raids) do
+	defaults.profile.selectedRaids[raid] = {}
+	for difficulty, enabled in pairs(Raids[raid]["difficulties"] or {}) do
+		if enabled then
+			defaults.profile.selectedRaids[raid][difficulty] = false
+		end
+	end
 end
 
 -- Dynamically add the battleground options
@@ -171,14 +341,12 @@ for i, arena in ipairs(Arenas) do
 end
 
 local function invertTable(table)
-    if _G.type(table) ~= "table" then return end
-
-    local newTable = {}
-    for key, value in pairs(table) do
-        newTable[value] = key 
-    end
-    
-    return newTable
+	if _G.type(table) ~= "table" then return end
+	local newTable = {}
+	for key, value in pairs(table) do
+		newTable[value] = key 
+	end
+	return newTable
 end
 
 local logOptions = {
@@ -210,55 +378,55 @@ function AutoCombatLogger:GetLocalName(raid)
 end
 
 function AutoCombatLogger:GetOptions()
-    if options then return options end
+	if options then return options end
 
-    options = {
-        name = "AutoCombatLogger",
-        type = "group",
-        args = {
-            general = {
-                name = "General Options",
-                type = "group",
-                args = {
-            	    minimap = {
-                        name = L["Minimap Button"],
-                        desc = L["Toggle the minimap button"],
-                        type = "toggle",
-                        set = function(info,val)
-                            	-- Reverse the value since the stored value is to hide 
-                            	-- it and not show it
-                                self.db.profile.minimap.hide = not val
-                            	if self.db.profile.minimap.hide then
-                            		icon:Hide("AutoCombatLogger")
-                            	else
-                            		icon:Show("AutoCombatLogger")
-                            	end
-                              end,
-                        get = function(info)
-                                -- Reverse the logic since the option is to hide
-                                return not self.db.profile.minimap.hide
-                              end,
-            			order = 10
-                    },
-                    verbose = {
-                        name = L["Verbose"],
-                        desc = L["Toggles the display of informational messages"],
-                        type = "toggle",
-                        set = function(info,val) self.db.profile.verbose = val end,
-                        get = function(info) return self.db.profile.verbose end,
-            			order = 20
-                    }
-                }
-            },
-            chat = {
-                type = "group",
-                name = L["Chat"],
-                args = {
-                    enabled = {
-                        name = L["Enable"],
-                        desc = L["ChatEnable_Desc"],
-                        type = "toggle",
-                        set = function(info,val)
+	options = {
+		name = "AutoCombatLogger",
+		type = "group",
+		args = {
+			general = {
+				name = "General Options",
+				type = "group",
+				args = {
+					minimap = {
+						name = L["Minimap Button"],
+						desc = L["Toggle the minimap button"],
+						type = "toggle",
+						set = function(info,val)
+							-- Reverse the value since the stored value is to hide 
+							-- it and not show it
+							self.db.profile.minimap.hide = not val
+							if self.db.profile.minimap.hide then
+								icon:Hide("AutoCombatLogger")
+							else
+								icon:Show("AutoCombatLogger")
+							end
+						end,
+						get = function(info)
+							-- Reverse the logic since the option is to hide
+							return not self.db.profile.minimap.hide
+						end,
+						order = 10
+					},
+					verbose = {
+						name = L["Verbose"],
+						desc = L["Toggles the display of informational messages"],
+						type = "toggle",
+						set = function(info,val) self.db.profile.verbose = val end,
+						get = function(info) return self.db.profile.verbose end,
+						order = 20
+					}
+				}
+			},
+			chat = {
+				type = "group",
+				name = L["Chat"],
+				args = {
+					enabled = {
+						name = L["Enable"],
+						desc = L["ChatEnable_Desc"],
+						type = "toggle",
+						set = function(info,val)
 							self.db.profile.chat.enabled = val
 							if val then
 								self:EnableChatLogging()
@@ -266,244 +434,245 @@ function AutoCombatLogger:GetOptions()
 								self:DisableChatLogging()
 							end
 						end,
-                        get = function(info)
+						get = function(info)
 							return self.db.profile.chat.enabled
 						end,
-            			order = 1
+						order = 1
 					},
 				},
 			},
-            raids = {
-                type = "group",
-                name = "Raids",
-                args = {
-            		logRaid = {
-                        name = L["Log Raids"],
-                        desc = L["When to log combat within raids"],
-                        type = "select",
-                        width = "double",
-                        set = function(info,val) self.db.profile.logRaid = logOptions[val] end,
-                        get = function(info) return invertedOptions[self.db.profile.logRaid] end,
-            			order = 10,
-            			values = localizedLogOptions
-            		},
-            		header = {
-            		    name = L["Custom Settings"],
-            		    type = "header",
-            		    order = 20
-            		},
-            		desc = {
-            		    name = L["For Custom, choose the individual raids to log below."],
-            		    type = "description",
-            		    order = 30
-            		}
-        		}
-            },
-            instances = {
-                type = "group",
-                name = "Instances",
-                args = {
-            		logInstance = {
-                        name = L["Log Instances"],
-                        desc = L["When to log combat within instances"],
-                        type = "select",
-                        width = "double",
-                        set = function(info,val) self.db.profile.logInstance = logOptions[val] end,
-                        get = function(info) return invertedOptions[self.db.profile.logInstance] end,
-            			order = 10,
-            			values = localizedLogOptions
-        			}
-                }
-            },
-            arenas = {
-                type = "group",
-                name = "Arenas",
-                args = {
-            		logArena = {
-                        name = L["Log Arena"],
-                        desc = L["When to log combat within arenas"],
-                        type = "select",
-                        width = "double",
-                        set = function(info,val) self.db.profile.logArena = logOptions[val] end,
-                        get = function(info) return invertedOptions[self.db.profile.logArena] end,
-            			order = 10,
-            			values = localizedLogOptions
-            		},
-            		header = {
-            		    name = L["Custom Settings"],
-            		    type = "header",
-            		    order = 20
-            		},
-            		desc = {
-            		    name = L["For Custom, choose the individual arenas to log below."],
-            		    type = "description",
-            		    order = 30
-            		}            		
-                }                
-            },
-            bgs = {
-                type = "group",
-                name = "Battlegrounds",
-                args = {
-            		logBG = {
-                        name = L["Log Battlegrounds"],
-                        desc = L["When to log combat within battlegrounds"],
-                        type = "select",
-                        width = "double",
-                        set = function(info,val) self.db.profile.logBG = logOptions[val] end,
-                        get = function(info) return invertedOptions[self.db.profile.logBG] end,
-            			order = 10,
-            			values = localizedLogOptions
-            		},
-            		header = {
-            		    name = L["Custom Settings"],
-            		    type = "header",
-            		    order = 20
-            		},
-            		desc = {
-            		    name = L["For Custom, choose the individual battlegrounds to log below."],
-            		    type = "description",
-            		    order = 30
-            		}
-                }
-            },
-            world = {
-                type = "group",
-                name = "World",
-                args = {
-            		logWorld = {
-                        name = L["Log World Zones"],
-                        desc = L["When to log combat within world zones"],
-                        type = "select",
-                        width = "double",
-                        set = function(info,val) self.db.profile.logWorld = logOptions[val] end,
-                        get = function(info) return invertedOptions[self.db.profile.logWorld] end,
-            			order = 10,
-            			values = localizedLogOptions
-                    }
-                }
-            }
-        }
-    }
+			raids = {
+				type = "group",
+				name = "Raids",
+				args = {
+					logRaid = {
+						name = L["Log Raids"],
+						desc = L["When to log combat within raids"],
+						type = "select",
+						width = "double",
+						set = function(info,val) self.db.profile.logRaid = logOptions[val] end,
+						get = function(info) return invertedOptions[self.db.profile.logRaid] end,
+						order = 10,
+						values = localizedLogOptions
+					},
+					header = {
+						name = L["Custom Settings"],
+						type = "header",
+						order = 20
+					},
+					desc = {
+						name = L["For Custom, choose the individual raids to log below."],
+						type = "description",
+						order = 30
+					}
+				}
+			},
+			instances = {
+				type = "group",
+				name = "Instances",
+				args = {
+					logInstance = {
+						name = L["Log Instances"],
+						desc = L["When to log combat within instances"],
+						type = "select",
+						width = "double",
+						set = function(info,val) self.db.profile.logInstance = logOptions[val] end,
+						get = function(info) return invertedOptions[self.db.profile.logInstance] end,
+						order = 10,
+						values = localizedLogOptions
+					}
+				}
+			},
+			arenas = {
+				type = "group",
+				name = "Arenas",
+				args = {
+					logArena = {
+						name = L["Log Arena"],
+						desc = L["When to log combat within arenas"],
+						type = "select",
+						width = "double",
+						set = function(info,val) self.db.profile.logArena = logOptions[val] end,
+						get = function(info) return invertedOptions[self.db.profile.logArena] end,
+						order = 10,
+						values = localizedLogOptions
+					},
+					header = {
+						name = L["Custom Settings"],
+						type = "header",
+						order = 20
+					},
+					desc = {
+						name = L["For Custom, choose the individual arenas to log below."],
+						type = "description",
+						order = 30
+					}            		
+				}                
+			},
+			bgs = {
+				type = "group",
+				name = "Battlegrounds",
+				args = {
+					logBG = {
+						name = L["Log Battlegrounds"],
+						desc = L["When to log combat within battlegrounds"],
+						type = "select",
+						width = "double",
+						set = function(info,val) self.db.profile.logBG = logOptions[val] end,
+						get = function(info) return invertedOptions[self.db.profile.logBG] end,
+						order = 10,
+						values = localizedLogOptions
+					},
+					header = {
+						name = L["Custom Settings"],
+						type = "header",
+						order = 20
+					},
+					desc = {
+						name = L["For Custom, choose the individual battlegrounds to log below."],
+						type = "description",
+						order = 30
+					}
+				}
+			},
+			world = {
+				type = "group",
+				name = "World",
+				args = {
+					logWorld = {
+						name = L["Log World Zones"],
+						desc = L["When to log combat within world zones"],
+						type = "select",
+						width = "double",
+						set = function(info,val) self.db.profile.logWorld = logOptions[val] end,
+						get = function(info) return invertedOptions[self.db.profile.logWorld] end,
+						order = 10,
+						values = localizedLogOptions
+					}
+				}
+			}
+		}
+	}
         
-    -- Dynamically add the raid options
-    local startOrder = 40
-    for i, raid in ipairs(interestingRaids) do
-        options.args.raids.args[raid] = {
-            name = self:GetLocalName(raid),
-            type = "header",
-            order = startOrder + i*10
-        }
-
-        for key, difficulty in pairs(RaidDifficulties) do
-            local heroic = (difficulty == "10H" or difficulty == "25H")
-            if (heroic == false and difficulty ~= "LFR25" and difficulty ~= "Flex") or 
-                (heroicRaids[raid] and heroic == true) or
-				(difficulty == "Flex" and flexRaids[raid] == true) or
-                (difficulty == "LFR25" and raidFinder[raid] == true) then
-                options.args.raids.args[raid.."-"..difficulty] = {
-                    name = difficulty,
-                    desc = self:GetLocalName(raid) .. " ("..difficulty..")",
-                    type = "toggle",
-                    width = "half",
-                    get = function() 
-                            return self.db.profile.selectedRaids[raid][difficulty] 
-                          end,
-                    set = function(info, value)
-                            self.db.profile.selectedRaids[raid][difficulty] = value
-                          end,
-        			order = startOrder + i*10 + key,
-    			}
-    		end
-        end
-    end
+	-- Dynamically add the raid options
+	local startOrder = 40
+	for i, raid in ipairs(OrderedRaids) do
+		options.args.raids.args[raid] = {
+			name = self:GetLocalName(raid),
+			type = "header",
+			order = startOrder + i*10
+		}
+		for difficulty, enabled in pairs(Raids[raid]["difficulties"] or {}) do
+			if enabled then
+				options.args.raids.args[raid.."-"..difficulty] = {
+					name = difficulty,
+					desc = self:GetLocalName(raid) .. " ("..difficulty..")",
+					type = "toggle",
+					width = "half",
+					get = function() 
+						return self.db.profile.selectedRaids[raid][difficulty] 
+					end,
+					set = function(info, value)
+						self.db.profile.selectedRaids[raid][difficulty] = value
+					end,
+					order = startOrder + i*20 + (DifficultyOrder[difficulty] or 1),
+				}
+			end
+		end
+	end
 
 
-    -- Dynamically add the battleground options
-    for i, bg in ipairs(Battlegrounds) do
-        options.args.bgs.args[bg] = {
-            name = self:GetLocalName(bg),
-            type = "toggle",
-            width = "normal",
-            get = function() 
-                    return self.db.profile.selectedBGs[bg]
-                  end,
-            set = function(info, val)
-                    self.db.profile.selectedBGs[bg] = val
-                  end,
-            order = startOrder + i*10
-        }
-    end
+	-- Dynamically add the battleground options
+	for i, bg in ipairs(Battlegrounds) do
+		options.args.bgs.args[bg] = {
+			name = self:GetLocalName(bg),
+			type = "toggle",
+			width = "normal",
+			get = function() 
+				return self.db.profile.selectedBGs[bg]
+			end,
+			set = function(info, val)
+				self.db.profile.selectedBGs[bg] = val
+			end,
+			order = startOrder + i*10
+		}
+	end
 
 
-    -- Dynamically add the arena options
-    for i, arena in ipairs(Arenas) do
-        options.args.arenas.args[arena] = {
-            name = arena,
-            type = "toggle",
-            width = "normal",
-            get = function() 
-                    return self.db.profile.selectedArenas[arena]
-                  end,
-            set = function(info, val)
-                    self.db.profile.selectedArenas[arena] = val
-                  end,
-            order = startOrder + i*10
-        }
-    end
+	-- Dynamically add the arena options
+	for i, arena in ipairs(Arenas) do
+		options.args.arenas.args[arena] = {
+			name = arena,
+			type = "toggle",
+			width = "normal",
+			get = function() 
+				return self.db.profile.selectedArenas[arena]
+			end,
+			set = function(info, val)
+				self.db.profile.selectedArenas[arena] = val
+			end,
+			order = startOrder + i*10
+		}
+	end
     
-    return options
+	return options
 end
 
 function AutoCombatLogger:ChatCommand(input)
-    if not input or input:trim() == "" then
-        _G.InterfaceOptionsFrame_OpenToCategory(self.optionsFrame)
+	if not input or input:trim() == "" then
+		_G.InterfaceOptionsFrame_OpenToCategory(self.optionsFrame)
 	elseif input == "debug" then
 		DEBUG = true
 		self.db.profile.debug = true
 	elseif input == "nodebug" then
 		DEBUG = false
 		self.db.profile.debug = false
-    else
-        _G.LibStub("AceConfigCmd-3.0").HandleCommand(AutoCombatLogger, "acl", "AutoCombatLogger", input)
-    end
+	elseif input == "raids" then
+		self:Print("Raids:")
+		for i, raid in ipairs(OrderedRaids) do
+			self:Print(raid)
+		end
+	else
+		_G.LibStub("AceConfigCmd-3.0").HandleCommand(AutoCombatLogger, 
+			"acl", "AutoCombatLogger", input)
+	end
 end
 
 function AutoCombatLogger:OnInitialize()
-    -- Load the settings
-    self.db = _G.LibStub("AceDB-3.0"):New("AutoCombatLoggerDB", defaults, "Default")
+	-- Load the settings
+	self.db = _G.LibStub("AceDB-3.0"):New("AutoCombatLoggerDB", defaults, "Default")
 
 	DEBUG = self.db.profile.debug
 
-    -- Register the options table
-    local config = _G.LibStub("AceConfig-3.0")
-    local dialog = _G.LibStub("AceConfigDialog-3.0")
-    local options = self:GetOptions()
+	-- Register the options table
+	local config = _G.LibStub("AceConfig-3.0")
+	local dialog = _G.LibStub("AceConfigDialog-3.0")
+	local options = self:GetOptions()
 
-    config:RegisterOptionsTable("AutoCombatLogger", options)
+	config:RegisterOptionsTable("AutoCombatLogger", options)
 	self.optionsFrame = dialog:AddToBlizOptions(
-	    "AutoCombatLogger", "AutoCombatLogger", nil, "general")
-    config:RegisterOptionsTable("AutoCombatLogger-Chat", options.args.chat)
-    dialog:AddToBlizOptions(
-        "AutoCombatLogger-Chat", options.args.chat.name, "AutoCombatLogger")
-    config:RegisterOptionsTable("AutoCombatLogger-Raids", options.args.raids)
-    dialog:AddToBlizOptions(
-        "AutoCombatLogger-Raids", options.args.raids.name, "AutoCombatLogger")
-    config:RegisterOptionsTable("AutoCombatLogger-Instances", options.args.instances)
-    dialog:AddToBlizOptions(
-        "AutoCombatLogger-Instances", options.args.instances.name, "AutoCombatLogger")
-    config:RegisterOptionsTable("AutoCombatLogger-Arenas", options.args.arenas)
-    dialog:AddToBlizOptions(
-        "AutoCombatLogger-Arenas", options.args.arenas.name, "AutoCombatLogger")
-    config:RegisterOptionsTable("AutoCombatLogger-BGs", options.args.bgs)
-    dialog:AddToBlizOptions(
-        "AutoCombatLogger-BGs", options.args.bgs.name, "AutoCombatLogger")
-    config:RegisterOptionsTable("AutoCombatLogger-World", options.args.world)
-    dialog:AddToBlizOptions(
-        "AutoCombatLogger-World", options.args.world.name, "AutoCombatLogger")
+		"AutoCombatLogger", "AutoCombatLogger", nil, "general")
+	config:RegisterOptionsTable("AutoCombatLogger-Chat", options.args.chat)
+	dialog:AddToBlizOptions(
+		"AutoCombatLogger-Chat", options.args.chat.name, "AutoCombatLogger")
+	config:RegisterOptionsTable("AutoCombatLogger-Raids", options.args.raids)
+	dialog:AddToBlizOptions(
+		"AutoCombatLogger-Raids", options.args.raids.name, "AutoCombatLogger")
+	config:RegisterOptionsTable("AutoCombatLogger-Instances", options.args.instances)
+	dialog:AddToBlizOptions(
+		"AutoCombatLogger-Instances", options.args.instances.name, "AutoCombatLogger")
+	config:RegisterOptionsTable("AutoCombatLogger-Arenas", options.args.arenas)
+	dialog:AddToBlizOptions(
+		"AutoCombatLogger-Arenas", options.args.arenas.name, "AutoCombatLogger")
+	config:RegisterOptionsTable("AutoCombatLogger-BGs", options.args.bgs)
+	dialog:AddToBlizOptions(
+		"AutoCombatLogger-BGs", options.args.bgs.name, "AutoCombatLogger")
+	config:RegisterOptionsTable("AutoCombatLogger-World", options.args.world)
+	dialog:AddToBlizOptions(
+		"AutoCombatLogger-World", options.args.world.name, "AutoCombatLogger")
 
-    self:RegisterChatCommand("AutoCombatLogger", "ChatCommand")
-    self:RegisterChatCommand("acl", "ChatCommand")
+	self:RegisterChatCommand("AutoCombatLogger", "ChatCommand")
+	self:RegisterChatCommand("acl", "ChatCommand")
 
 	-- Create the LDB launcher
 	aclLDB = LDB:NewDataObject("AutoCombatLogger",{
@@ -530,7 +699,7 @@ function AutoCombatLogger:OnInitialize()
 		OnTooltipShow = function(tooltip)
 			if tooltip and tooltip.AddLine then
 			    tooltip:AddLine(addonHdr:format(
-					_G.GetAddOnMetadata(ADDON_NAME,"Title"), ADDON_VERSION))
+					_G.GetAddOnMetadata(ADDON_NAME,"Title"), addon.addonVersion))
 				tooltip:AddLine(YELLOW .. L["Left click"] .. " " .. WHITE
 					.. L["to toggle combat logging."])
 				tooltip:AddLine(YELLOW .. L["Right click"] .. " " .. WHITE
@@ -542,22 +711,22 @@ function AutoCombatLogger:OnInitialize()
 end
 
 function AutoCombatLogger:OnEnable()
-    self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
-    self:RegisterEvent("PLAYER_DIFFICULTY_CHANGED")
+	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+	self:RegisterEvent("PLAYER_DIFFICULTY_CHANGED")
 
 	update = _G.CreateFrame("Frame", nil, _G.UIParent)
 	update:SetScript("OnUpdate",
-			function(self, elapsed)
-				self.lastUpdate = (self.lastUpdate or 0) + elapsed
-				if self.lastUpdate >= 5.0 then
-					self.lastUpdate = 0
-					if _G.LoggingCombat() then
-						aclLDB.icon = "Interface\\RAIDFRAME\\ReadyCheck-Ready.blp"
-					else
-						aclLDB.icon = "Interface\\RAIDFRAME\\ReadyCheck-NotReady.blp"
-					end
+		function(self, elapsed)
+			self.lastUpdate = (self.lastUpdate or 0) + elapsed
+			if self.lastUpdate >= 5.0 then
+				self.lastUpdate = 0
+				if _G.LoggingCombat() then
+					aclLDB.icon = "Interface\\RAIDFRAME\\ReadyCheck-Ready.blp"
+				else
+					aclLDB.icon = "Interface\\RAIDFRAME\\ReadyCheck-NotReady.blp"
 				end
-			end)
+			end
+		end)
 	
 	self:ProcessZoneChange()
 
@@ -569,18 +738,18 @@ function AutoCombatLogger:OnEnable()
 end
 
 function AutoCombatLogger:OnDisable()
-    -- Unregister events
-    self:UnregisterEvent("ZONE_CHANGED_NEW_AREA")
-    self:UnregisterEvent("PLAYER_DIFFICULTY_CHANGED")
+	-- Unregister events
+	self:UnregisterEvent("ZONE_CHANGED_NEW_AREA")
+	self:UnregisterEvent("PLAYER_DIFFICULTY_CHANGED")
 end
 
 function AutoCombatLogger:PLAYER_DIFFICULTY_CHANGED()
-    -- Just to be safe, wait a few seconds and then check the status
-    self:ScheduleTimer("ProcessZoneChange", 3)
+	-- Just to be safe, wait a few seconds and then check the status
+	self:ScheduleTimer("ProcessZoneChange", 3)
 end
 
 function AutoCombatLogger:ZONE_CHANGED_NEW_AREA()
-    self:ProcessZoneChange()
+	self:ProcessZoneChange()
 end
 
 function AutoCombatLogger:ProcessZoneChange()
@@ -633,56 +802,56 @@ end
 -- @return difficulty The difficult of the current instance (i.e., 5,5H,10,10H,25,25H)
 -- @return maxPlayers The maximum number of players allowed in the instance.
 function AutoCombatLogger:GetCurrentInstanceInfo()
-    local InstanceDifficulties = {
-        [1] = "5",
-        [2] = "5H"
-    }
+	local InstanceDifficulties = {
+		[1] = "5",
+		[2] = "5H"
+	}
 
-    local name, type, instanceDifficulty, difficultyName, maxPlayers, 
-        dynamicDifficulty, isDynamic, mapId = _G.GetInstanceInfo()
+	local name, type, instanceDifficulty, difficultyName, maxPlayers, 
+		dynamicDifficulty, isDynamic, mapId = _G.GetInstanceInfo()
 
-    local difficulty = ""
-    if (type == "party") then
-        difficulty = InstanceDifficulties[instanceDifficulty] or ""
-    elseif (type == "raid") then
-        difficulty = RaidDifficulties[instanceDifficulty] or ""
-    end
+	local difficulty = ""
+	if (type == "party") then
+		difficulty = InstanceDifficulties[instanceDifficulty] or ""
+	elseif (type == "raid") then
+		difficulty = RaidDifficulties[instanceDifficulty] or ""
+	end
 
-    return name, type, difficulty, maxPlayers
+	return name, type, difficulty, maxPlayers
 end
 
 function AutoCombatLogger:EnableCombatLogging()
 	if _G.LoggingCombat() then return end
 
-    if self.db.profile.verbose then
-        self:Print(L["Enabling combat logging"])
-    end
+	if self.db.profile.verbose then
+		self:Print(L["Enabling combat logging"])
+	end
 	_G.LoggingCombat(1)
 end
 
 function AutoCombatLogger:DisableCombatLogging()
 	if not _G.LoggingCombat() then return end
 
-    if self.db.profile.verbose then
-        self:Print(L["Disabling combat logging"])
-    end
+	if self.db.profile.verbose then
+		self:Print(L["Disabling combat logging"])
+	end
 	_G.LoggingCombat(0)
 end
 
 function AutoCombatLogger:EnableChatLogging()
 	if _G.LoggingChat() then return end
 
-    if self.db.profile.verbose then
-        self:Print(L["Enabling chat logging"])
-    end
+	if self.db.profile.verbose then
+		self:Print(L["Enabling chat logging"])
+	end
 	_G.LoggingChat(1)
 end
 
 function AutoCombatLogger:DisableChatLogging()
 	if not _G.LoggingChat() then return end
 
-    if self.db.profile.verbose then
-        self:Print(L["Disabling chat logging"])
-    end
+	if self.db.profile.verbose then
+		self:Print(L["Disabling chat logging"])
+	end
 	_G.LoggingChat(0)
 end
