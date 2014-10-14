@@ -560,7 +560,7 @@ function AutoCombatLogger:GetOptions()
 		options.args.raids.args[raid] = {
 			name = self:GetLocalName(raid),
 			type = "header",
-			order = startOrder + i*10
+			order = startOrder + i*20
 		}
 		for difficulty, enabled in pairs(Raids[raid]["difficulties"] or {}) do
 			if enabled then
