@@ -39,6 +39,14 @@ local ORANGE = "|cffff9933"
 local WHITE = "|cffffffff"
 local addonHdr = GREEN.."%s %s"
 
+-- GetInstanceInfo() data
+-- 10th Anniversary Molten Core
+-- [1]="Molten Core", [2]="raid", [3]=18, [4]="Event",  [5]=40,  [6]=0,  [7]=false,
+-- Horde Brawler's Guild
+-- [1]="Brawl'gar Arena", [2]="none", [3]=0, [4]="", [5]=5, [6]=0,
+-- Alliance Brawler's Guild (GetCurrentMapDungeonLevel() also returns [1]=2)
+-- [1]="Deeprun Tram",[2]="none",[3]=0,[4]="",[5]=5,[6]=0,[7]=false,[8]=369,[9]=0
+
 AutoCombatLogger.zoneTimer = nil
 
 local Zones = {
@@ -60,9 +68,11 @@ local Zones = {
 	[896] = "Mogu'shan Vaults",
 	[897] = "Heart of Fear",
 	[886] = "Terrace of Endless Spring",
+	[922] = "Deeprun Tram", -- Location of Bizmo's Brawlpub in Stormwind
+	[925] = "Brawl'gar Arena", -- Horde in Orgrimmar
 	[930] = "Throne of Thunder",
 	[953] = "Siege of Orgrimmar",
-	[1011] = "Highmaul",
+	[994] = "Highmaul",
 }
 
 local ReverseZones = {}
@@ -70,7 +80,8 @@ for k,v in pairs(Zones) do
 	ReverseZones[v] = k
 end
 
-local RaidDifficulties = {
+local InstanceDifficulties = {
+		[0] = "None",
 		[1] = "5",
 		[2] = "5H",
     [3] = "10",
@@ -80,9 +91,10 @@ local RaidDifficulties = {
     [7] = "LFR25",
 		[8] = "Challenge Mode",
 		[9] = "40",
+		--[10] = "Not used",
 		[11] = "Heroic Scenario",
 		[12] = "Scenario",
-		--[14] = "Flex",
+		--[13] = "Not used",
 		[14] = "Normal", -- Normal 10-30 Raid
 		[15] = "Heroic", -- Heroic 10-30 Raid
 		[16] = "Mythic 20",
@@ -269,15 +281,15 @@ local Raids = {
 			["LFR30"] = true,
 		},
 	},
-	--["Highmaul"] = {
-	--	tier = 17.1,
-	--	difficulties = {
-	--		["Mythic 20"] = true,
-	--		["Heroic"] = true,
-	--		["Normal"] = true,
-	--		["LFR30"] = true,
-	--	},
-	--},
+	["Highmaul"] = {
+		tier = 17.1,
+		difficulties = {
+			["Mythic 20"] = true,
+			["Heroic"] = true,
+			["Normal"] = true,
+			["LFR30"] = true,
+		},
+	},
 }
 
 local OrderedRaids = {}
@@ -316,7 +328,11 @@ local defaults = {
 		selectedBGs = {},
 		logArena = "No",
 		selectedArenas = {},
-		logWorld = "No"
+		logWorld = "No",
+		log = {
+			Garrison = false,
+			Brawlers = false,
+		},
 	}
 }
 
@@ -548,7 +564,38 @@ function AutoCombatLogger:GetOptions()
 						get = function(info) return invertedOptions[self.db.profile.logWorld] end,
 						order = 10,
 						values = localizedLogOptions
-					}
+					},
+					specialHdr = {
+						order = 20,
+						name = "Special Areas",
+						type = "header",
+					},
+					logBrawlers = {
+						order = 100,
+						name = _G.GetCategoryInfo(15202) or "Brawler's Guild",
+						desc = _G.GetCategoryInfo(15202) or "Brawler's Guild",
+						type = "toggle",
+						width = "double",
+						set = function(info,val)
+							self.db.profile.log.Brawlers = val
+						end,
+						get = function(info)
+							return self.db.profile.log.Brawlers
+						end,
+					},
+					logGarrison = {
+						order = 110,
+						name = _G.GetCategoryInfo(15237) or "Garrison",
+						desc = _G.GetCategoryInfo(15237) or "Garrison",
+						type = "toggle",
+						width = "double",
+						set = function(info,val)
+							self.db.profile.log.Garrison = val
+						end,
+						get = function(info)
+							return self.db.profile.log.Garrison
+						end,
+					},
 				}
 			}
 		}
@@ -752,42 +799,100 @@ function AutoCombatLogger:ZONE_CHANGED_NEW_AREA()
 	self:ProcessZoneChange()
 end
 
+local LogChecks = {
+	-- Garrison
+	[1] = function(data)
+		if _G.IsMapGarrisonMap(data.areaid) and data.profile.log.Garrison then
+			return true, "Garrison"
+		else
+			return false
+		end
+	end,
+	-- Logging Raids
+	[2] = function(data)
+		if data.type == "raid" and data.profile.logRaid == "Yes" then
+			return true, "Raid"
+		else
+			return false
+		end
+	end,
+	-- Logging Specific Raids
+	[3] = function(data)
+		if data.type == "raid" and data.profile.logRaid == "Custom" and 
+			data.difficulty and data.nonlocalZone and 
+			data.profile.selectedRaids[data.nonlocalZone] and
+			data.profile.selectedRaids[data.nonlocalZone][data.difficulty]== true then
+			return true, "Raid"
+		else
+			return false
+		end
+	end,
+	-- Logging Instances
+	[4] = function(data)
+		local diffCheck = data.difficulty and data.difficulty ~= "None" and
+			data.difficulty ~= ""
+		if data.type == "party" and diffCheck and 
+			not _G.IsMapGarrisonMap(data.areaid) and 
+			data.profile.logInstance == "Yes" then
+			return true, "Instance"
+		else
+			return false
+		end
+	end,
+		
+}
+
+local data = {}
 function AutoCombatLogger:ProcessZoneChange()
 	local areaid = _G.GetCurrentMapAreaID()
-    if not areaid or areaid == 0 then
+	if not areaid or areaid == 0 then
 		if not self.zoneTimer then
 			self.zoneTimer = self:ScheduleTimer("ProcessZoneChange", 5)
 		end
-        return
-    end
+		return
+	end
 
 	self.zoneTimer = nil
-    local name, type, difficulty, maxPlayers = self:GetCurrentInstanceInfo()
+	local name, type, difficulty, maxPlayers, mapId = self:GetCurrentInstanceInfo()
 	local nonlocalZone = Zones[areaid]
 
-    if DEBUG == true then
-        self:Print("Zone: "..name..", Area ID: ".. areaid ..", Non-Local: "..(nonlocalZone or ""))
-        self:Print("Type: "..type..", Difficulty: "..difficulty..", Max Players: "..maxPlayers)
-    end
-    
-    if (type == "raid" and self.db.profile.logRaid == "Yes") then
-        self:EnableCombatLogging()
-    elseif (type == "raid" and self.db.profile.logRaid == "Custom" and 
-            difficulty and nonlocalZone and 
-            self.db.profile.selectedRaids[nonlocalZone] and
-            self.db.profile.selectedRaids[nonlocalZone][difficulty]== true) then
-        self:EnableCombatLogging()
-    elseif (type == "party" and self.db.profile.logInstance == "Yes") then
-        self:EnableCombatLogging()
-    elseif (type == "arena" and self.db.profile.logArena == "Yes") then
-        self:EnableCombatLogging()
-    elseif (type == "pvp" and self.db.profile.logBG == "Yes") then
-        self:EnableCombatLogging()
-    elseif (type == "none" and self.db.profile.logWorld == "Yes") then
-        self:EnableCombatLogging()
-    else
-        self:DisableCombatLogging()
-    end
+	local isGarrison = _G.IsMapGarrisonMap(areaid)
+	local isBrawlers = (nonlocalZone == "Brawl'gar Arena" or mapId == 369)
+
+	if DEBUG == true then
+		local fmt1 = "Zone: %s, Area ID: %s, Non-Local: %s"
+		local fmt2 = "Type: %s, Difficulty: %s, MaxPlayers: %s, Garrison: %s, Brawl: %s"
+		self:Print(fmt1:format(name, _G.tostring(areaid), _G.tostring(nonlocalZone)))
+		self:Print(fmt2:format(type, difficulty, _G.tostring(maxPlayers), 
+			_G.tostring(isGarrison), _G.tostring(isBrawlers)))
+	end
+
+	local profile = self.db.profile
+	local diffCheck = difficulty and difficulty ~= "None" and difficulty ~= ""
+
+	if isGarrison and profile.log.Garrison then
+		-- Player is in a garrison
+		self:EnableCombatLogging("Garrison")
+	elseif (type == "raid" and profile.logRaid == "Yes") then
+		self:EnableCombatLogging("Raid")
+	elseif (type == "raid" and profile.logRaid == "Custom" and 
+		difficulty and nonlocalZone and profile.selectedRaids[nonlocalZone] and
+		profile.selectedRaids[nonlocalZone][difficulty]== true) then
+			self:EnableCombatLogging("Custom Raid: ".._G.tostring(nonlocalZone))
+	elseif (type == "party" and diffCheck and not isGarrison and 
+		profile.logInstance == "Yes") then
+		self:EnableCombatLogging("Instance")
+	elseif (type == "arena" and profile.logArena == "Yes") then
+		self:EnableCombatLogging("Arena")
+	elseif (type == "pvp" and profile.logBG == "Yes") then
+		self:EnableCombatLogging("BG")
+	elseif (type == "none" and profile.logWorld == "Yes") then
+		self:EnableCombatLogging("World")
+	elseif (type == "none" and isBrawlers and profile.log.Brawlers) then
+		self:EnableCombatLogging("Brawlers")
+	else
+		self:DisableCombatLogging()
+	end
 
 	--if self.db.profile.chat.enabled then
 	--	self:EnableChatLogging()
@@ -802,11 +907,6 @@ end
 -- @return difficulty The difficult of the current instance (i.e., 5,5H,10,10H,25,25H)
 -- @return maxPlayers The maximum number of players allowed in the instance.
 function AutoCombatLogger:GetCurrentInstanceInfo()
-	local InstanceDifficulties = {
-		[1] = "5",
-		[2] = "5H"
-	}
-
 	local name, type, instanceDifficulty, difficultyName, maxPlayers, 
 		dynamicDifficulty, isDynamic, mapId = _G.GetInstanceInfo()
 
@@ -814,19 +914,25 @@ function AutoCombatLogger:GetCurrentInstanceInfo()
 	if (type == "party") then
 		difficulty = InstanceDifficulties[instanceDifficulty] or ""
 	elseif (type == "raid") then
-		difficulty = RaidDifficulties[instanceDifficulty] or ""
+		difficulty = InstanceDifficulties[instanceDifficulty] or ""
+	elseif (type == "scenario") then
+		difficulty = InstanceDifficulties[instanceDifficulty] or ""
 	end
 
-	return name, type, difficulty, maxPlayers
+	return name, type, difficulty, maxPlayers, mapId
 end
 
-function AutoCombatLogger:EnableCombatLogging()
+function AutoCombatLogger:EnableCombatLogging(reason)
+	--if DEBUG then
+	--	self:Print("Attempt to Enable Combat Logging(".._G.tostring(reason)..")")
+	--end
+
 	if _G.LoggingCombat() then return end
 
 	if self.db.profile.verbose then
 		self:Print(L["Enabling combat logging"])
 	end
-	_G.LoggingCombat(1)
+	_G.LoggingCombat(true)
 end
 
 function AutoCombatLogger:DisableCombatLogging()
@@ -835,7 +941,7 @@ function AutoCombatLogger:DisableCombatLogging()
 	if self.db.profile.verbose then
 		self:Print(L["Disabling combat logging"])
 	end
-	_G.LoggingCombat(0)
+	_G.LoggingCombat(false)
 end
 
 function AutoCombatLogger:EnableChatLogging()
@@ -844,7 +950,7 @@ function AutoCombatLogger:EnableChatLogging()
 	if self.db.profile.verbose then
 		self:Print(L["Enabling chat logging"])
 	end
-	_G.LoggingChat(1)
+	_G.LoggingChat(true)
 end
 
 function AutoCombatLogger:DisableChatLogging()
@@ -853,5 +959,5 @@ function AutoCombatLogger:DisableChatLogging()
 	if self.db.profile.verbose then
 		self:Print(L["Disabling chat logging"])
 	end
-	_G.LoggingChat(0)
+	_G.LoggingChat(false)
 end
