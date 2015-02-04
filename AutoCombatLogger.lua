@@ -73,6 +73,7 @@ local Zones = {
 	[930] = "Throne of Thunder",
 	[953] = "Siege of Orgrimmar",
 	[994] = "Highmaul",
+	[988] = "Blackrock Foundry",
 }
 
 local ReverseZones = {}
@@ -290,6 +291,15 @@ local Raids = {
 			["LFR30"] = true,
 		},
 	},
+	["Blackrock Foundry"] = {
+		tier = 17.2,
+		difficulties = {
+			["Mythic 20"] = true,
+			["Heroic"] = true,
+			["Normal"] = true,
+			["LFR30"] = true,
+		},
+	},
 }
 
 local OrderedRaids = {}
@@ -332,6 +342,7 @@ local defaults = {
 		log = {
 			Garrison = false,
 			Brawlers = false,
+			Taxi = false,
 		},
 	}
 }
@@ -870,9 +881,18 @@ function AutoCombatLogger:ProcessZoneChange()
 	local profile = self.db.profile
 	local diffCheck = difficulty and difficulty ~= "None" and difficulty ~= ""
 
-	if isGarrison and profile.log.Garrison then
-		-- Player is in a garrison
-		self:EnableCombatLogging("Garrison")
+	if _G.UnitOnTaxi("player") then
+		if profile.log.Taxi then
+			self:EnableCombatLogging("Taxi")
+		else
+			self:DisableCombatLogging("Taxi")
+		end
+	elseif isGarrison then
+		if profile.log.Garrison then
+			self:EnableCombatLogging("Garrison")
+		else
+			self:DisableCombatLogging()
+		end
 	elseif (type == "raid" and profile.logRaid == "Yes") then
 		self:EnableCombatLogging("Raid")
 	elseif (type == "raid" and profile.logRaid == "Custom" and 
