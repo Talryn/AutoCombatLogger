@@ -102,6 +102,8 @@ local InstanceDifficulties = {
 		[15] = "Heroic", -- Heroic 10-30 Raid
 		[16] = "Mythic 20",
 		[17] = "LFR30",
+		[23] = "5M", -- Mythic 5 player
+		[24] = "5T", -- Timewalker 5 player
 }
 
 local DifficultyOrder = {
