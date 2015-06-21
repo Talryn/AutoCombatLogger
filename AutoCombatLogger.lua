@@ -74,6 +74,8 @@ local Zones = {
 	[953] = "Siege of Orgrimmar",
 	[994] = "Highmaul",
 	[988] = "Blackrock Foundry",
+	[1011] = "Blackrock Foundry", -- Also BRF
+	[1026] = "Hellfire Citadel",
 }
 
 local ReverseZones = {}
@@ -293,6 +295,15 @@ local Raids = {
 	},
 	["Blackrock Foundry"] = {
 		tier = 17.2,
+		difficulties = {
+			["Mythic 20"] = true,
+			["Heroic"] = true,
+			["Normal"] = true,
+			["LFR30"] = true,
+		},
+	},
+	["Hellfire Citadel"] = {
+		tier = 18,
 		difficulties = {
 			["Mythic 20"] = true,
 			["Heroic"] = true,
@@ -856,7 +867,7 @@ local LogChecks = {
 local data = {}
 function AutoCombatLogger:ProcessZoneChange()
 	local areaid = _G.GetCurrentMapAreaID()
-	if not areaid or areaid == 0 then
+	if not areaid or areaid == 0 or areaid == -1 then
 		if not self.zoneTimer then
 			self.zoneTimer = self:ScheduleTimer("ProcessZoneChange", 5)
 		end
