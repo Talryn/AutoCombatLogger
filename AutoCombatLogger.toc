@@ -1,4 +1,4 @@
-## Interface: 60200
+## Interface: 70000
 ## Title: Auto Combat Logger
 ## Notes: Automatically enables or disables combat logging based on location.
 ## Author: Talryn
