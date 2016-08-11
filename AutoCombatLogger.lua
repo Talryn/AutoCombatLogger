@@ -71,11 +71,12 @@ local Zones = {
 	[922] = "Deeprun Tram", -- Location of Bizmo's Brawlpub in Stormwind
 	[925] = "Brawl'gar Arena", -- Horde in Orgrimmar
 	[930] = "Throne of Thunder",
+	[945] = "Hellfire Citadel",
 	[953] = "Siege of Orgrimmar",
 	[994] = "Highmaul",
 	[988] = "Blackrock Foundry",
 	[1011] = "Blackrock Foundry", -- Also BRF
-	[1026] = "Hellfire Citadel",
+	[1026] = "Hellfire Citadel",  -- Now only the one in Tanaan Jungle?
 }
 
 local ReverseZones = {}
