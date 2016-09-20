@@ -77,6 +77,9 @@ local Zones = {
 	[988] = "Blackrock Foundry",
 	[1011] = "Blackrock Foundry", -- Also BRF
 	[1026] = "Hellfire Citadel",  -- Now only the one in Tanaan Jungle?
+	[1066] = "Assault on Violet Hold",
+	[1045] = "Vault of the Wardens",
+	[1094] = "The Emerald Nightmare", 
 }
 
 local ReverseZones = {}
@@ -307,6 +310,15 @@ local Raids = {
 	},
 	["Hellfire Citadel"] = {
 		tier = 18,
+		difficulties = {
+			["Mythic 20"] = true,
+			["Heroic"] = true,
+			["Normal"] = true,
+			["LFR30"] = true,
+		},
+	},
+	["The Emerald Nightmare"] = {
+		tier = 19,
 		difficulties = {
 			["Mythic 20"] = true,
 			["Heroic"] = true,
