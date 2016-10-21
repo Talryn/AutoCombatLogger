@@ -78,7 +78,13 @@ local Zones = {
 	[1011] = "Blackrock Foundry", -- Also BRF
 	[1026] = "Hellfire Citadel",  -- Now only the one in Tanaan Jungle?
 	[1066] = "Assault on Violet Hold",
+	[1067] = "Darkheart Thicket",
 	[1045] = "Vault of the Wardens",
+	[1042] = "Maw of Souls",
+	[1041] = "Halls of Valor",
+	[1081] = "Black Rook Hold",
+	[1046] = "Eye of Azshara",
+	[1065] = "Neltharion's Lair",
 	[1094] = "The Emerald Nightmare", 
 }
 
@@ -91,11 +97,11 @@ local InstanceDifficulties = {
 		[0] = "None",
 		[1] = "5",
 		[2] = "5H",
-    [3] = "10",
-    [4] = "25",
-    [5] = "10H",
-    [6] = "25H",
-    [7] = "LFR25",
+		[3] = "10",
+		[4] = "25",
+		[5] = "10H",
+		[6] = "25H",
+		[7] = "LFR25",
 		[8] = "Challenge Mode",
 		[9] = "40",
 		--[10] = "Not used",
@@ -121,6 +127,108 @@ local DifficultyOrder = {
 	["Mythic 20"] = 8,
 	["40"] = 9,
 }
+
+local InstanceMappings = {
+	tiers = {
+		[19] = {
+			["5"] = "Normal",
+			["5H"] = "Heroic",
+			["5M"] = "Mythic",
+			["Challenge Mode"] = "Mythic+",
+		},
+	}
+}
+
+local InstanceDifficultyOrder = {
+	["5"] = 1,
+	["5H"] = 2,
+	["5M"] = 3,
+	["Challenge Mode"] = 4,
+}
+
+local Instances = {
+	["Assault on Violet Hold"] = {
+		tier = 19,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+			["5M"] = true,
+			["Challenge Mode"] = true,
+		},
+	},
+	["Darkheart Thicket"] = {
+		tier = 19,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+			["5M"] = true,
+			["Challenge Mode"] = true,
+		},
+	},
+	["Vault of the Wardens"] = {
+		tier = 19,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+			["5M"] = true,
+			["Challenge Mode"] = true,
+		},
+	},
+	["Maw of Souls"] = {
+		tier = 19,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+			["5M"] = true,
+			["Challenge Mode"] = true,
+		},
+	},
+	["Halls of Valor"] = {
+		tier = 19,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+			["5M"] = true,
+			["Challenge Mode"] = true,
+		},
+	},
+	["Black Rook Hold"] = {
+		tier = 19,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+			["5M"] = true,
+			["Challenge Mode"] = true,
+		},
+	},
+	["Eye of Azshara"] = {
+		tier = 19,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+			["5M"] = true,
+			["Challenge Mode"] = true,
+		},
+	},
+	["Neltharion's Lair"] = {
+		tier = 19,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+			["5M"] = true,
+			["Challenge Mode"] = true,
+		},
+	},
+}
+
+local OrderedInstances = {}
+for instance, data in pairs(Instances) do
+	table.insert(OrderedInstances, instance)
+end
+table.sort(OrderedInstances, 
+	function(a,b)
+		return (Instances[a]["tier"] or 0) > (Instances[b]["tier"] or 0)
+	end)
 
 -- Raids to track and the possible raid sizes.
 local Raids = {
@@ -360,6 +468,7 @@ local defaults = {
 		logRaid = "Yes",
 		selectedRaids = {},
 		logInstance = "No",
+		selectedInstances = {},
 		logBG = "No",
 		selectedBGs = {},
 		logArena = "No",
@@ -379,6 +488,16 @@ for raid, data in pairs(Raids) do
 	for difficulty, enabled in pairs(Raids[raid]["difficulties"] or {}) do
 		if enabled then
 			defaults.profile.selectedRaids[raid][difficulty] = false
+		end
+	end
+end
+
+-- Dynamically add the default instances settings
+for instance, data in pairs(Instances) do
+	defaults.profile.selectedInstances[instance] = {}
+	for difficulty, enabled in pairs(Instances[instance]["difficulties"] or {}) do
+		if enabled then
+			defaults.profile.selectedInstances[instance][difficulty] = false
 		end
 	end
 end
@@ -637,7 +756,7 @@ function AutoCombatLogger:GetOptions()
 			}
 		}
 	}
-        
+
 	-- Dynamically add the raid options
 	local startOrder = 40
 	for i, raid in ipairs(OrderedRaids) do
@@ -665,6 +784,34 @@ function AutoCombatLogger:GetOptions()
 		end
 	end
 
+	-- Dynamically add the instance options
+	local startOrder = 30
+	for i, instance in ipairs(OrderedInstances) do
+		options.args.instances.args[instance] = {
+			name = self:GetLocalName(instance),
+			type = "header",
+			order = startOrder + i*20
+		}
+		for difficulty, enabled in pairs(Instances[instance]["difficulties"] or {}) do
+			if enabled then
+				local tier = Instances[instance].tier or 0
+				local mappings = InstanceMappings.tiers[tier] or {}
+				options.args.instances.args[instance.."-"..difficulty] = {
+					name =  mappings[difficulty] or difficulty,
+					desc = self:GetLocalName(instance) .. " ("..difficulty..")",
+					type = "toggle",
+					width = "half",
+					get = function() 
+						return self.db.profile.selectedInstances[instance][difficulty] 
+					end,
+					set = function(info, value)
+						self.db.profile.selectedInstances[instance][difficulty] = value
+					end,
+					order = startOrder + i*20 + (InstanceDifficultyOrder[difficulty] or 1),
+				}
+			end
+		end
+	end
 
 	-- Dynamically add the battleground options
 	for i, bg in ipairs(Battlegrounds) do
@@ -704,6 +851,7 @@ end
 
 function AutoCombatLogger:ChatCommand(input)
 	if not input or input:trim() == "" then
+		_G.InterfaceOptionsFrame_OpenToCategory(self.optionsFrame)
 		_G.InterfaceOptionsFrame_OpenToCategory(self.optionsFrame)
 	elseif input == "debug" then
 		DEBUG = true
@@ -928,6 +1076,10 @@ function AutoCombatLogger:ProcessZoneChange()
 	elseif (type == "party" and diffCheck and not isGarrison and 
 		profile.logInstance == "Yes") then
 		self:EnableCombatLogging("Instance")
+	elseif (type == "party" and diffCheck and not isGarrison and 
+		profile.logInstance == "Custom" and nonlocalZone and profile.selectedInstances[nonlocalZone] and
+		profile.selectedInstances[nonlocalZone][difficulty]== true) then
+		self:EnableCombatLogging("Custom Instance")
 	elseif (type == "arena" and profile.logArena == "Yes") then
 		self:EnableCombatLogging("Arena")
 	elseif (type == "pvp" and profile.logBG == "Yes") then
@@ -954,7 +1106,7 @@ end
 -- @return maxPlayers The maximum number of players allowed in the instance.
 function AutoCombatLogger:GetCurrentInstanceInfo()
 	local name, type, instanceDifficulty, difficultyName, maxPlayers, 
-		dynamicDifficulty, isDynamic, mapId = _G.GetInstanceInfo()
+		dynamicDifficulty, isDynamic, mapId, new1 = _G.GetInstanceInfo()
 
 	local difficulty = ""
 	if (type == "party") then
