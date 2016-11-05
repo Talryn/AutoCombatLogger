@@ -85,7 +85,9 @@ local Zones = {
 	[1081] = "Black Rook Hold",
 	[1046] = "Eye of Azshara",
 	[1065] = "Neltharion's Lair",
-	[1094] = "The Emerald Nightmare", 
+	[1094] = "The Emerald Nightmare",
+	[1115] = "Return to Karazhan",
+	[32] = "Return to Karazhan",
 }
 
 local ReverseZones = {}
@@ -131,6 +133,12 @@ local DifficultyOrder = {
 local InstanceMappings = {
 	tiers = {
 		[19] = {
+			["5"] = "Normal",
+			["5H"] = "Heroic",
+			["5M"] = "Mythic",
+			["Challenge Mode"] = "Mythic+",
+		},
+		[19.1] = {
 			["5"] = "Normal",
 			["5H"] = "Heroic",
 			["5M"] = "Mythic",
@@ -217,6 +225,15 @@ local Instances = {
 			["5H"] = true,
 			["5M"] = true,
 			["Challenge Mode"] = true,
+		},
+	},
+	["Return to Karazhan"] = {
+		tier = 19.1,
+		difficulties = {
+			["5"] = false,
+			["5H"] = false,
+			["5M"] = true,
+			["Challenge Mode"] = false,
 		},
 	},
 }
@@ -808,6 +825,7 @@ function AutoCombatLogger:GetOptions()
 						self.db.profile.selectedInstances[instance][difficulty] = value
 					end,
 					order = startOrder + i*20 + (InstanceDifficultyOrder[difficulty] or 1),
+					disabled = function() return self.db.profile.logInstance ~= "Custom" end,
 				}
 			end
 		end
@@ -945,6 +963,9 @@ end
 function AutoCombatLogger:OnEnable()
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 	self:RegisterEvent("PLAYER_DIFFICULTY_CHANGED")
+	self:RegisterEvent("CHALLENGE_MODE_START")
+	self:RegisterEvent("CHALLENGE_MODE_RESET")
+	self:RegisterEvent("CHALLENGE_MODE_COMPLETED")
 
 	update = _G.CreateFrame("Frame", nil, _G.UIParent)
 	update:SetScript("OnUpdate",
@@ -973,9 +994,27 @@ function AutoCombatLogger:OnDisable()
 	-- Unregister events
 	self:UnregisterEvent("ZONE_CHANGED_NEW_AREA")
 	self:UnregisterEvent("PLAYER_DIFFICULTY_CHANGED")
+	self:UnregisterEvent("CHALLENGE_MODE_START")
+	self:UnregisterEvent("CHALLENGE_MODE_RESET")
+	self:UnregisterEvent("CHALLENGE_MODE_COMPLETED")
 end
 
 function AutoCombatLogger:PLAYER_DIFFICULTY_CHANGED()
+	-- Just to be safe, wait a few seconds and then check the status
+	self:ScheduleTimer("ProcessZoneChange", 3)
+end
+
+function AutoCombatLogger:CHALLENGE_MODE_START()
+	-- Just to be safe, wait a second and then check the status
+	self:ScheduleTimer("ProcessZoneChange", 1)
+end
+
+function AutoCombatLogger:CHALLENGE_MODE_RESET()
+	-- Just to be safe, wait a few seconds and then check the status
+	self:ScheduleTimer("ProcessZoneChange", 3)
+end
+
+function AutoCombatLogger:CHALLENGE_MODE_COMPLETED()
 	-- Just to be safe, wait a few seconds and then check the status
 	self:ScheduleTimer("ProcessZoneChange", 3)
 end
