@@ -86,8 +86,9 @@ local Zones = {
 	[1046] = "Eye of Azshara",
 	[1065] = "Neltharion's Lair",
 	[1094] = "The Emerald Nightmare",
-	[1115] = "Return to Karazhan",
 	[32] = "Return to Karazhan",
+	[1114] = "Trial of Valor",
+	--[1115] = "",  -- Seems to be the map when first zoning in at times.
 }
 
 local ReverseZones = {}
@@ -444,6 +445,15 @@ local Raids = {
 	},
 	["The Emerald Nightmare"] = {
 		tier = 19,
+		difficulties = {
+			["Mythic 20"] = true,
+			["Heroic"] = true,
+			["Normal"] = true,
+			["LFR30"] = true,
+		},
+	},
+	["Trial of Valor"] = {
+		tier = 19.1,
 		difficulties = {
 			["Mythic 20"] = true,
 			["Heroic"] = true,
@@ -981,7 +991,7 @@ function AutoCombatLogger:OnEnable()
 			end
 		end)
 	
-	self:ProcessZoneChange()
+	self:ScheduleTimer("ProcessZoneChange", 3)
 
 	if self.db.profile.chat.enabled then
 		self:EnableChatLogging()
