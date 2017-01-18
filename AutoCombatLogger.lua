@@ -88,6 +88,7 @@ local Zones = {
 	[1094] = "The Emerald Nightmare",
 	[32] = "Return to Karazhan",
 	[1114] = "Trial of Valor",
+	[1088] = "The Nighthold"
 	--[1115] = "",  -- Seems to be the map when first zoning in at times.
 }
 
@@ -454,6 +455,15 @@ local Raids = {
 	},
 	["Trial of Valor"] = {
 		tier = 19.1,
+		difficulties = {
+			["Mythic 20"] = true,
+			["Heroic"] = true,
+			["Normal"] = true,
+			["LFR30"] = true,
+		},
+	},
+	["The Nighthold"] = {
+		tier = 19.2,
 		difficulties = {
 			["Mythic 20"] = true,
 			["Heroic"] = true,
