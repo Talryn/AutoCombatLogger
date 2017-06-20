@@ -85,10 +85,14 @@ local Zones = {
 	[1081] = "Black Rook Hold",
 	[1046] = "Eye of Azshara",
 	[1065] = "Neltharion's Lair",
+	[1079] = "Arcway",
+	[1087] = "Court of Stars",
 	[1094] = "The Emerald Nightmare",
-	[32] = "Return to Karazhan",
+	[1146] = "Cathedral of the Eternal Night",
 	[1114] = "Trial of Valor",
-	[1088] = "The Nighthold"
+	[1115] = "Return to Karazhan",  -- 32
+	[1088] = "The Nighthold",
+	[1147] = "Tomb of Sargeras"
 	--[1115] = "",  -- Seems to be the map when first zoning in at times.
 }
 
@@ -157,6 +161,15 @@ local InstanceDifficultyOrder = {
 }
 
 local Instances = {
+	["Arcway"] = {
+		tier = 19,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+			["5M"] = true,
+			["Challenge Mode"] = true,
+		},
+	},
 	["Assault on Violet Hold"] = {
 		tier = 19,
 		difficulties = {
