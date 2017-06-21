@@ -179,6 +179,24 @@ local Instances = {
 			["Challenge Mode"] = true,
 		},
 	},
+	["Cathedral of the Eternal Night"] = {
+		tier = 19,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+			["5M"] = true,
+			["Challenge Mode"] = true,
+		},
+	},
+	["Court of Stars"] = {
+		tier = 19,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+			["5M"] = true,
+			["Challenge Mode"] = true,
+		},
+	},
 	["Darkheart Thicket"] = {
 		tier = 19,
 		difficulties = {
@@ -477,6 +495,15 @@ local Raids = {
 	},
 	["The Nighthold"] = {
 		tier = 19.2,
+		difficulties = {
+			["Mythic 20"] = true,
+			["Heroic"] = true,
+			["Normal"] = true,
+			["LFR30"] = true,
+		},
+	},
+	["Tomb of Sargeras"] = {
+		tier = 20,
 		difficulties = {
 			["Mythic 20"] = true,
 			["Heroic"] = true,
