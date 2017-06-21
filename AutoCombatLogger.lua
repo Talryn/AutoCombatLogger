@@ -266,7 +266,7 @@ local Instances = {
 			["5"] = false,
 			["5H"] = false,
 			["5M"] = true,
-			["Challenge Mode"] = false,
+			["Challenge Mode"] = true,
 		},
 	},
 }
