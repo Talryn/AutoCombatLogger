@@ -92,7 +92,8 @@ local Zones = {
 	[1114] = "Trial of Valor",
 	[1115] = "Return to Karazhan",  -- 32
 	[1088] = "The Nighthold",
-	[1147] = "Tomb of Sargeras"
+	[1147] = "Tomb of Sargeras",
+	[1188] = "Antorus, the Burning Throne",
 	--[1115] = "",  -- Seems to be the map when first zoning in at times.
 }
 
@@ -504,6 +505,15 @@ local Raids = {
 	},
 	["Tomb of Sargeras"] = {
 		tier = 20,
+		difficulties = {
+			["Mythic 20"] = true,
+			["Heroic"] = true,
+			["Normal"] = true,
+			["LFR30"] = true,
+		},
+	},
+	["Antorus, the Burning Throne"] = {
+		tier = 21,
 		difficulties = {
 			["Mythic 20"] = true,
 			["Heroic"] = true,
