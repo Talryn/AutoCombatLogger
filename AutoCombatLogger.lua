@@ -28,7 +28,7 @@ addon.addonVersion = cleanupVersion("@project-version@")
 
 addon.CURRENT_BUILD, addon.CURRENT_INTERNAL, 
     addon.CURRENT_BUILD_DATE, addon.CURRENT_UI_VERSION = _G.GetBuildInfo()
-addon.WoD = addon.CURRENT_UI_VERSION >= 60000
+addon.BfA = addon.CURRENT_UI_VERSION >= 80000
 
 local DEBUG = false
 
@@ -116,71 +116,6 @@ for name, ids in pairs(ZoneMappings) do
 		Zones[id] = name
 	end
 end
-
--- local Zones = {
--- 	[527] = "The Eye of Eternity",
--- 	[604] = "Icecrown Citadel",
--- 	[535] = "Naxxramas",
--- 	[531] = "The Obsidian Sanctum",
--- 	[718] = "Onyxia's Lair",
--- 	[609] = "The Ruby Sanctum",
--- 	[543] = "Trial of the Crusader",
--- 	[529] = "Ulduar",
--- 	[532] = "Vault of Archavon",
--- 	[754] = "Blackwing Descent",
--- 	[773] = "Throne of the Four Winds",
--- 	[758] = "The Bastion of Twilight",
--- 	[752] = "Baradin Hold",
--- 	[800] = "Firelands",
--- 	[824] = "Dragon Soul",
--- 	[896] = "Mogu'shan Vaults",
--- 	[897] = "Heart of Fear",
--- 	[886] = "Terrace of Endless Spring",
--- 	[922] = "Deeprun Tram", -- Location of Bizmo's Brawlpub in Stormwind
--- 	[925] = "Brawl'gar Arena", -- Horde in Orgrimmar
--- 	[930] = "Throne of Thunder",
--- 	[945] = "Hellfire Citadel",
--- 	[953] = "Siege of Orgrimmar",
---
--- 	[610] = "Highmaul",
--- 	[611] = "Highmaul",
--- 	[612] = "Highmaul",
--- 	[613] = "Highmaul",
--- 	[614] = "Highmaul",
--- 	[615] = "Highmaul",
--- 	[596] = "Blackrock Foundry",
--- 	[597] = "Blackrock Foundry",
--- 	[598] = "Blackrock Foundry",
--- 	[599] = "Blackrock Foundry",
--- 	[600] = "Blackrock Foundry",
--- 	[624] = "Blackrock Foundry", -- Also BRF
--- 	[667] = "Hellfire Citadel",  -- Now only the one in Tanaan Jungle?
--- 	[668] = "Hellfire Citadel",  -- Now only the one in Tanaan Jungle?
--- 	[669] = "Hellfire Citadel",  -- Now only the one in Tanaan Jungle?
--- 	[733] = "Darkheart Thicket",
--- 	[710] = "Vault of the Wardens",
--- 	[711] = "Vault of the Wardens",
--- 	[712] = "Vault of the Wardens",
--- 	[706] = "Maw of Souls",
--- 	[706] = "Maw of Souls",
--- 	[706] = "Maw of Souls",
---
--- 	[703] = "Halls of Valor",
--- 	[751] = "Black Rook Hold",
--- 	[713] = "Eye of Azshara",
--- 	[731] = "Neltharion's Lair",
--- 	[732] = "Assault on Violet Hold",
--- 	[749] = "Arcway",
--- 	[761] = "Court of Stars",
--- 	[777] = "The Emerald Nightmare",
--- 	[845] = "Cathedral of the Eternal Night",
--- 	[806] = "Trial of Valor",
--- 	[809] = "Return to Karazhan",  -- 32
--- 	[764] = "The Nighthold",
--- 	[850] = "Tomb of Sargeras",
--- 	[909] = "Antorus, the Burning Throne",
--- 	--[1115] = "",  -- Seems to be the map when first zoning in at times.
--- }
 
 local ReverseZones = {}
 for k,v in pairs(Zones) do
