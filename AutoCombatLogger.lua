@@ -97,9 +97,9 @@ local ZoneMappings = {
 	["Court of Stars"] = { 761, 762, 763 },
 	["The Nighthold"] = { 764, 765, 766, 767, 768, 769, 770, 771, 772 },
 	["The Emerald Nightmare"] = range(777, 789),
-	["Cathedral of the Eternal Night"] = { 845, 846, 847, 848, 849 },
 	["Trial of Valor"] = { 806, 807, 808 },
 	["Return to Karazhan"] = range(809, 822),
+	["Cathedral of the Eternal Night"] = { 845, 846, 847, 848, 849 },
 	["Tomb of Sargeras"] = { 850, 851, 852, 853, 854, 855, 856 },
 	["Antorus, the Burning Throne"] = range(909, 920),
 }
