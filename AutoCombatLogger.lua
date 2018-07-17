@@ -49,53 +49,138 @@ local addonHdr = GREEN.."%s %s"
 
 AutoCombatLogger.zoneTimer = nil
 
-local Zones = {
-	[527] = "The Eye of Eternity",
-	[604] = "Icecrown Citadel",
-	[535] = "Naxxramas",
-	[531] = "The Obsidian Sanctum",
-	[718] = "Onyxia's Lair",
-	[609] = "The Ruby Sanctum",
-	[543] = "Trial of the Crusader",
-	[529] = "Ulduar",
-	[532] = "Vault of Archavon",
-	[754] = "Blackwing Descent",
-	[773] = "Throne of the Four Winds",
-	[758] = "The Bastion of Twilight",
-	[752] = "Baradin Hold",
-	[800] = "Firelands",
-	[824] = "Dragon Soul",
-	[896] = "Mogu'shan Vaults",
-	[897] = "Heart of Fear",
-	[886] = "Terrace of Endless Spring",
-	[922] = "Deeprun Tram", -- Location of Bizmo's Brawlpub in Stormwind
-	[925] = "Brawl'gar Arena", -- Horde in Orgrimmar
-	[930] = "Throne of Thunder",
-	[945] = "Hellfire Citadel",
-	[953] = "Siege of Orgrimmar",
-	[994] = "Highmaul",
-	[988] = "Blackrock Foundry",
-	[1011] = "Blackrock Foundry", -- Also BRF
-	[1026] = "Hellfire Citadel",  -- Now only the one in Tanaan Jungle?
-	[1066] = "Assault on Violet Hold",
-	[1067] = "Darkheart Thicket",
-	[1045] = "Vault of the Wardens",
-	[1042] = "Maw of Souls",
-	[1041] = "Halls of Valor",
-	[1081] = "Black Rook Hold",
-	[1046] = "Eye of Azshara",
-	[1065] = "Neltharion's Lair",
-	[1079] = "Arcway",
-	[1087] = "Court of Stars",
-	[1094] = "The Emerald Nightmare",
-	[1146] = "Cathedral of the Eternal Night",
-	[1114] = "Trial of Valor",
-	[1115] = "Return to Karazhan",  -- 32
-	[1088] = "The Nighthold",
-	[1147] = "Tomb of Sargeras",
-	[1188] = "Antorus, the Burning Throne",
-	--[1115] = "",  -- Seems to be the map when first zoning in at times.
+local function range(from, to)
+	local result = {}
+	for i = from, to do
+		table.insert(result, i)
+	end
+	return result
+end
+
+local ZoneMappings = {
+	["The Eye of Eternity"] = { 141 },
+	["Icecrown Citadel"] = range(186, 193),
+	["Naxxramas"] = range(162, 167),
+	["The Obsidian Sanctum"] = { 155 },
+	["Onyxia's Lair"] = { 248 },
+	["The Ruby Sanctum"] = { 200 },
+	["Trial of the Crusader"] = { 172, 173 },
+	["Ulduar"] = range(147, 152),
+	["Vault of Archavon"] = { 156 },
+	["Blackwing Descent"] = { 285, 286 },
+	["Throne of the Four Winds"] = { 328 },
+	["The Bastion of Twilight"] = { 294, 295, 296 },
+	["Baradin Hold"] = { 282 },
+	["Firelands"] = { 367, 368, 369 },
+	["Dragon Soul"] = range(409, 415),
+	["Mogu'shan Vaults"] = { 471, 472, 473 },
+	["Heart of Fear"] = { 474, 475 },
+	["Terrace of Endless Spring"] = { 456 },
+	["Deeprun Tram"] = { 499, 500 },  -- Location of Bizmo's Brawlpub in Stormwind
+	["Brawl'gar Arena"] = { 503 },  -- Horde in Orgrimmar
+	["Throne of Thunder"] = range(508, 515),
+	["Hellfire Citadel"] = { 534 },
+	["Siege of Orgrimmar"] = range(556, 570),
+	["Highmaul"] = range(610, 615),
+	["Blackrock Foundry"] = { 624 },  -- Also BRF
+	["Blackrock Foundry"] = range(596, 600),
+	["Hellfire Citadel"] = range(661, 670),  -- Now only the one in Tanaan Jungle?
+	["Assault on Violet Hold"] = { 732 },
+	["Darkheart Thicket"] = { 733 },
+	["Vault of the Wardens"] = { 710 },
+	["Halls of Valor"] = { 703 },
+	["Eye of Azshara"] = { 713 },
+	["Neltharion's Lair"] = { 731 },
+	["Black Rook Hold"] = { 751 },
+	["Maw of Souls"] = { 706 },
+	["Arcway"] = { 749 },
+	["Court of Stars"] = { 761, 762, 763 },
+	["The Nighthold"] = { 764, 765, 766, 767, 768, 769, 770, 771, 772 },
+	["The Emerald Nightmare"] = range(777, 789),
+	["Cathedral of the Eternal Night"] = { 845, 846, 847, 848, 849 },
+	["Trial of Valor"] = { 806, 807, 808 },
+	["Return to Karazhan"] = range(809, 822),
+	["Tomb of Sargeras"] = { 850, 851, 852, 853, 854, 855, 856 },
+	["Antorus, the Burning Throne"] = range(909, 920),
 }
+local Zones = {}
+for name, ids in pairs(ZoneMappings) do
+	for i, id in ipairs(ids) do
+		if DEBUG then
+			local mapName = (C_Map.GetMapInfo(id) or {}).name
+			if name ~= mapName then
+				local fmt = "Bad map name! %s for %s is %s"
+				AutoCombatLogger:Print(fmt:format(_G.tostring(name), _G.tostring(id), _G.tostring(mapName)))
+			end
+		end
+		Zones[id] = name
+	end
+end
+
+-- local Zones = {
+-- 	[527] = "The Eye of Eternity",
+-- 	[604] = "Icecrown Citadel",
+-- 	[535] = "Naxxramas",
+-- 	[531] = "The Obsidian Sanctum",
+-- 	[718] = "Onyxia's Lair",
+-- 	[609] = "The Ruby Sanctum",
+-- 	[543] = "Trial of the Crusader",
+-- 	[529] = "Ulduar",
+-- 	[532] = "Vault of Archavon",
+-- 	[754] = "Blackwing Descent",
+-- 	[773] = "Throne of the Four Winds",
+-- 	[758] = "The Bastion of Twilight",
+-- 	[752] = "Baradin Hold",
+-- 	[800] = "Firelands",
+-- 	[824] = "Dragon Soul",
+-- 	[896] = "Mogu'shan Vaults",
+-- 	[897] = "Heart of Fear",
+-- 	[886] = "Terrace of Endless Spring",
+-- 	[922] = "Deeprun Tram", -- Location of Bizmo's Brawlpub in Stormwind
+-- 	[925] = "Brawl'gar Arena", -- Horde in Orgrimmar
+-- 	[930] = "Throne of Thunder",
+-- 	[945] = "Hellfire Citadel",
+-- 	[953] = "Siege of Orgrimmar",
+--
+-- 	[610] = "Highmaul",
+-- 	[611] = "Highmaul",
+-- 	[612] = "Highmaul",
+-- 	[613] = "Highmaul",
+-- 	[614] = "Highmaul",
+-- 	[615] = "Highmaul",
+-- 	[596] = "Blackrock Foundry",
+-- 	[597] = "Blackrock Foundry",
+-- 	[598] = "Blackrock Foundry",
+-- 	[599] = "Blackrock Foundry",
+-- 	[600] = "Blackrock Foundry",
+-- 	[624] = "Blackrock Foundry", -- Also BRF
+-- 	[667] = "Hellfire Citadel",  -- Now only the one in Tanaan Jungle?
+-- 	[668] = "Hellfire Citadel",  -- Now only the one in Tanaan Jungle?
+-- 	[669] = "Hellfire Citadel",  -- Now only the one in Tanaan Jungle?
+-- 	[733] = "Darkheart Thicket",
+-- 	[710] = "Vault of the Wardens",
+-- 	[711] = "Vault of the Wardens",
+-- 	[712] = "Vault of the Wardens",
+-- 	[706] = "Maw of Souls",
+-- 	[706] = "Maw of Souls",
+-- 	[706] = "Maw of Souls",
+--
+-- 	[703] = "Halls of Valor",
+-- 	[751] = "Black Rook Hold",
+-- 	[713] = "Eye of Azshara",
+-- 	[731] = "Neltharion's Lair",
+-- 	[732] = "Assault on Violet Hold",
+-- 	[749] = "Arcway",
+-- 	[761] = "Court of Stars",
+-- 	[777] = "The Emerald Nightmare",
+-- 	[845] = "Cathedral of the Eternal Night",
+-- 	[806] = "Trial of Valor",
+-- 	[809] = "Return to Karazhan",  -- 32
+-- 	[764] = "The Nighthold",
+-- 	[850] = "Tomb of Sargeras",
+-- 	[909] = "Antorus, the Burning Throne",
+-- 	--[1115] = "",  -- Seems to be the map when first zoning in at times.
+-- }
 
 local ReverseZones = {}
 for k,v in pairs(Zones) do
@@ -630,7 +715,8 @@ local options
 function AutoCombatLogger:GetLocalName(raid)
 	local id = ReverseZones[raid]
 	if id then
-		return _G.GetMapNameByID(id) or raid
+		local info = C_Map.GetMapInfo(id) or {}
+		return info.name or raid
 	else
 		return raid
 	end
@@ -1093,10 +1179,15 @@ function AutoCombatLogger:ZONE_CHANGED_NEW_AREA()
 	self:ProcessZoneChange()
 end
 
+local function IsMapGarrisonMap(uiMapID)
+	local plots = C_Garrison.GetGarrisonPlotsInstancesForMap(uiMapID) or {}
+	return #plots > 0
+end
+
 local LogChecks = {
 	-- Garrison
 	[1] = function(data)
-		if _G.IsMapGarrisonMap(data.areaid) and data.profile.log.Garrison then
+		if IsMapGarrisonMap(data.areaid) and data.profile.log.Garrison then
 			return true, "Garrison"
 		else
 			return false
@@ -1138,8 +1229,8 @@ local LogChecks = {
 
 local data = {}
 function AutoCombatLogger:ProcessZoneChange()
-	local areaid = _G.GetCurrentMapAreaID()
-	if not areaid or areaid == 0 or areaid == -1 then
+	local uiMapID = C_Map.GetBestMapForUnit("player")
+	if not uiMapID or uiMapID == 0 or uiMapID == -1 then
 		if not self.zoneTimer then
 			self.zoneTimer = self:ScheduleTimer("ProcessZoneChange", 5)
 		end
@@ -1148,15 +1239,15 @@ function AutoCombatLogger:ProcessZoneChange()
 
 	self.zoneTimer = nil
 	local name, type, difficulty, maxPlayers, mapId = self:GetCurrentInstanceInfo()
-	local nonlocalZone = Zones[areaid]
+	local nonlocalZone = Zones[uiMapID]
 
-	local isGarrison = _G.IsMapGarrisonMap(areaid)
+	local isGarrison = IsMapGarrisonMap(uiMapID)
 	local isBrawlers = (nonlocalZone == "Brawl'gar Arena" or mapId == 369)
 
 	if DEBUG == true then
 		local fmt1 = "Zone: %s, Area ID: %s, Non-Local: %s"
 		local fmt2 = "Type: %s, Difficulty: %s, MaxPlayers: %s, Garrison: %s, Brawl: %s"
-		self:Print(fmt1:format(name, _G.tostring(areaid), _G.tostring(nonlocalZone)))
+		self:Print(fmt1:format(name, _G.tostring(uiMapID), _G.tostring(nonlocalZone)))
 		self:Print(fmt2:format(type, difficulty, _G.tostring(maxPlayers), 
 			_G.tostring(isGarrison), _G.tostring(isBrawlers)))
 	end
