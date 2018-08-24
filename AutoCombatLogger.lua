@@ -26,7 +26,7 @@ end
 addon.addonTitle = _G.GetAddOnMetadata(ADDON_NAME,"Title")
 addon.addonVersion = cleanupVersion("@project-version@")
 
-addon.CURRENT_BUILD, addon.CURRENT_INTERNAL, 
+addon.CURRENT_BUILD, addon.CURRENT_INTERNAL,
     addon.CURRENT_BUILD_DATE, addon.CURRENT_UI_VERSION = _G.GetBuildInfo()
 addon.BfA = addon.CURRENT_UI_VERSION >= 80000
 
@@ -102,6 +102,17 @@ local ZoneMappings = {
 	["Cathedral of the Eternal Night"] = { 845, 846, 847, 848, 849 },
 	["Tomb of Sargeras"] = { 850, 851, 852, 853, 854, 855, 856 },
 	["Antorus, the Burning Throne"] = range(909, 920),
+	["Atal'Dazar"] = { 934, 935 },
+	["Freehold"] = { 936 },
+	["Tol Dagor"] = range(974, 980),
+	["King's Rest"] = { 1004 },
+	["The MOTHERLODE!!"] = { 1010 },
+	["Waycrest Manor"] = { 1015 },
+	["Shrine of the Storm"] = { 1039, 1040 },
+	["The Underrot"] = { 1041, 1042 },
+	["Temple of Sethrallis"] = { 1043 },
+	["Siege of Boralus"] = { 1162 },
+	["Uldir"] = {},
 }
 local Zones = {}
 for name, ids in pairs(ZoneMappings) do
@@ -166,6 +177,12 @@ local InstanceMappings = {
 			["Challenge Mode"] = "Mythic+",
 		},
 		[19.1] = {
+			["5"] = "Normal",
+			["5H"] = "Heroic",
+			["5M"] = "Mythic",
+			["Challenge Mode"] = "Mythic+",
+		},
+		[22] = {
 			["5"] = "Normal",
 			["5H"] = "Heroic",
 			["5M"] = "Mythic",
@@ -290,13 +307,103 @@ local Instances = {
 			["Challenge Mode"] = true,
 		},
 	},
+	["Atal'Dazar"] = {
+		tier = 22,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+			["5M"] = true,
+			["Challenge Mode"] = true,
+		},
+	},
+	["King's Rest"] = {
+		tier = 22,
+		difficulties = {
+			["5"] = false,
+			["5H"] = false,
+			["5M"] = true,
+			["Challenge Mode"] = true,
+		},
+	},
+	["Shrine of the Storm"] = {
+		tier = 22,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+			["5M"] = true,
+			["Challenge Mode"] = true,
+		},
+	},
+	["Waycrest Manor"] = {
+		tier = 22,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+			["5M"] = true,
+			["Challenge Mode"] = true,
+		},
+	},
+	["Freehold"] = {
+		tier = 22,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+			["5M"] = true,
+			["Challenge Mode"] = true,
+		},
+	},
+	["Temple of Sethrallis"] = {
+		tier = 22,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+			["5M"] = true,
+			["Challenge Mode"] = true,
+		},
+	},
+	["Siege of Boralus"] = {
+		tier = 22,
+		difficulties = {
+			["5"] = false,
+			["5H"] = false,
+			["5M"] = true,
+			["Challenge Mode"] = true,
+		},
+	},
+	["The Underrot"] = {
+		tier = 22,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+			["5M"] = true,
+			["Challenge Mode"] = true,
+		},
+	},
+	["Tol Dagor"] = {
+		tier = 22,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+			["5M"] = true,
+			["Challenge Mode"] = true,
+		},
+	},
+	["The MOTHERLODE!!"] = {
+		tier = 22,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+			["5M"] = true,
+			["Challenge Mode"] = true,
+		},
+	},
 }
 
 local OrderedInstances = {}
 for instance, data in pairs(Instances) do
 	table.insert(OrderedInstances, instance)
 end
-table.sort(OrderedInstances, 
+table.sort(OrderedInstances,
 	function(a,b)
 		return (Instances[a]["tier"] or 0) > (Instances[b]["tier"] or 0)
 	end)
@@ -541,24 +648,33 @@ local Raids = {
 			["LFR30"] = true,
 		},
 	},
+	["Uldir"] = {
+		tier = 22,
+		difficulties = {
+			["Mythic 20"] = true,
+			["Heroic"] = true,
+			["Normal"] = true,
+			["LFR30"] = true,
+		},
+	},
 }
 
 local OrderedRaids = {}
 for raid, data in pairs(Raids) do
 	table.insert(OrderedRaids, raid)
 end
-table.sort(OrderedRaids, 
+table.sort(OrderedRaids,
 	function(a,b)
 		return (Raids[a]["tier"] or 0) > (Raids[b]["tier"] or 0)
 	end)
 
 local Battlegrounds = {
-	"Alterac Valley", "Arathi Basin", "Eye of the Storm", "Isle of Conquest", 
+	"Alterac Valley", "Arathi Basin", "Eye of the Storm", "Isle of Conquest",
 	"Strand of the Ancients", "Warsong Gulch"
 }
 
 local Arenas = {
-	"Dalaran Sewers", "Ruins of Lordaeron", "The Circle of Blood", 
+	"Dalaran Sewers", "Ruins of Lordaeron", "The Circle of Blood",
 	"The Ring of Trials", "The Ring of Valor"
 }
 
@@ -623,7 +739,7 @@ local function invertTable(table)
 	if _G.type(table) ~= "table" then return end
 	local newTable = {}
 	for key, value in pairs(table) do
-		newTable[value] = key 
+		newTable[value] = key
 	end
 	return newTable
 end
@@ -637,7 +753,7 @@ local logOptions = {
 local localizedLogOptions = {
     [1] = L["No"],
     [2] = L["Yes"],
-    [3] = L["Custom"]    
+    [3] = L["Custom"]
 }
 
 local invertedOptions = invertTable(logOptions)
@@ -673,7 +789,7 @@ function AutoCombatLogger:GetOptions()
 						desc = L["Toggle the minimap button"],
 						type = "toggle",
 						set = function(info,val)
-							-- Reverse the value since the stored value is to hide 
+							-- Reverse the value since the stored value is to hide
 							-- it and not show it
 							self.db.profile.minimap.hide = not val
 							if self.db.profile.minimap.hide then
@@ -786,8 +902,8 @@ function AutoCombatLogger:GetOptions()
 						name = L["For Custom, choose the individual arenas to log below."],
 						type = "description",
 						order = 30
-					}            		
-				}                
+					}
+				}
 			},
 			bgs = {
 				type = "group",
@@ -880,8 +996,8 @@ function AutoCombatLogger:GetOptions()
 					desc = self:GetLocalName(raid) .. " ("..difficulty..")",
 					type = "toggle",
 					width = "half",
-					get = function() 
-						return self.db.profile.selectedRaids[raid][difficulty] 
+					get = function()
+						return self.db.profile.selectedRaids[raid][difficulty]
 					end,
 					set = function(info, value)
 						self.db.profile.selectedRaids[raid][difficulty] = value
@@ -909,8 +1025,8 @@ function AutoCombatLogger:GetOptions()
 					desc = self:GetLocalName(instance) .. " ("..difficulty..")",
 					type = "toggle",
 					width = "half",
-					get = function() 
-						return self.db.profile.selectedInstances[instance][difficulty] 
+					get = function()
+						return self.db.profile.selectedInstances[instance][difficulty]
 					end,
 					set = function(info, value)
 						self.db.profile.selectedInstances[instance][difficulty] = value
@@ -928,7 +1044,7 @@ function AutoCombatLogger:GetOptions()
 			name = self:GetLocalName(bg),
 			type = "toggle",
 			width = "normal",
-			get = function() 
+			get = function()
 				return self.db.profile.selectedBGs[bg]
 			end,
 			set = function(info, val)
@@ -945,7 +1061,7 @@ function AutoCombatLogger:GetOptions()
 			name = arena,
 			type = "toggle",
 			width = "normal",
-			get = function() 
+			get = function()
 				return self.db.profile.selectedArenas[arena]
 			end,
 			set = function(info, val)
@@ -954,7 +1070,7 @@ function AutoCombatLogger:GetOptions()
 			order = startOrder + i*10
 		}
 	end
-    
+
 	return options
 end
 
@@ -974,7 +1090,7 @@ function AutoCombatLogger:ChatCommand(input)
 			self:Print(raid)
 		end
 	else
-		_G.LibStub("AceConfigCmd-3.0").HandleCommand(AutoCombatLogger, 
+		_G.LibStub("AceConfigCmd-3.0").HandleCommand(AutoCombatLogger,
 			"acl", "AutoCombatLogger", input)
 	end
 end
@@ -1071,7 +1187,7 @@ function AutoCombatLogger:OnEnable()
 				end
 			end
 		end)
-	
+
 	self:ScheduleTimer("ProcessZoneChange", 3)
 
 	if self.db.profile.chat.enabled then
@@ -1138,8 +1254,8 @@ local LogChecks = {
 	end,
 	-- Logging Specific Raids
 	[3] = function(data)
-		if data.type == "raid" and data.profile.logRaid == "Custom" and 
-			data.difficulty and data.nonlocalZone and 
+		if data.type == "raid" and data.profile.logRaid == "Custom" and
+			data.difficulty and data.nonlocalZone and
 			data.profile.selectedRaids[data.nonlocalZone] and
 			data.profile.selectedRaids[data.nonlocalZone][data.difficulty]== true then
 			return true, "Raid"
@@ -1151,15 +1267,15 @@ local LogChecks = {
 	[4] = function(data)
 		local diffCheck = data.difficulty and data.difficulty ~= "None" and
 			data.difficulty ~= ""
-		if data.type == "party" and diffCheck and 
-			not _G.IsMapGarrisonMap(data.areaid) and 
+		if data.type == "party" and diffCheck and
+			not _G.IsMapGarrisonMap(data.areaid) and
 			data.profile.logInstance == "Yes" then
 			return true, "Instance"
 		else
 			return false
 		end
 	end,
-		
+
 }
 
 local data = {}
@@ -1183,7 +1299,7 @@ function AutoCombatLogger:ProcessZoneChange()
 		local fmt1 = "Zone: %s, Area ID: %s, Non-Local: %s"
 		local fmt2 = "Type: %s, Difficulty: %s, MaxPlayers: %s, Garrison: %s, Brawl: %s"
 		self:Print(fmt1:format(name, _G.tostring(uiMapID), _G.tostring(nonlocalZone)))
-		self:Print(fmt2:format(type, difficulty, _G.tostring(maxPlayers), 
+		self:Print(fmt2:format(type, difficulty, _G.tostring(maxPlayers),
 			_G.tostring(isGarrison), _G.tostring(isBrawlers)))
 	end
 
@@ -1204,14 +1320,14 @@ function AutoCombatLogger:ProcessZoneChange()
 		end
 	elseif (type == "raid" and profile.logRaid == "Yes") then
 		self:EnableCombatLogging("Raid")
-	elseif (type == "raid" and profile.logRaid == "Custom" and 
+	elseif (type == "raid" and profile.logRaid == "Custom" and
 		difficulty and nonlocalZone and profile.selectedRaids[nonlocalZone] and
 		profile.selectedRaids[nonlocalZone][difficulty]== true) then
 			self:EnableCombatLogging("Custom Raid: ".._G.tostring(nonlocalZone))
-	elseif (type == "party" and diffCheck and not isGarrison and 
+	elseif (type == "party" and diffCheck and not isGarrison and
 		profile.logInstance == "Yes") then
 		self:EnableCombatLogging("Instance")
-	elseif (type == "party" and diffCheck and not isGarrison and 
+	elseif (type == "party" and diffCheck and not isGarrison and
 		profile.logInstance == "Custom" and nonlocalZone and profile.selectedInstances[nonlocalZone] and
 		profile.selectedInstances[nonlocalZone][difficulty]== true) then
 		self:EnableCombatLogging("Custom Instance")
@@ -1240,7 +1356,7 @@ end
 -- @return difficulty The difficult of the current instance (i.e., 5,5H,10,10H,25,25H)
 -- @return maxPlayers The maximum number of players allowed in the instance.
 function AutoCombatLogger:GetCurrentInstanceInfo()
-	local name, type, instanceDifficulty, difficultyName, maxPlayers, 
+	local name, type, instanceDifficulty, difficultyName, maxPlayers,
 		dynamicDifficulty, isDynamic, mapId, new1 = _G.GetInstanceInfo()
 
 	local difficulty = ""
