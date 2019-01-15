@@ -4,8 +4,8 @@ language: c
 addons:
   apt:
     packages:
-	- luarocks
-    - pandoc
+      - luarocks
+      - pandoc
 
 install:
   - eval $(luarocks path --bin)
