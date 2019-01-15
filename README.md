@@ -1,4 +1,4 @@
-AutoCombatLogger automatically enables or disables the combat log based on location. It's specifically tailored to control the logging based on the raid name and difficulty.
+AutoCombatLogger is a World of Warcraft addon that automatically enables or disables the combat log based on location.  It's specifically tailored to control the logging based on the raid name and difficulty.
 
 Logging can be controlled for the following locations:
 
