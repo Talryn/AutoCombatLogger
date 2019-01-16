@@ -14,6 +14,7 @@ install:
 script: /home/travis/.luarocks/bin/luacheck . --no-color -quiet -only "011"
 
 after_script:
+  - jq --version
   - curl -s https://raw.githubusercontent.com/BigWigsMods/packager/master/release.sh | bash
 
 notifications:
