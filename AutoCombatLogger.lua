@@ -113,6 +113,7 @@ local ZoneMappings = {
 	["Temple of Sethrallis"] = { 1043 },
 	["Siege of Boralus"] = { 1162 },
 	["Uldir"] = range(1148, 1155),
+	["Battle of Dazar'alor"] = { 1352, 1353, 1354, 1356, 1357, 1358 },
 }
 local Zones = {}
 for name, ids in pairs(ZoneMappings) do
@@ -650,6 +651,15 @@ local Raids = {
 	},
 	["Uldir"] = {
 		tier = 22,
+		difficulties = {
+			["Mythic 20"] = true,
+			["Heroic"] = true,
+			["Normal"] = true,
+			["LFR30"] = true,
+		},
+	},
+	["Battle of Dazar'alor"] = {
+		tier = 23,
 		difficulties = {
 			["Mythic 20"] = true,
 			["Heroic"] = true,
