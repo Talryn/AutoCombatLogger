@@ -113,7 +113,7 @@ local ZoneMappings = {
 	["Temple of Sethrallis"] = { 1043 },
 	["Siege of Boralus"] = { 1162 },
 	["Uldir"] = range(1148, 1155),
-	["Battle of Dazar'alor"] = { 1352, 1353, 1354, 1356, 1357, 1358 },
+	["Battle of Dazar'alor"] = { 1352, 1353, 1354, 1356, 1357, 1358, 1364 },
 }
 local Zones = {}
 for name, ids in pairs(ZoneMappings) do
