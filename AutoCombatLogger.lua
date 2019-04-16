@@ -667,14 +667,14 @@ local Raids = {
 			["Normal"] = true,
 			["LFR30"] = true,
 		},
-		["Crucible of Storms"] = {
-			tier = 23.1,
-			difficulties = {
-				["Mythic 20"] = true,
-				["Heroic"] = true,
-				["Normal"] = true,
-				["LFR30"] = true,
-			},
+	},
+	["Crucible of Storms"] = {
+		tier = 23.1,
+		difficulties = {
+			["Mythic 20"] = true,
+			["Heroic"] = true,
+			["Normal"] = true,
+			["LFR30"] = true,
 		},
 	},
 }
