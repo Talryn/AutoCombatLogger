@@ -1,4 +1,4 @@
-## Interface: 80100
+## Interface: 80200
 ## Title: Auto Combat Logger
 ## Notes: Automatically enables or disables combat logging based on location.
 ## Author: Talryn
