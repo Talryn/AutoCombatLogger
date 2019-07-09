@@ -116,6 +116,7 @@ local ZoneMappings = {
 	["Battle of Dazar'alor"] = { 1352, 1353, 1354, 1356, 1357, 1358, 1364 },
 	["Crucible of Storms"] = { 1345, 1346 },
 	["The Eternal Palace"] = range(1512, 1520),
+	["Operation: Mechagon"] = { 1490, 1491, 1493, 1494, 1497 },
 }
 local Zones = {}
 for name, ids in pairs(ZoneMappings) do
@@ -393,6 +394,15 @@ local Instances = {
 	},
 	["The MOTHERLODE!!"] = {
 		tier = 22,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+			["5M"] = true,
+			["Challenge Mode"] = true,
+		},
+	},
+	["Operation: Mechagon"] = {
+		tier = 24,
 		difficulties = {
 			["5"] = true,
 			["5H"] = true,
