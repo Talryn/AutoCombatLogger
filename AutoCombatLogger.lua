@@ -192,6 +192,12 @@ local InstanceMappings = {
 			["5M"] = "Mythic",
 			["Challenge Mode"] = "Mythic+",
 		},
+		[24] = {
+			["5"] = "Normal",
+			["5H"] = "Heroic",
+			["5M"] = "Mythic",
+			["Challenge Mode"] = "Mythic+",
+		},
 	}
 }
 
