@@ -115,6 +115,7 @@ local ZoneMappings = {
 	["Uldir"] = range(1148, 1155),
 	["Battle of Dazar'alor"] = { 1352, 1353, 1354, 1356, 1357, 1358, 1364 },
 	["Crucible of Storms"] = { 1345, 1346 },
+	["The Eternal Palace"] = range(1512, 1520),
 }
 local Zones = {}
 for name, ids in pairs(ZoneMappings) do
@@ -670,6 +671,15 @@ local Raids = {
 	},
 	["Crucible of Storms"] = {
 		tier = 23.1,
+		difficulties = {
+			["Mythic 20"] = true,
+			["Heroic"] = true,
+			["Normal"] = true,
+			["LFR30"] = true,
+		},
+	},
+	["The Eternal Palace"] = {
+		tier = 24,
 		difficulties = {
 			["Mythic 20"] = true,
 			["Heroic"] = true,
