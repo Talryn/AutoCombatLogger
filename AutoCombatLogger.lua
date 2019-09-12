@@ -809,6 +809,10 @@ local update = nil
 
 local options
 
+local function GetCategoryInfo(id, default)
+	return _G.GetCategoryInfo and _G.GetCategoryInfo(id) or default
+end
+
 function AutoCombatLogger:GetLocalName(raid)
 	local id = ReverseZones[raid]
 	if id then
@@ -998,8 +1002,8 @@ function AutoCombatLogger:GetOptions()
 					},
 					logBrawlers = {
 						order = 100,
-						name = _G.GetCategoryInfo(15202) or "Brawler's Guild",
-						desc = _G.GetCategoryInfo(15202) or "Brawler's Guild",
+						name = GetCategoryInfo(15202, "Brawler's Guild"),
+						desc = GetCategoryInfo(15202, "Brawler's Guild"),
 						type = "toggle",
 						width = "double",
 						set = function(info,val)
@@ -1011,8 +1015,8 @@ function AutoCombatLogger:GetOptions()
 					},
 					logGarrison = {
 						order = 110,
-						name = _G.GetCategoryInfo(15237) or "Garrison",
-						desc = _G.GetCategoryInfo(15237) or "Garrison",
+						name = GetCategoryInfo(15237, "Garrison"),
+						desc = GetCategoryInfo(15237, "Garrison"),
 						type = "toggle",
 						width = "double",
 						set = function(info,val)
@@ -1213,12 +1217,22 @@ function AutoCombatLogger:OnInitialize()
 	icon:Register("AutoCombatLogger", aclLDB, self.db.profile.minimap)
 end
 
+local WatchedEvents = {
+	"ZONE_CHANGED_NEW_AREA",
+	"PLAYER_DIFFICULTY_CHANGED",
+	"CHALLENGE_MODE_START",
+	"CHALLENGE_MODE_RESET",
+	"CHALLENGE_MODE_COMPLETED",
+}
+
 function AutoCombatLogger:OnEnable()
-	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
-	self:RegisterEvent("PLAYER_DIFFICULTY_CHANGED")
-	self:RegisterEvent("CHALLENGE_MODE_START")
-	self:RegisterEvent("CHALLENGE_MODE_RESET")
-	self:RegisterEvent("CHALLENGE_MODE_COMPLETED")
+	for i = 1, #WatchedEvents do
+		local event = WatchedEvents[i]
+		local success = pcall(self.RegisterEvent, self, event)
+		if not success and DEBUG == true then
+			self:Print("Error registering event: " + event)
+		end
+	end
 
 	update = _G.CreateFrame("Frame", nil, _G.UIParent)
 	update:SetScript("OnUpdate",
@@ -1245,11 +1259,9 @@ end
 
 function AutoCombatLogger:OnDisable()
 	-- Unregister events
-	self:UnregisterEvent("ZONE_CHANGED_NEW_AREA")
-	self:UnregisterEvent("PLAYER_DIFFICULTY_CHANGED")
-	self:UnregisterEvent("CHALLENGE_MODE_START")
-	self:UnregisterEvent("CHALLENGE_MODE_RESET")
-	self:UnregisterEvent("CHALLENGE_MODE_COMPLETED")
+	for i = 1, #WatchedEvents do
+		pcall(self.UnregisterEvent, self, WatchedEvents[i])
+	end
 end
 
 function AutoCombatLogger:PLAYER_DIFFICULTY_CHANGED()
@@ -1277,6 +1289,7 @@ function AutoCombatLogger:ZONE_CHANGED_NEW_AREA()
 end
 
 local function IsMapGarrisonMap(uiMapID)
+	if not C_Garrison then return false end
 	local plots = C_Garrison.GetGarrisonPlotsInstancesForMap(uiMapID) or {}
 	return #plots > 0
 end
