@@ -28,6 +28,7 @@ addon.addonVersion = cleanupVersion("@project-version@")
 
 addon.CURRENT_BUILD, addon.CURRENT_INTERNAL,
     addon.CURRENT_BUILD_DATE, addon.CURRENT_UI_VERSION = _G.GetBuildInfo()
+addon.Classic = addon.CURRENT_UI_VERSION < 20000
 addon.BfA = addon.CURRENT_UI_VERSION >= 80000
 
 local DEBUG = false
@@ -1230,7 +1231,7 @@ function AutoCombatLogger:OnEnable()
 		local event = WatchedEvents[i]
 		local success = pcall(self.RegisterEvent, self, event)
 		if not success and DEBUG == true then
-			self:Print("Error registering event: " + event)
+			self:Print("Error registering event: " .. event)
 		end
 	end
 
