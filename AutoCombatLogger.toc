@@ -14,4 +14,7 @@ embeds.xml
 
 Locale\Locales.xml
 
+Core.lua
+Data-Classic.lua
+Data.lua
 AutoCombatLogger.lua
