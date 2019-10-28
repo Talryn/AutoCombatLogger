@@ -27,6 +27,7 @@ local addonHdr = GREEN.."%s %s"
 -- [1]="Deeprun Tram",[2]="none",[3]=0,[4]="",[5]=5,[6]=0,[7]=false,[8]=369,[9]=0
 
 addon.zoneTimer = nil
+addon.enteringTimer = nil
 
 local range = addon.range
 
@@ -572,13 +573,16 @@ function AutoCombatLogger:OnInitialize()
 	icon:Register("AutoCombatLogger", aclLDB, self.db.profile.minimap)
 end
 
-local WatchedEvents = {
+local WatchedEvents = addon.Classic and
+{
+	"ZONE_CHANGED_NEW_AREA",
+	"PLAYER_ENTERING_WORLD"
+} or {
 	"ZONE_CHANGED_NEW_AREA",
 	"PLAYER_DIFFICULTY_CHANGED",
 	"CHALLENGE_MODE_START",
 	"CHALLENGE_MODE_RESET",
 	"CHALLENGE_MODE_COMPLETED",
-	"PLAYER_ENTERING_WORLD"
 }
 
 function AutoCombatLogger:OnEnable()
@@ -604,7 +608,9 @@ function AutoCombatLogger:OnEnable()
 			end
 		end)
 
-	addon.zoneTimer = self:ScheduleTimer("ProcessZoneChange", 3)
+	if not addon.enteringTimer then
+		addon.enteringTimer = self:ScheduleTimer("ProcessZoneChange", 3)
+	end
 
 	if self.db.profile.chat.enabled then
 		self:EnableChatLogging()
@@ -622,31 +628,39 @@ end
 
 function AutoCombatLogger:PLAYER_DIFFICULTY_CHANGED()
 	-- Just to be safe, wait a few seconds and then check the status
-	addon.zoneTimer = self:ScheduleTimer("ProcessZoneChange", 3)
+	self:ScheduleTimer("ProcessZoneChange", 3)
 end
 
 function AutoCombatLogger:CHALLENGE_MODE_START()
 	-- Just to be safe, wait a second and then check the status
-	addon.zoneTimer = self:ScheduleTimer("ProcessZoneChange", 1)
+	self:ScheduleTimer("ProcessZoneChange", 1)
 end
 
 function AutoCombatLogger:CHALLENGE_MODE_RESET()
 	-- Just to be safe, wait a few seconds and then check the status
-	addon.zoneTimer = self:ScheduleTimer("ProcessZoneChange", 3)
+	self:ScheduleTimer("ProcessZoneChange", 3)
 end
 
 function AutoCombatLogger:CHALLENGE_MODE_COMPLETED()
 	-- Just to be safe, wait a few seconds and then check the status
-	addon.zoneTimer = self:ScheduleTimer("ProcessZoneChange", 3)
+	self:ScheduleTimer("ProcessZoneChange", 3)
 end
 
 function AutoCombatLogger:ZONE_CHANGED_NEW_AREA()
-	addon.zoneTimer = self:ScheduleTimer("ProcessZoneChange", 1)
+	if DEBUG == true then
+		self:Print("Zone Changed New Area")
+	end
+	self:ProcessZoneChange()
 end
 
 function AutoCombatLogger:PLAYER_ENTERING_WORLD()
+	if DEBUG == true then
+		self:Print("Entering World")
+	end
 	-- Just to be safe, wait a few seconds and then check the status
-	addon.zoneTimer = self:ScheduleTimer("ProcessZoneChange", 4)
+	if not addon.enteringTimer then
+		addon.enteringTimer = self:ScheduleTimer("ProcessZoneChange", 4)
+	end
 end
 
 local function IsMapGarrisonMap(uiMapID)
@@ -700,8 +714,9 @@ local LogChecks = {
 
 local data = {}
 function AutoCombatLogger:ProcessZoneChange()
+	local uiMapID = nil
 	if not addon.Classic then
-		local uiMapID = C_Map.GetBestMapForUnit("player")
+		uiMapID = C_Map.GetBestMapForUnit("player")
 		if not uiMapID or uiMapID == 0 or uiMapID == -1 then
 			if not addon.zoneTimer then
 				addon.zoneTimer = self:ScheduleTimer("ProcessZoneChange", 5)
@@ -711,6 +726,7 @@ function AutoCombatLogger:ProcessZoneChange()
 	end
 
 	addon.zoneTimer = nil
+	addon.enteringTimer = nil
 	local name, type, difficulty, maxPlayers, mapId = self:GetCurrentInstanceInfo()
 	local nonlocalZone = Zones[addon.Classic and mapId or uiMapID]
 
