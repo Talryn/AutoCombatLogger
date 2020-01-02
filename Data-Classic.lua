@@ -7,6 +7,33 @@ local range = addon.range
 addon.ZoneMappings = {
 	["Molten Core"] = { 409 },
 	["Onyxia's Lair"] = { 249 },
+
+	-- Dungeons
+	["Blackfathom Deeps"] = { 48 },
+	["Blackrock Depths"] = { 230 },
+	["Blackrock Spire"] = { 229 },
+	["Dire Maul"] = { 429 },
+	["Gnomeregan"] = { 90 },
+	["Maraudon"] = { 349 },
+	["Ragefire Chasm"] = { 389 },
+	["Razorfen Downs"] = { 129 },
+	["Razorfen Kraul"] = { 47 },
+	["Scarlet Halls"] = { 1001 },
+	["Scarlet Monastery"] = { 1004 },
+	["Scholomance"] = { 329 },
+	["Shadowfang Keep"] = { 33 },
+	["Stratholme"] = { 329 },
+	["The Deadmines"] = { 36 },
+	["The Stockade"] = { 34 },
+	["The Temple of Atal'Hakkar"] = { 109 },
+	["Uldaman"] = { 70 },
+	["Wailing Caverns"] = { 43 },
+	["Zul'Farrak"] = { 209 },
+	
+	-- Battlegrounds
+	["Alterac Valley"] = { 30 },
+	["Arathi Basin"] = { 529 },
+	["Warsong Gulch"] = { 489 },
 }
 
 addon.InstanceDifficulties = {
