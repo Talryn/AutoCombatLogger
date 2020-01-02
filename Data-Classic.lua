@@ -73,30 +73,15 @@ addon.DifficultyOrder = {
 
 addon.InstanceMappings = {
 	tiers = {
-		[19] = {
+		[1] = {
 			["5"] = "Normal",
-			["5H"] = "Heroic",
-			["5M"] = "Mythic",
-			["Challenge Mode"] = "Mythic+",
 		},
-		[19.1] = {
-			["5"] = "Normal",
-			["5H"] = "Heroic",
-			["5M"] = "Mythic",
-			["Challenge Mode"] = "Mythic+",
-		},
-		[22] = {
-			["5"] = "Normal",
-			["5H"] = "Heroic",
-			["5M"] = "Mythic",
-			["Challenge Mode"] = "Mythic+",
-		},
-		[24] = {
-			["5"] = "Normal",
-			["5H"] = "Heroic",
-			["5M"] = "Mythic",
-			["Challenge Mode"] = "Mythic+",
-		},
+		-- [19] = {
+		-- 	["5"] = "Normal",
+		-- 	["5H"] = "Heroic",
+		-- 	["5M"] = "Mythic",
+		-- 	["Challenge Mode"] = "Mythic+",
+		-- },
 	}
 }
 
@@ -108,13 +93,124 @@ addon.InstanceDifficultyOrder = {
 }
 
 addon.Instances = {
-	["Arcway"] = {
-		tier = 19,
+	["Blackfathom Deeps"] = {
+		tier = 1,
 		difficulties = {
 			["5"] = true,
-			["5H"] = true,
-			["5M"] = true,
-			["Challenge Mode"] = true,
+		},
+	},
+	["Blackrock Depths"] = {
+		tier = 1,
+		difficulties = {
+			["5"] = true,
+		},
+	},
+	["Blackrock Spire"] = {
+		tier = 1,
+		difficulties = {
+			["5"] = true,
+		},
+	},
+	["Dire Maul"] = {
+		tier = 1,
+		difficulties = {
+			["5"] = true,
+		},
+	},
+	["Gnomeregan"] = {
+		tier = 1,
+		difficulties = {
+			["5"] = true,
+		},
+	},
+	["Maraudon"] = {
+		tier = 1,
+		difficulties = {
+			["5"] = true,
+		},
+	},
+	["Ragefire Chasm"] = {
+		tier = 1,
+		difficulties = {
+			["5"] = true,
+		},
+	},
+	["Razorfen Downs"] = {
+		tier = 1,
+		difficulties = {
+			["5"] = true,
+		},
+	},
+	["Razorfen Kraul"] = {
+		tier = 1,
+		difficulties = {
+			["5"] = true,
+		},
+	},
+	["Scaret Halls"] = {
+		tier = 1,
+		difficulties = {
+			["5"] = true,
+		},
+	},
+	["Scarlet Monastery"] = {
+		tier = 1,
+		difficulties = {
+			["5"] = true,
+		},
+	},
+	["Scholomance"] = {
+		tier = 1,
+		difficulties = {
+			["5"] = true,
+		},
+	},
+	["Shadowfang Keep"] = {
+		tier = 1,
+		difficulties = {
+			["5"] = true,
+		},
+	},
+	["Stratholme"] = {
+		tier = 1,
+		difficulties = {
+			["5"] = true,
+		},
+	},
+	["The Deadmines"] = {
+		tier = 1,
+		difficulties = {
+			["5"] = true,
+		},
+	},
+	["The Stockade"] = {
+		tier = 1,
+		difficulties = {
+			["5"] = true,
+		},
+	},
+	["The Temple of Atal'Hakkar"] = {
+		tier = 1,
+		difficulties = {
+			["5"] = true,
+		},
+	},
+	["Uldaman"] = {
+		tier = 1,
+		difficulties = {
+			["5"] = true,
+		},
+	},
+	["Wailing Caverns"] = {
+		tier = 1,
+		difficulties = {
+			["5"] = true,
+		},
+	},
+	["Zul'Farrak"] = {
+		tier = 1,
+		difficulties = {
+			["5"] = true,
 		},
 	},
 }
