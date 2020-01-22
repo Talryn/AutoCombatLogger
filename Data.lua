@@ -64,6 +64,7 @@ addon.ZoneMappings = {
 	["Crucible of Storms"] = { 1345, 1346 },
 	["The Eternal Palace"] = range(1512, 1520),
 	["Operation: Mechagon"] = { 1490, 1491, 1493, 1494, 1497 },
+	["Ny'alotha, The Waking City"] = { 1580, 1581, 1582, 1590, 1591, 1592, 1593, 1594, 1595, 1596, 1597 },
 }
 
 addon.InstanceDifficulties = {
@@ -616,6 +617,15 @@ addon.Raids = {
 	},
 	["The Eternal Palace"] = {
 		tier = 24,
+		difficulties = {
+			["Mythic 20"] = true,
+			["Heroic"] = true,
+			["Normal"] = true,
+			["LFR30"] = true,
+		},
+	},
+	["Ny'alotha, The Waking City"] = {
+		tier = 25,
 		difficulties = {
 			["Mythic 20"] = true,
 			["Heroic"] = true,
