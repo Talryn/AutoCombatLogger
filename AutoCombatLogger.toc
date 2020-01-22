@@ -1,4 +1,9 @@
-## Interface: 80200
+#@retail@
+## Interface: 80300
+#@end-retail@
+#@non-retail@
+# ## Interface: 11303
+#@end-non-retail@
 ## Title: Auto Combat Logger
 ## Notes: Automatically enables or disables combat logging based on location.
 ## Author: Talryn
@@ -14,4 +19,7 @@ embeds.xml
 
 Locale\Locales.xml
 
+Core.lua
+Data-Classic.lua
+Data.lua
 AutoCombatLogger.lua
