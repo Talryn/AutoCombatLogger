@@ -7,6 +7,7 @@ local range = addon.range
 addon.ZoneMappings = {
 	["Molten Core"] = { 409 },
 	["Onyxia's Lair"] = { 249 },
+	["Blackwing Lair"] = { 469 },
 
 	-- Dungeons
 	["Blackfathom Deeps"] = { 48 },
@@ -228,7 +229,12 @@ addon.Raids = {
 			["40"] = true,
 		},
 	},
-
+	["Blackwing Lair"] = {
+		tier = 2,
+		difficulties = {
+			["40"] = true,
+		},
+	},
 }
 
 addon.Battlegrounds = {
