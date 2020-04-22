@@ -8,6 +8,7 @@ addon.ZoneMappings = {
 	["Molten Core"] = { 409 },
 	["Onyxia's Lair"] = { 249 },
 	["Blackwing Lair"] = { 469 },
+	["Zul'Gurub"] = { 309 },
 
 	-- Dungeons
 	["Blackfathom Deeps"] = { 48 },
@@ -58,6 +59,7 @@ addon.InstanceDifficulties = {
 		[17] = "LFR30",
 		[23] = "5M", -- Mythic 5 player
 		[24] = "5T", -- Timewalker 5 player
+		[148] = "20", -- Classic 20 player raid
 }
 
 addon.DifficultyOrder = {
@@ -233,6 +235,12 @@ addon.Raids = {
 		tier = 2,
 		difficulties = {
 			["40"] = true,
+		},
+	},
+	["Zul'Gurub"] = {
+		tier = 2.1,
+		difficulties = {
+			["20"] = true,
 		},
 	},
 }

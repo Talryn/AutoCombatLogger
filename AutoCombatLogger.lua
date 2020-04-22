@@ -728,7 +728,8 @@ function AutoCombatLogger:ProcessZoneChange()
 	addon.zoneTimer = nil
 	addon.enteringTimer = nil
 	local name, type, difficulty, maxPlayers, mapId = self:GetCurrentInstanceInfo()
-	local nonlocalZone = Zones[addon.Classic and mapId or uiMapID]
+	local areaId = addon.Classic and mapId or uiMapID
+	local nonlocalZone = Zones[areaId]
 
 	local isGarrison = IsMapGarrisonMap(uiMapID)
 	local isBrawlers = (nonlocalZone == "Brawl'gar Arena" or mapId == 369)
@@ -736,7 +737,7 @@ function AutoCombatLogger:ProcessZoneChange()
 	if DEBUG == true then
 		local fmt1 = "Zone: %s, Area ID: %s, Non-Local: %s"
 		local fmt2 = "Type: %s, Difficulty: %s, MaxPlayers: %s, Garrison: %s, Brawl: %s"
-		self:Print(fmt1:format(name, _G.tostring(uiMapID), _G.tostring(nonlocalZone)))
+		self:Print(fmt1:format(name, _G.tostring(areaId), _G.tostring(nonlocalZone)))
 		self:Print(fmt2:format(type, difficulty, _G.tostring(maxPlayers),
 			_G.tostring(isGarrison), _G.tostring(isBrawlers)))
 	end
