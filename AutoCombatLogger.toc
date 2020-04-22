@@ -2,7 +2,7 @@
 ## Interface: 80300
 #@end-retail@
 #@non-retail@
-# ## Interface: 11303
+# ## Interface: 11304
 #@end-non-retail@
 ## Title: Auto Combat Logger
 ## Notes: Automatically enables or disables combat logging based on location.
