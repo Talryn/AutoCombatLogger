@@ -9,6 +9,7 @@ addon.ZoneMappings = {
 	["Onyxia's Lair"] = { 249 },
 	["Blackwing Lair"] = { 469 },
 	["Zul'Gurub"] = { 309 },
+	["Ahn'Qiraj"] = { 531 },
 
 	-- Dungeons
 	["Blackfathom Deeps"] = { 48 },
@@ -241,6 +242,12 @@ addon.Raids = {
 		tier = 2.1,
 		difficulties = {
 			["20"] = true,
+		},
+	},
+	["Ahn'Qiraj"] = {
+		tier = 2.5,
+		difficulties = {
+			["40"] = true,
 		},
 	},
 }
