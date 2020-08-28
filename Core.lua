@@ -32,3 +32,4 @@ addon.CURRENT_BUILD, addon.CURRENT_INTERNAL,
     addon.CURRENT_BUILD_DATE, addon.CURRENT_UI_VERSION = _G.GetBuildInfo()
 addon.Classic = addon.CURRENT_UI_VERSION < 20000
 addon.BfA = addon.CURRENT_UI_VERSION >= 80000
+addon.Shadowlands = addon.CURRENT_UI_VERSION >= 90000
