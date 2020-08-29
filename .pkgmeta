@@ -30,9 +30,6 @@ externals:
         url: https://repos.wowace.com/wow/libdbicon-1-0/trunk
         tag: latest
 
-    Libs/LibBabble-Zone-3.0:
-        url: https://repos.wowace.com/wow/libbabble-zone-3-0/trunk
-
     Libs/LibStub:
         url: https://repos.wowace.com/wow/libstub/trunk
         tag: latest
