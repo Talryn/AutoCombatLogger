@@ -65,6 +65,17 @@ addon.ZoneMappings = {
 	["The Eternal Palace"] = range(1512, 1520),
 	["Operation: Mechagon"] = { 1490, 1491, 1493, 1494, 1497 },
 	["Ny'alotha, The Waking City"] = { 1580, 1581, 1582, 1590, 1591, 1592, 1593, 1594, 1595, 1596, 1597 },
+
+	-- Shadowlands
+	-- ["The Necrotic Wake"] = { 1666, 1667, 1668 },
+	-- ["Sanguine Depths"] = { 1675, 1676 },
+	-- ["Mists of Tirna Scithe"] = { 1669 },
+	-- ["Halls of Atonement"] = { 1663, 1664, 1665 },
+	-- ["Plaguefall"] = { 1674, 1697 },
+	-- ["De Other Side"] = { 1677, 1678, 1679, 1680 },
+	-- ["Spires of Acension"] = { 1692, 1693, 1694, 1695 },
+	-- ["Theater of Pain"] = { 1683, 1684, 1685, 1686, 1687 },
+	-- ["Castle Nathria"] = { 1735, 1744, 1745, 1746, 1747, 1748, 1750, 1755 },
 }
 
 addon.InstanceDifficulties = {
@@ -123,6 +134,12 @@ addon.InstanceMappings = {
 			["Challenge Mode"] = "Mythic+",
 		},
 		[24] = {
+			["5"] = "Normal",
+			["5H"] = "Heroic",
+			["5M"] = "Mythic",
+			["Challenge Mode"] = "Mythic+",
+		},
+		[26] = {
 			["5"] = "Normal",
 			["5H"] = "Heroic",
 			["5M"] = "Mythic",
@@ -346,6 +363,80 @@ addon.Instances = {
 			["Challenge Mode"] = true,
 		},
 	},
+
+	-- Shadowlands
+	-- ["Plaguefall"] = {
+	-- 	tier = 26,
+	-- 	difficulties = {
+	-- 		["5"] = true,
+	-- 		["5H"] = true,
+	-- 		["5M"] = true,
+	-- 		["Challenge Mode"] = true,
+	-- 	},
+	-- },
+	-- ["The Necrotic Wake"] = {
+	-- 	tier = 26,
+	-- 	difficulties = {
+	-- 		["5"] = true,
+	-- 		["5H"] = true,
+	-- 		["5M"] = true,
+	-- 		["Challenge Mode"] = true,
+	-- 	},
+	-- },
+	-- ["Sanguine Depths"] = {
+	-- 	tier = 26,
+	-- 	difficulties = {
+	-- 		["5"] = true,
+	-- 		["5H"] = true,
+	-- 		["5M"] = true,
+	-- 		["Challenge Mode"] = true,
+	-- 	},
+	-- },
+	-- ["Mists of Tirna Scithe"] = {
+	-- 	tier = 26,
+	-- 	difficulties = {
+	-- 		["5"] = true,
+	-- 		["5H"] = true,
+	-- 		["5M"] = true,
+	-- 		["Challenge Mode"] = true,
+	-- 	},
+	-- },
+	-- ["Spires of Ascension"] = {
+	-- 	tier = 26,
+	-- 	difficulties = {
+	-- 		["5"] = true,
+	-- 		["5H"] = true,
+	-- 		["5M"] = true,
+	-- 		["Challenge Mode"] = true,
+	-- 	},
+	-- },
+	-- ["De Other Side"] = {
+	-- 	tier = 26,
+	-- 	difficulties = {
+	-- 		["5"] = true,
+	-- 		["5H"] = true,
+	-- 		["5M"] = true,
+	-- 		["Challenge Mode"] = true,
+	-- 	},
+	-- },
+	-- ["Theater of Pain"] = {
+	-- 	tier = 26,
+	-- 	difficulties = {
+	-- 		["5"] = true,
+	-- 		["5H"] = true,
+	-- 		["5M"] = true,
+	-- 		["Challenge Mode"] = true,
+	-- 	},
+	-- },
+	-- ["Halls of Atonement"] = {
+	-- 	tier = 26,
+	-- 	difficulties = {
+	-- 		["5"] = true,
+	-- 		["5H"] = true,
+	-- 		["5M"] = true,
+	-- 		["Challenge Mode"] = true,
+	-- 	},
+	-- },
 }
 
 -- Raids to track and the possible raid sizes.
@@ -633,6 +724,15 @@ addon.Raids = {
 			["LFR30"] = true,
 		},
 	},
+	-- ["Castle Nathria"] = {
+	-- 	tier = 26,
+	-- 	difficulties = {
+	-- 		["Mythic 20"] = true,
+	-- 		["Heroic"] = true,
+	-- 		["Normal"] = true,
+	-- 		["LFR30"] = true,
+	-- 	},
+	-- },
 }
 
 addon.Battlegrounds = {
