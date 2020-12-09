@@ -11,6 +11,7 @@ addon.ZoneMappings = {
 	["Zul'Gurub"] = { 309 },
 	["Ahn'Qiraj"] = { 531 },
 	["Ruins of Ahn'Qiraj"] = { 509 },
+	["Naxxramas"] = { 533 },
 
 	-- Dungeons
 	["Blackfathom Deeps"] = { 48 },
@@ -33,7 +34,7 @@ addon.ZoneMappings = {
 	["Uldaman"] = { 70 },
 	["Wailing Caverns"] = { 43 },
 	["Zul'Farrak"] = { 209 },
-	
+
 	-- Battlegrounds
 	["Alterac Valley"] = { 30 },
 	["Arathi Basin"] = { 529 },
@@ -255,6 +256,12 @@ addon.Raids = {
 		tier = 2.5,
 		difficulties = {
 			["20"] = true,
+		},
+	},
+	["Naxxramas"] = {
+		tier = 3,
+		difficulties = {
+			["40"] = true,
 		},
 	},
 }
