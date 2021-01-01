@@ -73,7 +73,7 @@ addon.ZoneMappings = {
 	["Halls of Atonement"] = { 1663, 1664, 1665 },
 	["Plaguefall"] = { 1674, 1697 },
 	["De Other Side"] = { 1677, 1678, 1679, 1680 },
-	["Spires of Acension"] = { 1692, 1693, 1694, 1695 },
+	["Spires of Ascension"] = { 1692, 1693, 1694, 1695 },
 	["Theater of Pain"] = { 1683, 1684, 1685, 1686, 1687 },
 	["Castle Nathria"] = { 1735, 1744, 1745, 1746, 1747, 1748, 1750, 1755 },
 }
