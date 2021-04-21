@@ -12,6 +12,7 @@ local icon = _G.LibStub("LibDBIcon-1.0")
 local DEBUG = false
 
 local GREEN = "|cff00ff00"
+local RED = "|cffff0000"
 local YELLOW = "|cffffff00"
 local BLUE = "|cff0198e1"
 local ORANGE = "|cffff9933"
@@ -90,6 +91,7 @@ local defaults = {
 		},
 		verbose = false,
 		debug = false,
+		ldbStatus = true,
 		logRaid = "Yes",
 		selectedRaids = {},
 		logInstance = "No",
@@ -217,7 +219,15 @@ function AutoCombatLogger:GetOptions()
 						set = function(info,val) self.db.profile.verbose = val end,
 						get = function(info) return self.db.profile.verbose end,
 						order = 20
-					}
+					},
+					ldbStatus = {
+						name = L["LDB Status"],
+						desc = L["LDBStatus_Desc"],
+						type = "toggle",
+						set = function(info,val) self.db.profile.ldbStatus = val end,
+						get = function(info) return self.db.profile.ldbStatus end,
+						order = 30
+					},
 				}
 			},
 			chat = {
@@ -504,6 +514,7 @@ end
 function AutoCombatLogger:OnInitialize()
 	-- Load the settings
 	self.db = _G.LibStub("AceDB-3.0"):New("AutoCombatLoggerDB", defaults, "Default")
+	addon.db = self.db
 
 	DEBUG = self.db.profile.debug
 
@@ -585,6 +596,8 @@ local WatchedEvents = addon.Classic and
 	"CHALLENGE_MODE_COMPLETED",
 }
 
+local ldbLabel = L["LDB_ShortLabel"]
+local ldbFmt = "%s: %s%s|r"
 function AutoCombatLogger:OnEnable()
 	for i = 1, #WatchedEvents do
 		local event = WatchedEvents[i]
@@ -602,8 +615,14 @@ function AutoCombatLogger:OnEnable()
 				self.lastUpdate = 0
 				if _G.LoggingCombat() then
 					aclLDB.icon = "Interface\\RAIDFRAME\\ReadyCheck-Ready.blp"
+					if addon.db.profile.ldbStatus then
+						aclLDB.text = ldbFmt:format(ldbLabel, GREEN, L["Logging"])
+					end
 				else
 					aclLDB.icon = "Interface\\RAIDFRAME\\ReadyCheck-NotReady.blp"
+					if addon.db.profile.ldbStatus then
+						aclLDB.text = ldbFmt:format(ldbLabel, RED, L["Off"])
+					end
 				end
 			end
 		end)

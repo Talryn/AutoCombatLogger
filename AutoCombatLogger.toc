@@ -14,8 +14,7 @@
 ## X-WoWI-ID: 24941
 
 embeds.xml
-
-Locale\Locales.xml
+locale.xml
 
 Core.lua
 Data-Classic.lua
