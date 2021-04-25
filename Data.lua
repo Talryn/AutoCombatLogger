@@ -1,6 +1,6 @@
 local ADDON_NAME, addon = ...
 
-if addon.Classic then return end
+if not addon.Retail then return end
 
 local range = addon.range
 
