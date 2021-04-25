@@ -1,10 +1,32 @@
 local ADDON_NAME, addon = ...
 
-if not addon.Classic then return end
+if not addon.TBC then return end
 
 local range = addon.range
 
 addon.ZoneMappings = {
+	-- BC Dungeons
+	["The Blood Furnace"] = { 261 },
+	["Sethekk Halls"] = { 258, 259 },
+	["Auchenai Crypts"] = { 256, 257 },
+	["Mana-Tombs"] = { 272 },
+	["The Slave Pens"] = { 265 },
+	["The Steamvault"] = { 263, 264 },
+	["The Underbog"] = { 262 },
+	["Hellfire Ramparts"] = { 347 },
+	["The Mechanar"] = { 267, 268 },
+	["The Botanica"] = { 266 },
+	["Arcatraz"] = { 269, 270, 271 },
+	["The Shattered Halls"] = { 246 },
+	["The Shadow Labyrinth"] = { 260 },
+
+	-- BC Raids
+	["Gruul's Lair"] = { 330 },
+	["Magtheridon's Lair"] = { 331 },
+	["Serpentshrine Cavern"] = { 332 },
+	["Tempest Keep"] = { 334 },
+	["Black Temple"] = { 339 },
+
 	-- Classic Raids
 	["Molten Core"] = { 409 },
 	["Onyxia's Lair"] = { 249 },
@@ -100,6 +122,14 @@ addon.InstanceDifficultyOrder = {
 }
 
 addon.Instances = {
+	-- TBC Dungeons
+	["The Blood Furnace"] = {
+		tier = 4,
+		difficulties = {
+			["5"] = true,
+		},
+	},
+
 	-- Classic Dungeons
 	["Blackfathom Deeps"] = {
 		tier = 1,

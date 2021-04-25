@@ -18,5 +18,6 @@ locale.xml
 
 Core.lua
 Data-Classic.lua
+Data-TBC.lua
 Data.lua
 AutoCombatLogger.lua
