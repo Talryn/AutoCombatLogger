@@ -86,6 +86,8 @@ addon.InstanceDifficulties = {
 	[23] = "5M", -- Mythic 5 player
 	[24] = "5T", -- Timewalker 5 player
 	[148] = "20", -- Classic 20 player raid
+	[173] = "5", -- BC 5 Normal dungeon
+	[174] = "5H", -- BC 5 Heroic dungeon
 }
 
 addon.DifficultyOrder = {
@@ -105,6 +107,11 @@ addon.InstanceMappings = {
 		[1] = {
 			["5"] = "Normal",
 		},
+		[4] = {
+			["5"] = "Normal",
+			["5H"] = "Heroic",
+		},
+
 		-- [19] = {
 		-- 	["5"] = "Normal",
 		-- 	["5H"] = "Heroic",
@@ -127,6 +134,91 @@ addon.Instances = {
 		tier = 4,
 		difficulties = {
 			["5"] = true,
+			["5H"] = true,
+		},
+	},
+	["Sethekk Halls"] = {
+		tier = 4,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+		},
+	},
+	["Auchenai Crypts"] = {
+		tier = 4,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+		},
+	},
+	["Mana-Tombs"] = {
+		tier = 4,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+		},
+	},
+	["The Slave Pens"] = {
+		tier = 4,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+		},
+	},
+	["The Steamvault"] = {
+		tier = 4,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+		},
+	},
+	["The Underbog"] = {
+		tier = 4,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+		},
+	},
+	["Hellfire Ramparts"] = {
+		tier = 4,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+		},
+	},
+	["The Mechanar"] = {
+		tier = 4,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+		},
+	},
+	["The Botanica"] = {
+		tier = 4,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+		},
+	},
+	["Arcatraz"] = {
+		tier = 4,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+		},
+	},
+	["The Shattered Halls"] = {
+		tier = 4,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+		},
+	},
+	["The Shadow Labyrinth"] = {
+		tier = 4,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
 		},
 	},
 
@@ -255,6 +347,38 @@ addon.Instances = {
 
 -- Raids to track and the possible raid sizes.
 addon.Raids = {
+	-- BC Raids
+	["Gruul's Lair"] = {
+		tier = 4,
+		difficulties = {
+			["25"] = true,
+		},
+	},
+	["Magtheridon's Lair"] = {
+		tier = 4,
+		difficulties = {
+			["25"] = true,
+		},
+	},
+	["Serpentshrine Cavern"] = {
+		tier = 5,
+		difficulties = {
+			["25"] = true,
+		},
+	},
+	["Tempest Keep"] = {
+		tier = 5,
+		difficulties = {
+			["25"] = true,
+		},
+	},
+	["Black Temple"] = {
+		tier = 6,
+		difficulties = {
+			["25"] = true,
+		},
+	},
+
 	-- Classic Raids
 	["Molten Core"] = {
 		tier = 1,
