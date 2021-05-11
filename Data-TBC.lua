@@ -26,6 +26,7 @@ addon.ZoneMappings = {
 	["Serpentshrine Cavern"] = { 332 },
 	["Tempest Keep"] = { 334 },
 	["Black Temple"] = { 339 },
+	["Karazhan"] = { 532 },  -- Correct? From raid testing
 
 	-- Classic Raids
 	["Molten Core"] = { 409 },
