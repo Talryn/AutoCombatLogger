@@ -584,17 +584,7 @@ function AutoCombatLogger:OnInitialize()
 	icon:Register("AutoCombatLogger", aclLDB, self.db.profile.minimap)
 end
 
-local WatchedEvents = addon.Classic and
-{
-	"ZONE_CHANGED_NEW_AREA",
-	"PLAYER_ENTERING_WORLD"
-} or {
-	"ZONE_CHANGED_NEW_AREA",
-	"PLAYER_DIFFICULTY_CHANGED",
-	"CHALLENGE_MODE_START",
-	"CHALLENGE_MODE_RESET",
-	"CHALLENGE_MODE_COMPLETED",
-}
+local WatchedEvents = addon.WatchedEvents
 
 local ldbLabel = L["LDB_ShortLabel"]
 local ldbFmt = "%s: %s%s|r"
@@ -734,7 +724,7 @@ local LogChecks = {
 local data = {}
 function AutoCombatLogger:ProcessZoneChange()
 	local uiMapID = nil
-	if not addon.Classic then
+	if addon.newMapApi then
 		uiMapID = C_Map.GetBestMapForUnit("player")
 		if not uiMapID or uiMapID == 0 or uiMapID == -1 then
 			if not addon.zoneTimer then
@@ -747,7 +737,7 @@ function AutoCombatLogger:ProcessZoneChange()
 	addon.zoneTimer = nil
 	addon.enteringTimer = nil
 	local name, type, difficulty, maxPlayers, mapId = self:GetCurrentInstanceInfo()
-	local areaId = addon.Classic and mapId or uiMapID
+	local areaId = addon.newMapApi and uiMapID or mapId
 	local nonlocalZone = Zones[areaId]
 
 	local isGarrison = IsMapGarrisonMap(uiMapID)

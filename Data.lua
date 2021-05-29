@@ -4,6 +4,15 @@ if not addon.Retail then return end
 
 local range = addon.range
 
+addon.newMapApi = true
+addon.WatchedEvents = {
+	"ZONE_CHANGED_NEW_AREA",
+	"PLAYER_DIFFICULTY_CHANGED",
+	"CHALLENGE_MODE_START",
+	"CHALLENGE_MODE_RESET",
+	"CHALLENGE_MODE_COMPLETED",
+}
+
 addon.ZoneMappings = {
 	["The Eye of Eternity"] = { 141 },
 	["Ulduar"] = range(147, 152),

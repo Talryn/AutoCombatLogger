@@ -4,6 +4,12 @@ if not addon.Classic then return end
 
 local range = addon.range
 
+addon.newMapApi = false
+addon.WatchedEvents = {
+	"ZONE_CHANGED_NEW_AREA",
+	"PLAYER_ENTERING_WORLD"
+}
+
 addon.ZoneMappings = {
 	-- Classic Raids
 	["Molten Core"] = { 409 },

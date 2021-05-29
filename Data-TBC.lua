@@ -4,6 +4,12 @@ if not addon.TBC then return end
 
 local range = addon.range
 
+addon.newMapApi = false
+addon.WatchedEvents = {
+	"ZONE_CHANGED_NEW_AREA",
+	"PLAYER_ENTERING_WORLD"
+}
+
 addon.ZoneMappings = {
 	-- BC Dungeons
 	["The Blood Furnace"] = { 261 },
