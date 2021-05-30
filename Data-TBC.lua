@@ -355,6 +355,12 @@ addon.Instances = {
 -- Raids to track and the possible raid sizes.
 addon.Raids = {
 	-- BC Raids
+	["Karazhan"] = {
+		tier = 4,
+		difficulties = {
+			["10"] = true,
+		},
+	},
 	["Gruul's Lair"] = {
 		tier = 4,
 		difficulties = {
