@@ -12,19 +12,21 @@ addon.WatchedEvents = {
 
 addon.ZoneMappings = {
 	-- BC Dungeons
-	["The Blood Furnace"] = { 261 },
-	["Sethekk Halls"] = { 258, 259 },
-	["Auchenai Crypts"] = { 256, 257 },
-	["Mana-Tombs"] = { 272 },
-	["The Slave Pens"] = { 265 },
-	["The Steamvault"] = { 263, 264 },
-	["The Underbog"] = { 262 },
-	["Hellfire Ramparts"] = { 347 },
-	["The Mechanar"] = { 267, 268 },
-	["The Botanica"] = { 266 },
-	["Arcatraz"] = { 269, 270, 271 },
-	["The Shattered Halls"] = { 246 },
-	["The Shadow Labyrinth"] = { 260 },
+	["The Blood Furnace"] = { 542 },
+	["Sethekk Halls"] = { 556 },
+	["Auchenai Crypts"] = { 558 },
+	["Mana-Tombs"] = { 557 },
+	["The Slave Pens"] = { 547 },
+	["The Steamvault"] = { 545 },
+	["The Underbog"] = { 546 },
+	["Hellfire Ramparts"] = { 543 },
+	["The Mechanar"] = { 554 },
+	["The Botanica"] = { 553 },
+	["Arcatraz"] = { 552 },
+	["The Shattered Halls"] = { 540 },
+	["The Shadow Labyrinth"] = { 555 },
+	["Old Hillsbrad Foothills"] = { 560 },
+	["The Black Morass"] = { 269 },
 
 	-- BC Raids
 	["Gruul's Lair"] = { 330 },
@@ -32,7 +34,7 @@ addon.ZoneMappings = {
 	["Serpentshrine Cavern"] = { 332 },
 	["Tempest Keep"] = { 334 },
 	["Black Temple"] = { 339 },
-	["Karazhan"] = { 532 },  -- Correct? From raid testing
+	["Karazhan"] = { 532 },
 
 	-- Classic Raids
 	["Molten Core"] = { 409 },
