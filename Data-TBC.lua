@@ -230,6 +230,13 @@ addon.Instances = {
 			["5H"] = true,
 		},
 	},
+	["The Black Morass"] = {
+		tier = 4,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+		},
+	},
 
 	-- Classic Dungeons
 	["Blackfathom Deeps"] = {
