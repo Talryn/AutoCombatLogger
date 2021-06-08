@@ -171,11 +171,21 @@ local function GetCategoryInfo(id, default)
 	return _G.GetCategoryInfo and _G.GetCategoryInfo(id) or default
 end
 
+function AutoCombatLogger:GetMapOrInstanceName(id)
+	if addon.Retail then
+		local info = C_Map.GetMapInfo(id) or {}
+		return info.name
+	elseif addon.Classic or addon.TBC then
+		local name = _G.GetRealZoneText(id)
+		return name ~= "" and name or nil
+	end
+	return nil
+end
+
 function AutoCombatLogger:GetLocalName(raid)
 	local id = ReverseZones[raid]
 	if id then
-		local info = C_Map.GetMapInfo(id) or {}
-		return info.name or raid
+		return self:GetMapOrInstanceName(id) or raid
 	else
 		return raid
 	end
