@@ -97,6 +97,7 @@ addon.InstanceDifficulties = {
 	[148] = "20", -- Classic 20 player raid
 	[173] = "5", -- BC 5 Normal dungeon
 	[174] = "5H", -- BC 5 Heroic dungeon
+	[175] = "10", -- BC 10 player raid
 }
 
 addon.DifficultyOrder = {
