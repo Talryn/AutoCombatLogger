@@ -29,8 +29,8 @@ addon.ZoneMappings = {
 	["The Black Morass"] = { 269 },
 
 	-- BC Raids
-	["Gruul's Lair"] = { 330 },
-	["Magtheridon's Lair"] = { 331 },
+	["Gruul's Lair"] = { 565 },
+	["Magtheridon's Lair"] = { 544 },
 	["Serpentshrine Cavern"] = { 332 },
 	["Tempest Keep"] = { 334 },
 	["Black Temple"] = { 339 },
@@ -98,6 +98,7 @@ addon.InstanceDifficulties = {
 	[173] = "5", -- BC 5 Normal dungeon
 	[174] = "5H", -- BC 5 Heroic dungeon
 	[175] = "10", -- BC 10 player raid
+	[176] = "25", -- BC 25 player raid
 }
 
 addon.DifficultyOrder = {
