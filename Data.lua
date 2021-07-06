@@ -85,6 +85,8 @@ addon.ZoneMappings = {
 	["Spires of Ascension"] = { 1692, 1693, 1694, 1695 },
 	["Theater of Pain"] = { 1683, 1684, 1685, 1686, 1687 },
 	["Castle Nathria"] = { 1735, 1744, 1745, 1746, 1747, 1748, 1750, 1755 },
+	["Tazavesh, the Veiled Market"] = { 1989, 1990, 1991, 1992, 1993, 1995, 1996, 1997 },
+	["Sanctum of Domination"] = { 1998, 1999, 2000 },
 }
 
 addon.InstanceDifficulties = {
@@ -149,6 +151,12 @@ addon.InstanceMappings = {
 			["Challenge Mode"] = "Mythic+",
 		},
 		[26] = {
+			["5"] = "Normal",
+			["5H"] = "Heroic",
+			["5M"] = "Mythic",
+			["Challenge Mode"] = "Mythic+",
+		},
+		[26.1] = {
 			["5"] = "Normal",
 			["5H"] = "Heroic",
 			["5M"] = "Mythic",
@@ -446,6 +454,15 @@ addon.Instances = {
 			["Challenge Mode"] = true,
 		},
 	},
+	["Tazavesh, the Veiled Market"] = {
+		tier = 26.1,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+			["5M"] = true,
+			["Challenge Mode"] = true,
+		},
+	},
 }
 
 -- Raids to track and the possible raid sizes.
@@ -735,6 +752,15 @@ addon.Raids = {
 	},
 	["Castle Nathria"] = {
 		tier = 26,
+		difficulties = {
+			["Mythic 20"] = true,
+			["Heroic"] = true,
+			["Normal"] = true,
+			["LFR30"] = true,
+		},
+	},
+	["Sanctum of Domination"] = {
+		tier = 26.1,
 		difficulties = {
 			["Mythic 20"] = true,
 			["Heroic"] = true,
