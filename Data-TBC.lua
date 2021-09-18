@@ -31,7 +31,7 @@ addon.ZoneMappings = {
 	-- BC Raids
 	["Gruul's Lair"] = { 565 },
 	["Magtheridon's Lair"] = { 544 },
-	["Serpentshrine Cavern"] = { 332 },
+	["Serpentshrine Cavern"] = { 548 },
 	["Tempest Keep"] = { 334 },
 	["Black Temple"] = { 339 },
 	["Karazhan"] = { 532 },
