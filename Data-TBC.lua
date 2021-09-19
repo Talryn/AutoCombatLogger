@@ -32,7 +32,7 @@ addon.ZoneMappings = {
 	["Gruul's Lair"] = { 565 },
 	["Magtheridon's Lair"] = { 544 },
 	["Serpentshrine Cavern"] = { 548 },
-	["Tempest Keep"] = { 334 },
+	["Tempest Keep"] = { 550 },
 	["Black Temple"] = { 339 },
 	["Karazhan"] = { 532 },
 
