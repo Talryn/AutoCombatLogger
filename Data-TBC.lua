@@ -33,8 +33,11 @@ addon.ZoneMappings = {
 	["Magtheridon's Lair"] = { 544 },
 	["Serpentshrine Cavern"] = { 548 },
 	["Tempest Keep"] = { 550 },
-	["Black Temple"] = { 339 },
+	["Black Temple"] = { 564 },
 	["Karazhan"] = { 532 },
+	["The Battle for Mount Hyjal"] = { 534 },
+	["Zul'Aman"] = { 568 },
+	["The Sunwell"] = { 580 },
 
 	-- Classic Raids
 	["Molten Core"] = { 409 },
@@ -397,6 +400,12 @@ addon.Raids = {
 		},
 	},
 	["Black Temple"] = {
+		tier = 6,
+		difficulties = {
+			["25"] = true,
+		},
+	},
+	["The Battle for Mount Hyjal"] = {
 		tier = 6,
 		difficulties = {
 			["25"] = true,
