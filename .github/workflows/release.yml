@@ -4,7 +4,7 @@ name: Package and release
 # We need to let GitHub know _when_ we want to release, typically only when we create a new tag.
 # This will target only tags, and not all pushes to the master branch.
 # This part can be heavily customized to your liking, like targeting only tags that match a certain word,
-# other branches or even pullrequests.
+# other branches or even pull requests.
 on:
   push:
     tags:
@@ -38,18 +38,8 @@ jobs:
           # which is useful for controlling the length of the automated changelog
           fetch-depth: 50
 
-      # Package and release the retail version
+      # Package and release all versions
       - name: Package and release
-        uses: BigWigsMods/packager@master
-
-      # Package and release the Classic version
-      - name: Package and release for Classic
-        uses: BigWigsMods/packager@master
-        with:
-          args: -g classic
-
-      # Package and release the TBC version
-      - name: Package and release for TBC
-        uses: BigWigsMods/packager@master
-        with:
-          args: -g bcc
+        uses: BigWigsMods/packager@v2
+        #with:
+        #  args: -S
