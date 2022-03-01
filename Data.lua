@@ -87,6 +87,7 @@ addon.ZoneMappings = {
 	["Castle Nathria"] = { 1735, 1744, 1745, 1746, 1747, 1748, 1750, 1755 },
 	["Tazavesh, the Veiled Market"] = { 1989, 1990, 1991, 1992, 1993, 1995, 1996, 1997 },
 	["Sanctum of Domination"] = { 1998, 1999, 2000 },
+	["Sepulcher of the First Ones"] = { 2047, 2048, 2049, 2050, 2051, 2052, 2055, 2061 },
 }
 
 addon.InstanceDifficulties = {
@@ -761,6 +762,15 @@ addon.Raids = {
 	},
 	["Sanctum of Domination"] = {
 		tier = 26.1,
+		difficulties = {
+			["Mythic 20"] = true,
+			["Heroic"] = true,
+			["Normal"] = true,
+			["LFR30"] = true,
+		},
+	},
+	["Sepulcher of the First Ones"] = {
+		tier = 27,
 		difficulties = {
 			["Mythic 20"] = true,
 			["Heroic"] = true,
