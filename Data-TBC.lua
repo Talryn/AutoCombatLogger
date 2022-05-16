@@ -417,6 +417,12 @@ addon.Raids = {
 			["10"] = true,
 		},
 	},
+	["The Sunewell"] = {
+		tier = 7,
+		difficulties = {
+			["25"] = true,
+		},
+	},
 
 	-- Classic Raids
 	["Molten Core"] = {
