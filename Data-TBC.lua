@@ -417,7 +417,7 @@ addon.Raids = {
 			["10"] = true,
 		},
 	},
-	["The Sunewell"] = {
+	["The Sunwell"] = {
 		tier = 7,
 		difficulties = {
 			["25"] = true,
