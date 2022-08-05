@@ -26,9 +26,9 @@ addon.ZoneMappings = {
 	["Utgarde Pinnacle"] = { 575 },
 
 	-- Wrath Raids
---	["Eye of Eternity"] = { },
---	["Naxxramas"] = { },
---	["Obsidian Sanctum"] = { },
+	["Naxxramas"] = { 533 },
+	["The Eye of Eternity"] = { 616 },
+	["The Obsidian Sanctum"] = { 615 },
 --	["Ulduar"] = { },
 
 	-- BC Dungeons
@@ -66,7 +66,7 @@ addon.ZoneMappings = {
 	["Zul'Gurub"] = { 309 },
 	["Ahn'Qiraj"] = { 531 },
 	["Ruins of Ahn'Qiraj"] = { 509 },
-	["Naxxramas"] = { 533 },
+--	["Naxxramas"] = { 533 },
 
 	-- Classic Dungeons
 	["Blackfathom Deeps"] = { 48 },
@@ -474,6 +474,29 @@ addon.Instances = {
 
 -- Raids to track and the possible raid sizes.
 addon.Raids = {
+	-- Wrath Raids
+	["Naxxramas"] = {
+		tier = 7,
+		difficulties = {
+			["10"] = true,
+			["25"] = true,
+		},
+	},
+	["The Obsidian Sanctum"] = {
+		tier = 7,
+		difficulties = {
+			["10"] = true,
+			["25"] = true,
+		},
+	},
+	["The Eye of Eternity"] = {
+		tier = 7,
+		difficulties = {
+			["10"] = true,
+			["25"] = true,
+		},
+	},
+
 	-- BC Raids
 	["Karazhan"] = {
 		tier = 4,
@@ -524,7 +547,7 @@ addon.Raids = {
 		},
 	},
 	["The Sunwell"] = {
-		tier = 7,
+		tier = 6.5,
 		difficulties = {
 			["25"] = true,
 		},
@@ -566,12 +589,12 @@ addon.Raids = {
 			["20"] = true,
 		},
 	},
-	["Naxxramas"] = {
-		tier = 3,
-		difficulties = {
-			["40"] = true,
-		},
-	},
+	-- ["Naxxramas"] = {
+	-- 	tier = 3,
+	-- 	difficulties = {
+	-- 		["40"] = true,
+	-- 	},
+	-- },
 }
 
 addon.Battlegrounds = {
