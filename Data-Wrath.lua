@@ -11,6 +11,26 @@ addon.WatchedEvents = {
 }
 
 addon.ZoneMappings = {
+	-- Wrath Dungeons
+	["Ahn'kahet: The Old Kingdom"] = { 619 },
+	["Azjol-Nerub"] = { 601 },
+	["Drak'Tharon Keep"] = { 600 },
+	["Gundrak"] = { 604 },
+	["Halls of Lightning"] = { 602 },
+	["Halls of Stone"] = { 599 },
+	["The Culling of Stratholme"] = { 595 },
+	["The Nexus"] = { 576 },
+	["The Oculus"] = { 578 },
+	["The Violet Hold"] = { 608 },
+	["Utgarde Keep"] = { 574 },
+	["Utgarde Pinnacle"] = { 575 },
+
+	-- Wrath Raids
+--	["Eye of Eternity"] = { },
+--	["Naxxramas"] = { },
+--	["Obsidian Sanctum"] = { },
+--	["Ulduar"] = { },
+
 	-- BC Dungeons
 	["The Blood Furnace"] = { 542 },
 	["Sethekk Halls"] = { 556 },
@@ -143,6 +163,92 @@ addon.InstanceDifficultyOrder = {
 }
 
 addon.Instances = {
+	-- Wrath Dungeons
+	["Ahn'kahet: The Old Kingdom"] = {
+		tier = 5,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+		},
+	},
+	["Azjol-Nerub"] = {
+		tier = 5,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+		},
+	},
+	["Drak'Tharon Keep"] = {
+		tier = 5,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+		},
+	},
+	["Gundrak"] = {
+		tier = 5,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+		},
+	},
+	["Halls of Lightning"] = {
+		tier = 5,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+		},
+	},
+	["Halls of Stone"] = {
+		tier = 5,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+		},
+	},
+	["The Culling of Stratholme"] = {
+		tier = 5,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+		},
+	},
+	["The Nexus"] = {
+		tier = 5,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+		},
+	},
+	["The Oculus"] = {
+		tier = 5,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+		},
+	},
+	["The Violet Hold"] = {
+		tier = 5,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+		},
+	},
+	["Utgarde Keep"] = {
+		tier = 5,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+		},
+	},
+	["Utgarde Pinnacle"] = {
+		tier = 5,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+		},
+	},
+
 	-- TBC Dungeons
 	["The Blood Furnace"] = {
 		tier = 4,
