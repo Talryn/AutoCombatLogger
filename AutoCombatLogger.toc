@@ -13,6 +13,7 @@
 ## X-Category: Interface Enhancements
 ## X-Curse-Project-ID: 25333
 ## X-WoWI-ID: 24941
+## X-Wago-ID: WqKQonNx
 
 embeds.xml
 locale.xml
