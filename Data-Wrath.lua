@@ -29,6 +29,7 @@ addon.ZoneMappings = {
 	["Naxxramas"] = { 533 },
 	["The Eye of Eternity"] = { 616 },
 	["The Obsidian Sanctum"] = { 615 },
+	["Vault of Archavon"] = { 624 },
 --	["Ulduar"] = { },
 
 	-- BC Dungeons
@@ -490,6 +491,13 @@ addon.Raids = {
 		},
 	},
 	["The Eye of Eternity"] = {
+		tier = 7,
+		difficulties = {
+			["10"] = true,
+			["25"] = true,
+		},
+	},
+	["Vault of Archavon"] = {
 		tier = 7,
 		difficulties = {
 			["10"] = true,
