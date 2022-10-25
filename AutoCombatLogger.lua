@@ -92,6 +92,7 @@ local defaults = {
 		},
 		delayEnd = {
 			arena = 30,
+			battleground = 30,
 		},
 		verbose = false,
 		debug = false,
@@ -374,15 +375,40 @@ function AutoCombatLogger:GetOptions()
 						order = 10,
 						values = localizedLogOptions
 					},
+					headerDisable = {
+						name = L["Delay"],
+						type = "header",
+						order = 30
+					},
+					descDisable = {
+						name = L["DelayHeaderDesc"],
+						type = "description",
+						order = 40
+					},
+					disableDelay = {
+                        order = 50,
+                        name = L["Delay"],
+                        desc = L["Delay_Desc"],
+                        type = "range",
+                        min = 0,
+                        max = 60,
+                        step = 1,
+                        set = function(info, val)
+                            self.db.profile.delayEnd.battleground = val
+						end,
+						get = function(info, val)
+							return self.db.profile.delayEnd.battleground
+						end,
+					},
 					header = {
 						name = L["Custom Settings"],
 						type = "header",
-						order = 20
+						order = 100
 					},
 					desc = {
 						name = L["For Custom, choose the individual battlegrounds to log below."],
 						type = "description",
-						order = 30
+						order = 110
 					}
 				}
 			},
@@ -884,19 +910,29 @@ function AutoCombatLogger:DelayedDisableLogging()
 	self:ProcessZoneChange()
 end
 
-function AutoCombatLogger:DisableCombatLogging()
-	if not _G.LoggingCombat() or addon.DelayEndTimer then return end
-
-	if addon.previousReason == "Arena" and 
-		_G.type(self.db.profile.delayEnd.arena) == "number" and
-		self.db.profile.delayEnd.arena > 0 then
+function AutoCombatLogger:ShouldDelay(reason, variable)
+	if addon.previousReason == reason and 
+		_G.type(variable) == "number" and 
+		variable > 0 then
 		if not addon.DelayEndTimer then
 			addon.previousReason = ""
-			addon.DelayEndTimer = self:ScheduleTimer("DelayedDisableLogging", self.db.profile.delayEnd.arena)
+			addon.DelayEndTimer = self:ScheduleTimer("DelayedDisableLogging", variable)
 			if self.db.profile.verbose then
 				self:Print("Delaying disabling combat logging...")
 			end
 		end
+		return true
+	end
+	return false
+end
+
+function AutoCombatLogger:DisableCombatLogging()
+	if not _G.LoggingCombat() or addon.DelayEndTimer then return end
+
+	if self:ShouldDelay("Arena", self.db.profile.delayEnd.arena) then
+		return
+	end
+	if self:ShouldDelay("BG", self.db.profile.delayEnd.battleground) then
 		return
 	end
 
