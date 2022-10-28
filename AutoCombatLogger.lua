@@ -619,11 +619,12 @@ function AutoCombatLogger:OnInitialize()
 		icon = "Interface\\RAIDFRAME\\ReadyCheck-NotReady.blp",
 		OnClick = function(clickedframe, button)
 			if button == "RightButton" then
-				local optionsFrame = _G.InterfaceOptionsFrame
+				local optionsFrame = self.optionsFrame
 
 				if optionsFrame:IsVisible() then
 					optionsFrame:Hide()
 				else
+					_G.InterfaceOptionsFrame_OpenToCategory(self.optionsFrame)
 					_G.InterfaceOptionsFrame_OpenToCategory(self.optionsFrame)
 				end
 			elseif button == "LeftButton" then
