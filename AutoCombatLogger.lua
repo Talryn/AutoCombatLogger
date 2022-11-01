@@ -557,8 +557,7 @@ end
 
 function AutoCombatLogger:ChatCommand(input)
 	if not input or input:trim() == "" then
-		_G.InterfaceOptionsFrame_OpenToCategory(self.optionsFrame)
-		_G.InterfaceOptionsFrame_OpenToCategory(self.optionsFrame)
+		self:ShowOptions()
 	elseif input == "debug" then
 		DEBUG = true
 		self.db.profile.debug = true
@@ -576,6 +575,16 @@ function AutoCombatLogger:ChatCommand(input)
 	end
 end
 
+function AutoCombatLogger:ShowOptions()
+	if Settings and Settings.OpenToCategory and 
+		_G.type(Settings.OpenToCategory) == "function" then
+		Settings.OpenToCategory(addon.addonTitle)
+	else
+		_G.InterfaceOptionsFrame_OpenToCategory(self.optionsFrame)
+		_G.InterfaceOptionsFrame_OpenToCategory(self.optionsFrame)
+	end
+end
+
 function AutoCombatLogger:OnInitialize()
 	-- Load the settings
 	self.db = _G.LibStub("AceDB-3.0"):New("AutoCombatLoggerDB", defaults, "Default")
@@ -583,32 +592,34 @@ function AutoCombatLogger:OnInitialize()
 
 	DEBUG = self.db.profile.debug
 
+
 	-- Register the options table
+    local displayName = addon.addonTitle
 	local config = _G.LibStub("AceConfig-3.0")
 	local dialog = _G.LibStub("AceConfigDialog-3.0")
 	local options = self:GetOptions()
 
-	config:RegisterOptionsTable("AutoCombatLogger", options)
+	config:RegisterOptionsTable(displayName, options)
 	self.optionsFrame = dialog:AddToBlizOptions(
-		"AutoCombatLogger", "AutoCombatLogger", nil, "general")
+		displayName, displayName, nil, "general")
 	config:RegisterOptionsTable("AutoCombatLogger-Chat", options.args.chat)
 	dialog:AddToBlizOptions(
-		"AutoCombatLogger-Chat", options.args.chat.name, "AutoCombatLogger")
+		"AutoCombatLogger-Chat", options.args.chat.name, displayName)
 	config:RegisterOptionsTable("AutoCombatLogger-Raids", options.args.raids)
 	dialog:AddToBlizOptions(
-		"AutoCombatLogger-Raids", options.args.raids.name, "AutoCombatLogger")
+		"AutoCombatLogger-Raids", options.args.raids.name, displayName)
 	config:RegisterOptionsTable("AutoCombatLogger-Instances", options.args.instances)
 	dialog:AddToBlizOptions(
-		"AutoCombatLogger-Instances", options.args.instances.name, "AutoCombatLogger")
+		"AutoCombatLogger-Instances", options.args.instances.name, displayName)
 	config:RegisterOptionsTable("AutoCombatLogger-Arenas", options.args.arenas)
 	dialog:AddToBlizOptions(
-		"AutoCombatLogger-Arenas", options.args.arenas.name, "AutoCombatLogger")
+		"AutoCombatLogger-Arenas", options.args.arenas.name, displayName)
 	config:RegisterOptionsTable("AutoCombatLogger-BGs", options.args.bgs)
 	dialog:AddToBlizOptions(
-		"AutoCombatLogger-BGs", options.args.bgs.name, "AutoCombatLogger")
+		"AutoCombatLogger-BGs", options.args.bgs.name, displayName)
 	config:RegisterOptionsTable("AutoCombatLogger-World", options.args.world)
 	dialog:AddToBlizOptions(
-		"AutoCombatLogger-World", options.args.world.name, "AutoCombatLogger")
+		"AutoCombatLogger-World", options.args.world.name, displayName)
 
 	self:RegisterChatCommand("AutoCombatLogger", "ChatCommand")
 	self:RegisterChatCommand("acl", "ChatCommand")
@@ -619,13 +630,10 @@ function AutoCombatLogger:OnInitialize()
 		icon = "Interface\\RAIDFRAME\\ReadyCheck-NotReady.blp",
 		OnClick = function(clickedframe, button)
 			if button == "RightButton" then
-				local optionsFrame = self.optionsFrame
-
-				if optionsFrame:IsVisible() then
-					optionsFrame:Hide()
+				if addon.IsGameOptionsVisible() then
+					addon.HideGameOptions()
 				else
-					_G.InterfaceOptionsFrame_OpenToCategory(self.optionsFrame)
-					_G.InterfaceOptionsFrame_OpenToCategory(self.optionsFrame)
+					self:ShowOptions()
 				end
 			elseif button == "LeftButton" then
 				-- Toggle whether the game is logging combat

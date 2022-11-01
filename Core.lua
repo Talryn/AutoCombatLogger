@@ -42,3 +42,24 @@ addon.Classic = versionInRange(addon.CURRENT_UI_VERSION, 0, 20000)
 addon.TBC = versionInRange(addon.CURRENT_UI_VERSION, 20000, 30000)
 addon.Wrath = versionInRange(addon.CURRENT_UI_VERSION, 30000, 40000)
 addon.Retail = versionInRange(addon.CURRENT_UI_VERSION, 90000)
+
+function addon.IsGameOptionsVisible()
+	local optionsFrame = _G.SettingsPanel or _G.InterfaceOptionsFrame
+    return optionsFrame and optionsFrame:IsVisible() or false
+end
+
+function addon.ShowGameOptions()
+	local optionsFrame = _G.SettingsPanel or _G.InterfaceOptionsFrame
+    optionsFrame:Show()
+end
+
+function addon.HideGameOptions()
+	local optionsFrame = _G.SettingsPanel or _G.InterfaceOptionsFrame
+	if _G.SettingsPanel then
+		if not _G.UnitAffectingCombat("player") then
+			_G.HideUIPanel(optionsFrame)
+		end
+	else
+		optionsFrame:Hide()
+	end
+end
