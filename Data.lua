@@ -88,6 +88,17 @@ addon.ZoneMappings = {
 	["Tazavesh, the Veiled Market"] = { 1989, 1990, 1991, 1992, 1993, 1995, 1996, 1997 },
 	["Sanctum of Domination"] = { 1998, 1999, 2000 },
 	["Sepulcher of the First Ones"] = { 2047, 2048, 2049, 2050, 2051, 2052, 2055, 2061 },
+
+	-- Dragonflight
+	["Algeth'ar Academy"] = { 2097, 2098, 2099 },
+	["The Azure Vault"] = { 2073, 2074, 2075, 2076, 2077 },
+	["Brackenhide Hollow"] = { 2096 },
+	["Halls of Infusion"] = { 2082, 2083 },
+	["Neltharus"] = { 2080, 2081 },
+	["The Nokhud Offensive"] = { 2093 },
+	["Ruby Life Pools"] = { 2094, 2095 },
+	["Uldaman: Legacy of Tyr"] = { 2071, 2072 },
+	["Vault of the Incarnates"] = range(2119, 2126),
 }
 
 addon.InstanceDifficulties = {
@@ -158,6 +169,12 @@ addon.InstanceMappings = {
 			["Challenge Mode"] = "Mythic+",
 		},
 		[26.1] = {
+			["5"] = "Normal",
+			["5H"] = "Heroic",
+			["5M"] = "Mythic",
+			["Challenge Mode"] = "Mythic+",
+		},
+		[28] = {
 			["5"] = "Normal",
 			["5H"] = "Heroic",
 			["5M"] = "Mythic",
@@ -457,6 +474,79 @@ addon.Instances = {
 	},
 	["Tazavesh, the Veiled Market"] = {
 		tier = 26.1,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+			["5M"] = true,
+			["Challenge Mode"] = true,
+		},
+	},
+	-- Dragonflight
+	["Algeth'ar Academy"] = {
+		tier = 28,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+			["5M"] = true,
+			["Challenge Mode"] = true,
+		},
+	},
+	["The Azure Vault"] = {
+		tier = 28,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+			["5M"] = true,
+			["Challenge Mode"] = true,
+		},
+	},
+	["Brackenhide Hollow"] = {
+		tier = 28,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+			["5M"] = true,
+			["Challenge Mode"] = true,
+		},
+	},
+	["Halls of Infusion"] = {
+		tier = 28,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+			["5M"] = true,
+			["Challenge Mode"] = true,
+		},
+	},
+	["Neltharus"] = {
+		tier = 28,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+			["5M"] = true,
+			["Challenge Mode"] = true,
+		},
+	},
+	["The Nokhud Offensive"] = {
+		tier = 28,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+			["5M"] = true,
+			["Challenge Mode"] = true,
+		},
+	},
+	["Ruby Life Pools"] = {
+		tier = 28,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+			["5M"] = true,
+			["Challenge Mode"] = true,
+		},
+	},
+	["Uldaman: Legacy of Tyr"] = {
+		tier = 28,
 		difficulties = {
 			["5"] = true,
 			["5H"] = true,
@@ -771,6 +861,15 @@ addon.Raids = {
 	},
 	["Sepulcher of the First Ones"] = {
 		tier = 27,
+		difficulties = {
+			["Mythic 20"] = true,
+			["Heroic"] = true,
+			["Normal"] = true,
+			["LFR30"] = true,
+		},
+	},
+	["Vault of the Incarnates"] = {
+		tier = 28,
 		difficulties = {
 			["Mythic 20"] = true,
 			["Heroic"] = true,
