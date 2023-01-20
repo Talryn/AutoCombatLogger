@@ -30,7 +30,7 @@ addon.ZoneMappings = {
 	["The Eye of Eternity"] = { 616 },
 	["The Obsidian Sanctum"] = { 615 },
 	["Vault of Archavon"] = { 624 },
---	["Ulduar"] = { },
+	["Ulduar"] = { 603 },
 
 	-- BC Dungeons
 	["The Blood Furnace"] = { 542 },
@@ -476,6 +476,13 @@ addon.Instances = {
 -- Raids to track and the possible raid sizes.
 addon.Raids = {
 	-- Wrath Raids
+	["Ulduar"] = {
+		tier = 8,
+		difficulties = {
+			["10"] = true,
+			["25"] = true,
+		},
+	},
 	["Naxxramas"] = {
 		tier = 7,
 		difficulties = {
