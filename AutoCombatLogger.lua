@@ -585,6 +585,27 @@ function AutoCombatLogger:ShowOptions()
 	end
 end
 
+function AutoCombatLogger_OnAddonCompartmentClick(addonName, buttonName)
+	AutoCombatLogger:OnClickIcon(buttonName)
+end
+
+function AutoCombatLogger:OnClickIcon(button)
+	if button == "RightButton" then
+		if addon.IsGameOptionsVisible() then
+			addon.HideGameOptions()
+		else
+			self:ShowOptions()
+		end
+	elseif button == "LeftButton" then
+		-- Toggle whether the game is logging combat
+		if _G.LoggingCombat() then
+			self:DisableCombatLogging()
+		else
+			self:EnableCombatLogging("UserInitiated")
+		end
+	end
+end
+
 function AutoCombatLogger:OnInitialize()
 	-- Load the settings
 	self.db = _G.LibStub("AceDB-3.0"):New("AutoCombatLoggerDB", defaults, "Default")
@@ -629,20 +650,7 @@ function AutoCombatLogger:OnInitialize()
 		type = "launcher",
 		icon = "Interface\\RAIDFRAME\\ReadyCheck-NotReady.blp",
 		OnClick = function(clickedframe, button)
-			if button == "RightButton" then
-				if addon.IsGameOptionsVisible() then
-					addon.HideGameOptions()
-				else
-					self:ShowOptions()
-				end
-			elseif button == "LeftButton" then
-				-- Toggle whether the game is logging combat
-				if _G.LoggingCombat() then
-					_G.LoggingCombat(false)
-				else
-					_G.LoggingCombat(true)
-				end
-			end
+			self:OnClickIcon(button)
 		end,
 		OnTooltipShow = function(tooltip)
 			if tooltip and tooltip.AddLine then
@@ -907,6 +915,8 @@ function AutoCombatLogger:EnableCombatLogging(reason)
 
 	if self.db.profile.verbose then
 		self:Print(L["Enabling combat logging"]..(DEBUG and (" ["..reason.."]") or ""))
+	else
+		self:Print(L["Enabling combat logging"])
 	end
 	_G.LoggingCombat(true)
 end
@@ -947,9 +957,7 @@ function AutoCombatLogger:DisableCombatLogging()
 
 	addon.previousReason = ""
 
-	if self.db.profile.verbose then
-		self:Print(L["Disabling combat logging"])
-	end
+	self:Print(L["Disabling combat logging"])
 	_G.LoggingCombat(false)
 end
 

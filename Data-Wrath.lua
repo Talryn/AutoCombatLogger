@@ -31,6 +31,7 @@ addon.ZoneMappings = {
 	["The Obsidian Sanctum"] = { 615 },
 	["Vault of Archavon"] = { 624 },
 	["Ulduar"] = { 603 },
+	["Trial of the Crusader"] = { 649 },
 
 	-- BC Dungeons
 	["The Blood Furnace"] = { 542 },
@@ -476,6 +477,15 @@ addon.Instances = {
 -- Raids to track and the possible raid sizes.
 addon.Raids = {
 	-- Wrath Raids
+	["Trial of the Crusader"] = {
+		tier = 8.5,
+		difficulties = {
+			["10"] = true,
+			["10H"] = true,
+			["25"] = true,
+			["25H"] = true,
+		},
+	},
 	["Ulduar"] = {
 		tier = 8,
 		difficulties = {

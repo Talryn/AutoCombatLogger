@@ -99,6 +99,7 @@ addon.ZoneMappings = {
 	["Ruby Life Pools"] = { 2094, 2095 },
 	["Uldaman: Legacy of Tyr"] = { 2071, 2072 },
 	["Vault of the Incarnates"] = range(2119, 2126),
+	["Aberrus, the Shadowed Crucible"] = range(2166,2174)
 }
 
 addon.InstanceDifficulties = {
@@ -870,6 +871,15 @@ addon.Raids = {
 	},
 	["Vault of the Incarnates"] = {
 		tier = 28,
+		difficulties = {
+			["Mythic 20"] = true,
+			["Heroic"] = true,
+			["Normal"] = true,
+			["LFR30"] = true,
+		},
+	},
+	["Aberrus, the Shadowed Crucible"] = {
+		tier = 29,
 		difficulties = {
 			["Mythic 20"] = true,
 			["Heroic"] = true,
