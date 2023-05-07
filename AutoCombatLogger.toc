@@ -2,7 +2,7 @@
 ## Interface-Retail: 100100
 ## Interface-Classic: 11403
 ## Interface-BCC: 20504
-## Interface-Wrath: 30402
+## Interface-Wrath: 30401
 ## Title: Auto Combat Logger
 ## Notes: Automatically enables or disables combat logging based on location.
 ## Author: Talryn
