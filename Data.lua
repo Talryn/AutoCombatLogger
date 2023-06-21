@@ -99,7 +99,8 @@ addon.ZoneMappings = {
 	["Ruby Life Pools"] = { 2094, 2095 },
 	["Uldaman: Legacy of Tyr"] = { 2071, 2072 },
 	["Vault of the Incarnates"] = range(2119, 2126),
-	["Aberrus, the Shadowed Crucible"] = range(2166,2174)
+	["Aberrus, the Shadowed Crucible"] = range(2166,2174),
+	["The Vortex Pinnacle"] = { 325, 737 },
 }
 
 addon.InstanceDifficulties = {
@@ -547,6 +548,15 @@ addon.Instances = {
 		},
 	},
 	["Uldaman: Legacy of Tyr"] = {
+		tier = 28,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+			["5M"] = true,
+			["Challenge Mode"] = true,
+		},
+	},
+	["The Vortex Pinnacle"] = {
 		tier = 28,
 		difficulties = {
 			["5"] = true,
