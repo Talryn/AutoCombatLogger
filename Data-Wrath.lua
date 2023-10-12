@@ -17,8 +17,11 @@ addon.ZoneMappings = {
 	["Drak'Tharon Keep"] = { 600 },
 	["Gundrak"] = { 604 },
 	["Halls of Lightning"] = { 602 },
+	["Halls of Reflection"] = { 668 },
 	["Halls of Stone"] = { 599 },
+	["Pit of Saron"] = { 658 },
 	["The Culling of Stratholme"] = { 595 },
+	["The Forge of Souls"] = { 632 },
 	["The Nexus"] = { 576 },
 	["The Oculus"] = { 578 },
 	["The Violet Hold"] = { 608 },
@@ -32,6 +35,7 @@ addon.ZoneMappings = {
 	["Vault of Archavon"] = { 624 },
 	["Ulduar"] = { 603 },
 	["Trial of the Crusader"] = { 649 },
+	["Icecrown Citadel"] = { 631 },
 
 	-- BC Dungeons
 	["The Blood Furnace"] = { 542 },
@@ -201,6 +205,13 @@ addon.Instances = {
 			["5H"] = true,
 		},
 	},
+	["Halls of Reflection"] = {
+		tier = 5,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+		},
+	},
 	["Halls of Stone"] = {
 		tier = 5,
 		difficulties = {
@@ -208,7 +219,21 @@ addon.Instances = {
 			["5H"] = true,
 		},
 	},
+	["Pit of Saron"] = {
+		tier = 5,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+		},
+	},
 	["The Culling of Stratholme"] = {
+		tier = 5,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+		},
+	},
+	["The Forge of Souls"] = {
 		tier = 5,
 		difficulties = {
 			["5"] = true,
@@ -477,6 +502,15 @@ addon.Instances = {
 -- Raids to track and the possible raid sizes.
 addon.Raids = {
 	-- Wrath Raids
+	["Icecrown Citadel"] = {
+		tier = 9,
+		difficulties = {
+			["10"] = true,
+			["10H"] = true,
+			["25"] = true,
+			["25H"] = true,
+		},
+	},
 	["Trial of the Crusader"] = {
 		tier = 8.5,
 		difficulties = {
