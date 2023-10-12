@@ -486,6 +486,16 @@ addon.Raids = {
 			["25H"] = true,
 		},
 	},
+	["Onyxia's Lair"] = {
+		tier = 8.5,
+		difficulties = {
+			["10"] = true,
+			["10H"] = true,
+			["25"] = true,
+			["25H"] = true,
+			["40"] = true,
+		},
+	},
 	["Ulduar"] = {
 		tier = 8,
 		difficulties = {
@@ -581,11 +591,6 @@ addon.Raids = {
 	-- Classic Raids
 	["Molten Core"] = {
 		tier = 1,
-		difficulties = {
-			["40"] = true,
-		},
-	},
-	["Onyxia's Lair"] = {
 		difficulties = {
 			["40"] = true,
 		},
