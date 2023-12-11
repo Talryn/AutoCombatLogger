@@ -231,6 +231,13 @@ addon.Instances = {
 
 -- Raids to track and the possible raid sizes.
 addon.Raids = {
+	-- Season of Discovery
+	["Blackfathom Deeps"] = {
+		tier = 1,
+		difficulties = {
+			["10"] = true,
+		},
+	},
 	-- Classic Raids
 	["Molten Core"] = {
 		tier = 1,
