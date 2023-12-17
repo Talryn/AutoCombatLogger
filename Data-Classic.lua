@@ -70,6 +70,7 @@ addon.InstanceDifficulties = {
 	[23] = "5M", -- Mythic 5 player
 	[24] = "5T", -- Timewalker 5 player
 	[148] = "20", -- Classic 20 player raid
+	[198] = "10", -- SoD 10 player instance
 }
 
 addon.DifficultyOrder = {
@@ -104,6 +105,7 @@ addon.InstanceDifficultyOrder = {
 	["5H"] = 2,
 	["5M"] = 3,
 	["Challenge Mode"] = 4,
+	["10"] = 5,
 }
 
 addon.Instances = {
@@ -112,7 +114,7 @@ addon.Instances = {
 		tier = 1,
 		difficulties = {
 			["5"] = true,
-			["10"] = true,  # Season of Discovery
+			["10"] = true,  -- Season of Discovery
 		},
 	},
 	["Blackrock Depths"] = {

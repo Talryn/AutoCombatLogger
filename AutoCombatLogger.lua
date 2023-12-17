@@ -889,7 +889,7 @@ end
 -- @return maxPlayers The maximum number of players allowed in the instance.
 function AutoCombatLogger:GetCurrentInstanceInfo()
 	local name, type, instanceDifficulty, difficultyName, maxPlayers,
-		dynamicDifficulty, isDynamic, mapId, new1 = _G.GetInstanceInfo()
+		dynamicDifficulty, isDynamic, mapId, instanceGroupSize = _G.GetInstanceInfo()
 
 	local difficulty = ""
 	if (type == "party") then
