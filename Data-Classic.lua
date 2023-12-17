@@ -88,6 +88,7 @@ addon.InstanceMappings = {
 	tiers = {
 		[1] = {
 			["5"] = "Normal",
+			["10"] = "10",
 		},
 		-- [19] = {
 		-- 	["5"] = "Normal",
@@ -111,6 +112,7 @@ addon.Instances = {
 		tier = 1,
 		difficulties = {
 			["5"] = true,
+			["10"] = true,  # Season of Discovery
 		},
 	},
 	["Blackrock Depths"] = {
@@ -231,13 +233,6 @@ addon.Instances = {
 
 -- Raids to track and the possible raid sizes.
 addon.Raids = {
-	-- Season of Discovery
-	["Blackfathom Deeps"] = {
-		tier = 1,
-		difficulties = {
-			["10"] = true,
-		},
-	},
 	-- Classic Raids
 	["Molten Core"] = {
 		tier = 1,
