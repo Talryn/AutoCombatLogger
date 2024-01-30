@@ -100,6 +100,7 @@ addon.ZoneMappings = {
 	["Uldaman: Legacy of Tyr"] = { 2071, 2072 },
 	["Vault of the Incarnates"] = range(2119, 2126),
 	["Aberrus, the Shadowed Crucible"] = range(2166,2174),
+	["Amirdrassil, the Dream's Hope"] = range(2232,2239),
 	["The Vortex Pinnacle"] = { 325, 737 },
 }
 
@@ -890,6 +891,15 @@ addon.Raids = {
 	},
 	["Aberrus, the Shadowed Crucible"] = {
 		tier = 29,
+		difficulties = {
+			["Mythic 20"] = true,
+			["Heroic"] = true,
+			["Normal"] = true,
+			["LFR30"] = true,
+		},
+	},
+	["Amirdrassil, the Dream's Hope"] = {
+		tier = 30,
 		difficulties = {
 			["Mythic 20"] = true,
 			["Heroic"] = true,
