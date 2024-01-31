@@ -100,7 +100,7 @@ addon.ZoneMappings = {
 	["Uldaman: Legacy of Tyr"] = { 2071, 2072 },
 	["Vault of the Incarnates"] = range(2119, 2126),
 	["Aberrus, the Shadowed Crucible"] = range(2166,2174),
-	["Amirdrassil, the Dream's Hope"] = range(2232,2239),
+	["Amirdrassil, the Dream's Hope"] = { 2232, 2233, 2234, 2238, 2240, 2244 },
 	["The Vortex Pinnacle"] = { 325, 737 },
 }
 
