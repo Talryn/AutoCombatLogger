@@ -857,6 +857,9 @@ function AutoCombatLogger:ProcessZoneChange()
 		profile.selectedRaids[nonlocalZone][difficulty]== true) then
 			self:EnableCombatLogging("Custom Raid: ".._G.tostring(nonlocalZone))
 	elseif (type == "party" and diffCheck and not isGarrison and
+		maxPlayers == 10) then
+		self:EnableCombatLogging("Raid")
+	elseif (type == "party" and diffCheck and not isGarrison and
 		profile.logInstance == "Yes") then
 		self:EnableCombatLogging("Instance")
 	elseif (type == "party" and diffCheck and not isGarrison and
