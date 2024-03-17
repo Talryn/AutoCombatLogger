@@ -41,6 +41,7 @@ addon.CURRENT_BUILD, addon.CURRENT_INTERNAL,
 addon.Classic = versionInRange(addon.CURRENT_UI_VERSION, 0, 20000)
 addon.TBC = versionInRange(addon.CURRENT_UI_VERSION, 20000, 30000)
 addon.Wrath = versionInRange(addon.CURRENT_UI_VERSION, 30000, 40000)
+addon.Cataclysm = versionInRange(addon.CURRENT_UI_VERSION, 40000, 50000)
 addon.Retail = versionInRange(addon.CURRENT_UI_VERSION, 90000)
 
 function addon.IsGameOptionsVisible()

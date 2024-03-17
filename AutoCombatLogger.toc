@@ -1,8 +1,9 @@
 ## Interface: 100205
-## Interface-Retail: 100107
+## Interface-Retail: 100205
 ## Interface-Classic: 11501
 ## Interface-BCC: 20504
 ## Interface-Wrath: 30403
+## Interface-Cata: 40400
 ## Title: Auto Combat Logger
 ## Notes: Automatically enables or disables combat logging based on location.
 ## Author: Talryn
@@ -24,5 +25,6 @@ Core.lua
 Data-Classic.lua
 Data-TBC.lua
 Data-Wrath.lua
+Data-Cataclysm.lua
 Data.lua
 AutoCombatLogger.lua
