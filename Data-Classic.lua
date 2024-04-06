@@ -71,18 +71,20 @@ addon.InstanceDifficulties = {
 	[24] = "5T", -- Timewalker 5 player
 	[148] = "20", -- Classic 20 player raid
 	[198] = "10", -- SoD 10 player instance
+	[215] = "20", -- SoD 20 player instance
 }
 
 addon.DifficultyOrder = {
 	["LFR30"] = 1,
 	["10"] = 2,
 	["10H"] = 3,
-	["25"] = 4,
-	["25H"] = 5,
-	["Normal"] = 6,
-	["Heroic"] = 7,
-	["Mythic 20"] = 8,
-	["40"] = 9,
+	["20"] = 4,
+	["25"] = 5,
+	["25H"] = 6,
+	["Normal"] = 7,
+	["Heroic"] = 8,
+	["Mythic 20"] = 9,
+	["40"] = 10,
 }
 
 addon.InstanceMappings = {
@@ -90,6 +92,7 @@ addon.InstanceMappings = {
 		[1] = {
 			["5"] = "Normal",
 			["10"] = "10",
+			["20"] = "20",
 		},
 		-- [19] = {
 		-- 	["5"] = "Normal",
@@ -106,6 +109,7 @@ addon.InstanceDifficultyOrder = {
 	["5M"] = 3,
 	["Challenge Mode"] = 4,
 	["10"] = 5,
+	["20"] = 6,
 }
 
 addon.Instances = {
@@ -212,6 +216,7 @@ addon.Instances = {
 		tier = 1,
 		difficulties = {
 			["5"] = true,
+			["20"] = true,  -- Season of Discovery
 		},
 	},
 	["Uldaman"] = {
