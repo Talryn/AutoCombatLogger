@@ -11,6 +11,29 @@ addon.WatchedEvents = {
 }
 
 addon.ZoneMappings = {
+	-- Cataclysm Dungeons
+	["Blackrock Caverns"] = { 645 }, -- newApi 283
+	["End Time"] = { 938 },
+	["Grim Batol"] = { 670 },  --newApi 293
+	["Halls of Origination"] = { 644 },  -- newApi 297
+	["Hour of Twilight"] = { 940 },
+	["Lost City of the Tol'vir"] = { 755 },  -- newApi 277
+--	["The Deadmines"] = { 36 }, --newApi 291
+	["The Stonecore"] = { 725 },  -- newApi 324
+	["The Vortex Pinnacle"] = { 657 },  -- newApi 325
+	["Throne of the Tides"] = { 643 },  -- newApi 322
+	["Well of Eternity"] = { 939 },
+	["Zul'Aman"] = { 568 },
+	["Zul'Gurub"] = { 859 },
+
+	-- Cataclysm Raids
+	["Baradin Hold"] = { 757 },
+	["Blackwing Descent"] = { 669 },
+	["Dragon Soul"] = { 967 },
+	["Firelands"] = { 720 },
+	["The Bastion of Twilight"] = { 671 },
+	["Throne of the Four Winds"] = { 754 },
+
 	-- Wrath Dungeons
 	["Ahn'kahet: The Old Kingdom"] = { 619 },
 	["Azjol-Nerub"] = { 601 },
@@ -169,6 +192,57 @@ addon.InstanceDifficultyOrder = {
 }
 
 addon.Instances = {
+	-- Cataclysm Dungeons
+	["Blackrock Caverns"] = {
+		tier = 11,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+		},
+	},
+	["Grim Batol"] = {
+		tier = 11,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+		},
+	},
+	["Halls of Origination"] = {
+		tier = 11,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+		},
+	},
+	["Lost City of the Tol'vir"] = {
+		tier = 11,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+		},
+	},
+	["The Stonecore"] = {
+		tier = 11,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+		},
+	},
+	["The Vortex Pinnacle"] = {
+		tier = 11,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+		},
+	},
+	["Throne of the Tides"] = {
+		tier = 11,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+		},
+	},
+
 	-- Wrath Dungeons
 	["Ahn'kahet: The Old Kingdom"] = {
 		tier = 5,
@@ -450,9 +524,10 @@ addon.Instances = {
 		},
 	},
 	["Shadowfang Keep"] = {
-		tier = 1,
+		tier = 11,
 		difficulties = {
 			["5"] = true,
+			["5H"] = true,
 		},
 	},
 	["Stratholme"] = {
@@ -462,9 +537,10 @@ addon.Instances = {
 		},
 	},
 	["The Deadmines"] = {
-		tier = 1,
+		tier = 11,
 		difficulties = {
 			["5"] = true,
+			["5H"] = true,
 		},
 	},
 	["The Stockade"] = {
@@ -501,6 +577,45 @@ addon.Instances = {
 
 -- Raids to track and the possible raid sizes.
 addon.Raids = {
+	-- Cataclysm Raids
+	["Baradin Hold"] = {
+		tier = 11,
+		difficulties = {
+			["10"] = true,
+			["10H"] = true,
+			["25"] = true,
+			["25H"] = true,
+		},
+	},
+	["Blackwing Descent"] = {
+		tier = 11,
+		difficulties = {
+			["10"] = true,
+			["10H"] = true,
+			["25"] = true,
+			["25H"] = true,
+		},
+	},
+	["The Bastion of Twilight"] = {
+		tier = 11,
+		difficulties = {
+			["10"] = true,
+			["10H"] = true,
+			["25"] = true,
+			["25H"] = true,
+		},
+	},
+	["Throne of the Four Winds"] = {
+		tier = 11,
+		difficulties = {
+			["10"] = true,
+			["10H"] = true,
+			["25"] = true,
+			["25H"] = true,
+		},
+	},
+
+
 	-- Wrath Raids
 	["Icecrown Citadel"] = {
 		tier = 9,
