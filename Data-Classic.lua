@@ -72,6 +72,7 @@ addon.InstanceDifficulties = {
 	[148] = "20", -- Classic 20 player raid
 	[198] = "10", -- SoD 10 player instance
 	[215] = "20", -- SoD 20 player instance
+	[226] = "20", -- SoD 20 player raid
 }
 
 addon.DifficultyOrder = {
