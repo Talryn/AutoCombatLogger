@@ -245,11 +245,13 @@ addon.Raids = {
 	["Molten Core"] = {
 		tier = 1,
 		difficulties = {
+			["20"] = true,
 			["40"] = true,
 		},
 	},
 	["Onyxia's Lair"] = {
 		difficulties = {
+			["20"] = true,
 			["40"] = true,
 		},
 	},
