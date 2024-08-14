@@ -25,7 +25,7 @@ local function range(from, to)
 end
 addon.range = range
 
-addon.addonTitle = _G.GetAddOnMetadata(ADDON_NAME,"Title")
+addon.addonTitle = C_AddOns.GetAddOnMetadata(ADDON_NAME,"Title")
 addon.addonVersion = cleanupVersion("@project-version@")
 
 local function versionInRange(version, start, finish)

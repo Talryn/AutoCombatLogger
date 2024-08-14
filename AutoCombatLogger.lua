@@ -655,7 +655,7 @@ function AutoCombatLogger:OnInitialize()
 		OnTooltipShow = function(tooltip)
 			if tooltip and tooltip.AddLine then
 			    tooltip:AddLine(addonHdr:format(
-					_G.GetAddOnMetadata(ADDON_NAME,"Title"), addon.addonVersion))
+					C_AddOns.GetAddOnMetadata(ADDON_NAME,"Title"), addon.addonVersion))
 				tooltip:AddLine(YELLOW .. L["Left click"] .. " " .. WHITE
 					.. L["to toggle combat logging."])
 				tooltip:AddLine(YELLOW .. L["Right click"] .. " " .. WHITE
