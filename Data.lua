@@ -102,6 +102,18 @@ addon.ZoneMappings = {
 	["Aberrus, the Shadowed Crucible"] = range(2166,2174),
 	["Amirdrassil, the Dream's Hope"] = { 2232, 2233, 2234, 2238, 2240, 2244 },
 	["The Vortex Pinnacle"] = { 325, 737 },
+
+	-- TWW
+	["City of Echoes"] = { 2357, 2358 },
+	["Cinderbrew Meadery"] = { 2335 },
+	["City of Threads"] = { 2343, 2344 },
+	["Darkflame Cleft"] = { 2303, 2304 },
+	["Priory of the Sacred Flame"] = { 2308, 2309 },
+	["The Dawnbreaker"] = { 2359 },
+	["The Rookery"] = range(2315, 2320),
+	["The Stonevault"] = { 2341 }, 
+
+	["Nerub-ar Palace"] = { 2291, 2292, 2293, 2294, 2295, 2296, 2298 }, 
 }
 
 addon.InstanceDifficulties = {
@@ -178,6 +190,12 @@ addon.InstanceMappings = {
 			["Challenge Mode"] = "Mythic+",
 		},
 		[28] = {
+			["5"] = "Normal",
+			["5H"] = "Heroic",
+			["5M"] = "Mythic",
+			["Challenge Mode"] = "Mythic+",
+		},
+		[31] = {
 			["5"] = "Normal",
 			["5H"] = "Heroic",
 			["5M"] = "Mythic",
@@ -566,6 +584,79 @@ addon.Instances = {
 			["Challenge Mode"] = true,
 		},
 	},
+	-- TWW
+	["City of Echoes"] = {
+		tier = 31,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+			["5M"] = true,
+			["Challenge Mode"] = true,
+		},
+	},
+	["Cinderbrew Meadery"] = {
+		tier = 31,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+			["5M"] = true,
+			["Challenge Mode"] = true,
+		},
+	},
+	["City of Threads"] = {
+		tier = 31,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+			["5M"] = true,
+			["Challenge Mode"] = true,
+		},
+	},
+	["Darkflame Cleft"] = {
+		tier = 31,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+			["5M"] = true,
+			["Challenge Mode"] = true,
+		},
+	},
+	["Priory of the Sacred Flame"] = {
+		tier = 31,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+			["5M"] = true,
+			["Challenge Mode"] = true,
+		},
+	},
+	["The Dawnbreaker"] = {
+		tier = 31,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+			["5M"] = true,
+			["Challenge Mode"] = true,
+		},
+	},
+	["The Rookery"] = {
+		tier = 31,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+			["5M"] = true,
+			["Challenge Mode"] = true,
+		},
+	},
+	["The Stonevault"] = {
+		tier = 31,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+			["5M"] = true,
+			["Challenge Mode"] = true,
+		},
+	},
 }
 
 -- Raids to track and the possible raid sizes.
@@ -900,6 +991,15 @@ addon.Raids = {
 	},
 	["Amirdrassil, the Dream's Hope"] = {
 		tier = 30,
+		difficulties = {
+			["Mythic 20"] = true,
+			["Heroic"] = true,
+			["Normal"] = true,
+			["LFR30"] = true,
+		},
+	},
+	["Nerub-ar Palace"] = {
+		tier = 31,
 		difficulties = {
 			["Mythic 20"] = true,
 			["Heroic"] = true,
