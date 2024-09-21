@@ -74,6 +74,7 @@ addon.ZoneMappings = {
 	["The Eternal Palace"] = range(1512, 1520),
 	["Operation: Mechagon"] = { 1490, 1491, 1493, 1494, 1497 },
 	["Ny'alotha, The Waking City"] = { 1580, 1581, 1582, 1590, 1591, 1592, 1593, 1594, 1595, 1596, 1597 },
+	["Grim Batol"] = { 293 },
 
 	-- Shadowlands
 	["The Necrotic Wake"] = { 1666, 1667, 1668 },
@@ -153,6 +154,12 @@ addon.DifficultyOrder = {
 
 addon.InstanceMappings = {
 	tiers = {
+		[11] = {
+			["5"] = "Normal",
+			["5H"] = "Heroic",
+			["5M"] = "Mythic",
+			["Challenge Mode"] = "Mythic+",
+		},
 		[19] = {
 			["5"] = "Normal",
 			["5H"] = "Heroic",
@@ -650,6 +657,15 @@ addon.Instances = {
 	},
 	["The Stonevault"] = {
 		tier = 31,
+		difficulties = {
+			["5"] = true,
+			["5H"] = true,
+			["5M"] = true,
+			["Challenge Mode"] = true,
+		},
+	},
+	["Grim Batol"] = {
+		tier = 11,
 		difficulties = {
 			["5"] = true,
 			["5H"] = true,
