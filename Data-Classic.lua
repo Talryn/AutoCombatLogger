@@ -19,7 +19,7 @@ addon.ZoneMappings = {
 	["Ahn'Qiraj"] = { 531 },
 	["Ruins of Ahn'Qiraj"] = { 509 },
 	["Naxxramas"] = { 533 },
-	["Scaret Enclave"] = { 2856 }, -- Season of Discovery
+	["Scarlet Enclave"] = { 2856 }, -- Season of Discovery
 
 	-- Classic Dungeons
 	["Blackfathom Deeps"] = { 48 },
@@ -288,7 +288,7 @@ addon.Raids = {
 		},
 	},
 	-- Season of Discovery
-	["Scaret Enclave"] = {
+	["Scarlet Enclave"] = {
 		tier = 3.5,
 		difficulties = {
 			["40"] = true,
