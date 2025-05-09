@@ -115,6 +115,7 @@ addon.ZoneMappings = {
 	["The Stonevault"] = { 2341 }, 
 
 	["Nerub-ar Palace"] = { 2291, 2292, 2293, 2294, 2295, 2296, 2298 }, 
+	["Liberation of Undermine"] = { 2346, 2374, 2406, 2407, 2408, 2409, 2411, 2428 }, 
 }
 
 addon.InstanceDifficulties = {
@@ -1015,6 +1016,15 @@ addon.Raids = {
 		},
 	},
 	["Nerub-ar Palace"] = {
+		tier = 31,
+		difficulties = {
+			["Mythic 20"] = true,
+			["Heroic"] = true,
+			["Normal"] = true,
+			["LFR30"] = true,
+		},
+	},
+	["Liberation of Undermine"] = {
 		tier = 31,
 		difficulties = {
 			["Mythic 20"] = true,
