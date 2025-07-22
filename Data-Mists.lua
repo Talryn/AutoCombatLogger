@@ -11,17 +11,30 @@ addon.WatchedEvents = {
 }
 
 addon.ZoneMappings = {
+    -- Mists Dungeons
+    ["Stormstout Brewery"] = { 439, 440, 441, 442 },
+    ["Gate of the Setting Sun"] = { 437, 438 },
+    ["Shadow-Pan Monastery"] = { 443, 444, 445, 446 },
+    ["Siege of Niuzao Temple"] = { 457, 458, 459 },
+    ["Temple of the Jade Serpent"] = { 429, 430 },
+    ["Mogu'shan Palace"] = { 453, 454, 455 },
+
+    -- Mists Raids
+    ["Mogu'shan Vaults"] = { 471, 472, 473 },
+    ["Heart of Fear"] = { 474, 475 },
+    ["Terrace of Endless Springs"] = { 456 },
+
     -- Cataclysm Dungeons
-    ["Blackrock Caverns"] = { 645 },     -- newApi 283
+    ["Blackrock Caverns"] = { 645 },        -- newApi 283
     ["End Time"] = { 938 },
-    ["Grim Batol"] = { 670 },            --newApi 293
-    ["Halls of Origination"] = { 644 },  -- newApi 297
+    ["Grim Batol"] = { 670 },               --newApi 293
+    ["Halls of Origination"] = { 644 },     -- newApi 297
     ["Hour of Twilight"] = { 940 },
     ["Lost City of the Tol'vir"] = { 755 }, -- newApi 277
     --	["The Deadmines"] = { 36 }, --newApi 291
-    ["The Stonecore"] = { 725 },         -- newApi 324
-    ["The Vortex Pinnacle"] = { 657 },   -- newApi 325
-    ["Throne of the Tides"] = { 643 },   -- newApi 322
+    ["The Stonecore"] = { 725 },            -- newApi 324
+    ["The Vortex Pinnacle"] = { 657 },      -- newApi 325
+    ["Throne of the Tides"] = { 643 },      -- newApi 322
     ["Well of Eternity"] = { 939 },
     ["Zul'Aman"] = { 568 },
     ["Zul'Gurub"] = { 859 },
@@ -144,10 +157,10 @@ addon.InstanceDifficulties = {
     [15] = "Heroic", -- Heroic 10-30 Raid
     [16] = "Mythic 20",
     [17] = "LFR30",
-    [23] = "5M", -- Mythic 5 player
-    [24] = "5T", -- Timewalker 5 player
+    [23] = "5M",  -- Mythic 5 player
+    [24] = "5T",  -- Timewalker 5 player
     [148] = "20", -- Classic 20 player raid
-    [173] = "5", -- BC 5 Normal dungeon
+    [173] = "5",  -- BC 5 Normal dungeon
     [174] = "5H", -- BC 5 Heroic dungeon
     [175] = "10", -- BC 10 player raid
     [176] = "25", -- BC 25 player raid
@@ -192,6 +205,50 @@ addon.InstanceDifficultyOrder = {
 }
 
 addon.Instances = {
+    -- Mists Dungeons
+    ["Stormstout Brewery"] = {
+        tier = 14,
+        difficulties = {
+            ["5"] = true,
+            ["5H"] = true,
+        },
+    },
+    ["Gate of the Setting Sun"] = {
+        tier = 14,
+        difficulties = {
+            ["5"] = true,
+            ["5H"] = true,
+        },
+    },
+    ["Shadow-Pan Monastery"] = {
+        tier = 14,
+        difficulties = {
+            ["5"] = true,
+            ["5H"] = true,
+        },
+    },
+    ["Siege of Niuzao Temple"] = {
+        tier = 14,
+        difficulties = {
+            ["5"] = true,
+            ["5H"] = true,
+        },
+    },
+    ["Temple of the Jade Serpent"] = {
+        tier = 14,
+        difficulties = {
+            ["5"] = true,
+            ["5H"] = true,
+        },
+    },
+    ["Mogu'shan Palace"] = {
+        tier = 14,
+        difficulties = {
+            ["5"] = true,
+            ["5H"] = true,
+        },
+    },
+
     -- Cataclysm Dungeons
     ["Blackrock Caverns"] = {
         tier = 11,
@@ -577,6 +634,35 @@ addon.Instances = {
 
 -- Raids to track and the possible raid sizes.
 addon.Raids = {
+    -- Mists Raids
+    ["Mogu'shan Vaults"] = {
+        tier = 14,
+        difficulties = {
+            ["10"] = true,
+            ["10H"] = true,
+            ["25"] = true,
+            ["25H"] = true,
+        },
+    },
+    ["Heart of Fear"] = {
+        tier = 14,
+        difficulties = {
+            ["10"] = true,
+            ["10H"] = true,
+            ["25"] = true,
+            ["25H"] = true,
+        },
+    },
+    ["Terrace of Endless Springs"] = {
+        tier = 14,
+        difficulties = {
+            ["10"] = true,
+            ["10H"] = true,
+            ["25"] = true,
+            ["25H"] = true,
+        },
+    },
+
     -- Cataclysm Raids
     ["Baradin Hold"] = {
         tier = 11,
