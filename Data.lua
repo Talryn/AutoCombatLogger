@@ -116,6 +116,7 @@ addon.ZoneMappings = {
 
     ["Nerub-ar Palace"] = { 2291, 2292, 2293, 2294, 2295, 2296, 2298 },
     ["Liberation of Undermine"] = { 2346, 2374, 2406, 2407, 2408, 2409, 2411, 2428 },
+    ["Manaforge Omega"] = { 2460, 2462, 2463, 2464, 2465, 2466, 2467, 2471, 2468, 2469, 2470, 2461 },
 }
 
 addon.InstanceDifficulties = {
@@ -674,6 +675,15 @@ addon.Instances = {
             ["Challenge Mode"] = true,
         },
     },
+    ["Eco-dome Al'dani"] = {
+      tier = 34,
+      difficulties = {
+          ["5"] = true,
+          ["5H"] = true,
+          ["5M"] = true,
+          ["Challenge Mode"] = true,
+      },
+    }
 }
 
 -- Raids to track and the possible raid sizes.
@@ -1033,14 +1043,61 @@ addon.Raids = {
             ["LFR30"] = true,
         },
     },
+    ["Manaforge Omega"] = {
+        tier = 34,
+        difficulties = {
+            ["Mythic 20"] = true,
+            ["Heroic"] = true,
+            ["Normal"] = true,
+            ["LFR30"] = true,
+        },
+    },
 }
 
 addon.Battlegrounds = {
-    "Alterac Valley", "Arathi Basin", "Eye of the Storm", "Isle of Conquest",
-    "Strand of the Ancients", "Warsong Gulch"
+  "Arathi Basin",
+  "Twin Peaks",
+  "Eye of the Storm",
+  "Isle of Conquest",
+  "Alterac Valley",
+  "The Battle for Gilneas",
+  "Deephaul Ravine",
+  "Warsong Gulch",
+  "Wintergrasp",
+  "Deepwind Gorge",
+  "Seething Shore",
+  "Silvershard Mines",
+  "Strand of the Ancients",
+  "Tarren Mill vs Southshore",
+  "Temple of Kotmogu",
+  "Deepwind Gorge",
+  "Alterac Valley",
+  "Ashran",
+  "Southshore vs. Tarren Mill",
+  "Battle for Blackrock Mountain",
+  "Arathi Blizzard",
+  "Silithus Brawl"
 }
 
 addon.Arenas = {
-    "Dalaran Sewers", "Ruins of Lordaeron", "The Circle of Blood",
-    "The Ring of Trials", "The Ring of Valor"
-}
+  "Ruins of Lordaeron (Undercity Arena)",
+  "Cage of Carnage",
+  "Mugambala",
+  "Enigma Crucible",
+  "Maldraxxus Coliseum",
+  "Black Rook Hold Arena",
+  "Nagrand Arena",
+  "Ashamane's Fall",
+  "Dalaran Arena (Arena)",
+  "The Tiger's Peak",
+  "Empyrean Domain",
+  "Kul Tiras Arena",
+  "The Robodrome",
+  "Nokhudon Proving Grounds",
+  "Tol'viron Arena",
+  "Blade's Edge Arena",
+  "Hook Point",
+  "Enigma Arena",
+  "Shado-Pan Showdown",
+  "Maldraxxus Coliseum"
+} 
