@@ -981,15 +981,6 @@ addon.Raids = {
         },
     },
     ["Sanctum of Domination"] = {
-        tier = 26.1,
-        difficulties = {
-            ["Mythic 20"] = true,
-            ["Heroic"] = true,
-            ["Normal"] = true,
-            ["LFR30"] = true,
-        },
-    },
-    ["Sepulcher of the First Ones"] = {
         tier = 27,
         difficulties = {
             ["Mythic 20"] = true,
@@ -998,7 +989,7 @@ addon.Raids = {
             ["LFR30"] = true,
         },
     },
-    ["Vault of the Incarnates"] = {
+    ["Sepulcher of the First Ones"] = {
         tier = 28,
         difficulties = {
             ["Mythic 20"] = true,
@@ -1007,7 +998,7 @@ addon.Raids = {
             ["LFR30"] = true,
         },
     },
-    ["Aberrus, the Shadowed Crucible"] = {
+    ["Vault of the Incarnates"] = {
         tier = 29,
         difficulties = {
             ["Mythic 20"] = true,
@@ -1016,7 +1007,7 @@ addon.Raids = {
             ["LFR30"] = true,
         },
     },
-    ["Amirdrassil, the Dream's Hope"] = {
+    ["Aberrus, the Shadowed Crucible"] = {
         tier = 30,
         difficulties = {
             ["Mythic 20"] = true,
@@ -1025,7 +1016,7 @@ addon.Raids = {
             ["LFR30"] = true,
         },
     },
-    ["Nerub-ar Palace"] = {
+    ["Amirdrassil, the Dream's Hope"] = {
         tier = 31,
         difficulties = {
             ["Mythic 20"] = true,
@@ -1034,8 +1025,17 @@ addon.Raids = {
             ["LFR30"] = true,
         },
     },
+    ["Nerub-ar Palace"] = {
+        tier = 32,
+        difficulties = {
+            ["Mythic 20"] = true,
+            ["Heroic"] = true,
+            ["Normal"] = true,
+            ["LFR30"] = true,
+        },
+    },
     ["Liberation of Undermine"] = {
-        tier = 31,
+        tier = 33,
         difficulties = {
             ["Mythic 20"] = true,
             ["Heroic"] = true,
