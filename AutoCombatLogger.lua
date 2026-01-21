@@ -110,6 +110,7 @@ local defaults = {
             Garrison = false,
             Brawlers = false,
             Taxi = false,
+            Delve = "No",
         },
     }
 }
@@ -305,6 +306,26 @@ function AutoCombatLogger:GetOptions()
                         width = "double",
                         set = function(info, val) self.db.profile.logInstance = logOptions[val] end,
                         get = function(info) return invertedOptions[self.db.profile.logInstance] end,
+                        order = 10,
+                        values = localizedLogOptions
+                    }
+                }
+            },
+            delves = {
+                type = "group",
+                name = "Delves",
+                args = {
+                    logInstance = {
+                        name = L["Log Delves"],
+                        desc = L["When to log combat within delves"],
+                        type = "toggle",
+                        width = "double",
+                        set = function(info, val)
+                            self.db.profile.log.Delves = val and "Yes" or "No"
+                        end,
+                        get = function(info)
+                            return self.db.profile.log.Delves and L["Yes"] or L["No"]
+                        end,
                         order = 10,
                         values = localizedLogOptions
                     }
@@ -578,7 +599,7 @@ end
 function AutoCombatLogger:ShowOptions()
     if Settings and Settings.OpenToCategory and
         _G.type(Settings.OpenToCategory) == "function" then
-        Settings.OpenToCategory(addon.addonTitle)
+        Settings.OpenToCategory(self.optionsCategoryId)
     else
         _G.InterfaceOptionsFrame_OpenToCategory(self.optionsFrame)
         _G.InterfaceOptionsFrame_OpenToCategory(self.optionsFrame)
@@ -621,7 +642,7 @@ function AutoCombatLogger:OnInitialize()
     local options = self:GetOptions()
 
     config:RegisterOptionsTable(displayName, options)
-    self.optionsFrame = dialog:AddToBlizOptions(
+    self.optionsFrame, self.optionsCategoryId = dialog:AddToBlizOptions(
         displayName, displayName, nil, "general")
     config:RegisterOptionsTable("AutoCombatLogger-Chat", options.args.chat)
     dialog:AddToBlizOptions(
@@ -863,6 +884,8 @@ function AutoCombatLogger:ProcessZoneChange()
             profile.logInstance == "Custom" and nonlocalZone and profile.selectedInstances[nonlocalZone] and
             profile.selectedInstances[nonlocalZone][difficulty] == true) then
         self:EnableCombatLogging("Custom Instance")
+    elseif (type == "scenario" and difficulty == "Delve" and profile.log.Delve == "Yes") then
+        self:EnableCombatLogging("Delve")
     elseif (type == "arena" and profile.logArena == "Yes") then
         self:EnableCombatLogging("Arena")
     elseif (type == "pvp" and profile.logBG == "Yes") then

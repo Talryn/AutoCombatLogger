@@ -33,13 +33,13 @@ addon.ZoneMappings = {
     ["Heart of Fear"] = { 474, 475 },
     ["Terrace of Endless Spring"] = { 456 },
     ["Deeprun Tram"] = { 499, 500 }, -- Location of Bizmo's Brawlpub in Stormwind
-    ["Brawl'gar Arena"] = { 503 }, -- Horde in Orgrimmar
+    ["Brawl'gar Arena"] = { 503 },   -- Horde in Orgrimmar
     ["Throne of Thunder"] = range(508, 515),
     ["Hellfire Citadel"] = { 534 },
     ["Siege of Orgrimmar"] = range(556, 570),
     ["Blackrock Foundry"] = range(596, 600),
     ["Highmaul"] = range(610, 615),
-    ["Blackrock Foundry"] = { 624 },     -- Also BRF
+    ["Blackrock Foundry"] = { 624 },        -- Also BRF
     ["Hellfire Citadel"] = range(661, 670), -- Now only the one in Tanaan Jungle?
     ["Halls of Valor"] = { 703 },
     ["Maw of Souls"] = { 706 },
@@ -138,8 +138,9 @@ addon.InstanceDifficulties = {
     [15] = "Heroic", -- Heroic 10-30 Raid
     [16] = "Mythic 20",
     [17] = "LFR30",
-    [23] = "5M", -- Mythic 5 player
-    [24] = "5T", -- Timewalker 5 player
+    [23] = "5M",     -- Mythic 5 player
+    [24] = "5T",     -- Timewalker 5 player
+    [208] = "Delve", -- Dungeon Delve
 }
 
 addon.DifficultyOrder = {
@@ -676,13 +677,13 @@ addon.Instances = {
         },
     },
     ["Eco-dome Al'dani"] = {
-      tier = 34,
-      difficulties = {
-          ["5"] = true,
-          ["5H"] = true,
-          ["5M"] = true,
-          ["Challenge Mode"] = true,
-      },
+        tier = 34,
+        difficulties = {
+            ["5"] = true,
+            ["5H"] = true,
+            ["5M"] = true,
+            ["Challenge Mode"] = true,
+        },
     }
 }
 
@@ -1055,49 +1056,49 @@ addon.Raids = {
 }
 
 addon.Battlegrounds = {
-  "Arathi Basin",
-  "Twin Peaks",
-  "Eye of the Storm",
-  "Isle of Conquest",
-  "Alterac Valley",
-  "The Battle for Gilneas",
-  "Deephaul Ravine",
-  "Warsong Gulch",
-  "Wintergrasp",
-  "Deepwind Gorge",
-  "Seething Shore",
-  "Silvershard Mines",
-  "Strand of the Ancients",
-  "Tarren Mill vs Southshore",
-  "Temple of Kotmogu",
-  "Deepwind Gorge",
-  "Alterac Valley",
-  "Ashran",
-  "Southshore vs. Tarren Mill",
-  "Battle for Blackrock Mountain",
-  "Arathi Blizzard",
-  "Silithus Brawl"
+    "Arathi Basin",
+    "Twin Peaks",
+    "Eye of the Storm",
+    "Isle of Conquest",
+    "Alterac Valley",
+    "The Battle for Gilneas",
+    "Deephaul Ravine",
+    "Warsong Gulch",
+    "Wintergrasp",
+    "Deepwind Gorge",
+    "Seething Shore",
+    "Silvershard Mines",
+    "Strand of the Ancients",
+    "Tarren Mill vs Southshore",
+    "Temple of Kotmogu",
+    "Deepwind Gorge",
+    "Alterac Valley",
+    "Ashran",
+    "Southshore vs. Tarren Mill",
+    "Battle for Blackrock Mountain",
+    "Arathi Blizzard",
+    "Silithus Brawl"
 }
 
 addon.Arenas = {
-  "Ruins of Lordaeron (Undercity Arena)",
-  "Cage of Carnage",
-  "Mugambala",
-  "Enigma Crucible",
-  "Maldraxxus Coliseum",
-  "Black Rook Hold Arena",
-  "Nagrand Arena",
-  "Ashamane's Fall",
-  "Dalaran Arena (Arena)",
-  "The Tiger's Peak",
-  "Empyrean Domain",
-  "Kul Tiras Arena",
-  "The Robodrome",
-  "Nokhudon Proving Grounds",
-  "Tol'viron Arena",
-  "Blade's Edge Arena",
-  "Hook Point",
-  "Enigma Arena",
-  "Shado-Pan Showdown",
-  "Maldraxxus Coliseum"
-} 
+    "Ruins of Lordaeron (Undercity Arena)",
+    "Cage of Carnage",
+    "Mugambala",
+    "Enigma Crucible",
+    "Maldraxxus Coliseum",
+    "Black Rook Hold Arena",
+    "Nagrand Arena",
+    "Ashamane's Fall",
+    "Dalaran Arena (Arena)",
+    "The Tiger's Peak",
+    "Empyrean Domain",
+    "Kul Tiras Arena",
+    "The Robodrome",
+    "Nokhudon Proving Grounds",
+    "Tol'viron Arena",
+    "Blade's Edge Arena",
+    "Hook Point",
+    "Enigma Arena",
+    "Shado-Pan Showdown",
+    "Maldraxxus Coliseum"
+}
