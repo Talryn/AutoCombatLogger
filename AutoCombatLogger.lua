@@ -160,13 +160,24 @@ local logOptions = {
     [3] = "Custom"
 }
 
+local logToggleOptions = {
+    [1] = "No",
+    [2] = "Yes"
+}
+
 local localizedLogOptions = {
     [1] = L["No"],
     [2] = L["Yes"],
     [3] = L["Custom"]
 }
 
+local localizedLogToggleOptions = {
+    [1] = L["No"],
+    [2] = L["Yes"]
+}
+
 local invertedOptions = invertTable(logOptions)
+local invertedToggleOptions = invertTable(logToggleOptions)
 
 local aclLDB = nil
 local update = nil
@@ -318,16 +329,12 @@ function AutoCombatLogger:GetOptions()
                     logInstance = {
                         name = L["Log Delves"],
                         desc = L["When to log combat within delves"],
-                        type = "toggle",
+                        type = "select",
                         width = "double",
-                        set = function(info, val)
-                            self.db.profile.log.Delves = val and "Yes" or "No"
-                        end,
-                        get = function(info)
-                            return self.db.profile.log.Delves and L["Yes"] or L["No"]
-                        end,
+                        set = function(info, val) self.db.profile.log.Delves = logToggleOptions[val] end,
+                        get = function(info) return invertedToggleOptions[self.db.profile.log.Delves] end,
                         order = 10,
-                        values = localizedLogOptions
+                        values = localizedLogToggleOptions
                     }
                 }
             },
@@ -653,6 +660,9 @@ function AutoCombatLogger:OnInitialize()
     config:RegisterOptionsTable("AutoCombatLogger-Instances", options.args.instances)
     dialog:AddToBlizOptions(
         "AutoCombatLogger-Instances", options.args.instances.name, displayName)
+    config:RegisterOptionsTable("AutoCombatLogger-Delves", options.args.delves)
+    dialog:AddToBlizOptions(
+        "AutoCombatLogger-Delves", options.args.delves.name, displayName)
     config:RegisterOptionsTable("AutoCombatLogger-Arenas", options.args.arenas)
     dialog:AddToBlizOptions(
         "AutoCombatLogger-Arenas", options.args.arenas.name, displayName)
