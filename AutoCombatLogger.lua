@@ -331,8 +331,8 @@ function AutoCombatLogger:GetOptions()
                         desc = L["When to log combat within delves"],
                         type = "select",
                         width = "double",
-                        set = function(info, val) self.db.profile.log.Delves = logToggleOptions[val] end,
-                        get = function(info) return invertedToggleOptions[self.db.profile.log.Delves] end,
+                        set = function(info, val) self.db.profile.log.Delve = logToggleOptions[val] end,
+                        get = function(info) return invertedToggleOptions[self.db.profile.log.Delve] end,
                         order = 10,
                         values = localizedLogToggleOptions
                     }
