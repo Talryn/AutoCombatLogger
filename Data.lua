@@ -216,6 +216,14 @@ addon.InstanceMappings = {
     }
 }
 
+local defaultInstanceMapping = {
+    ["5"] = "Normal",
+    ["5H"] = "Heroic",
+    ["5M"] = "Mythic",
+    ["Challenge Mode"] = "Mythic+",
+}
+_G.setmetatable(addon.InstanceMappings.tiers, { __index = function() return defaultInstanceMapping end })
+
 addon.InstanceDifficultyOrder = {
     ["5"] = 1,
     ["5H"] = 2,
@@ -688,7 +696,7 @@ addon.Instances = {
         },
     },
     ["Eco-Dome Al'dani"] = {
-        tier = 34,
+        tier = 33,
         difficulties = {
             ["5"] = true,
             ["5H"] = true,
