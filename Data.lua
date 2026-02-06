@@ -109,6 +109,7 @@ addon.ZoneMappings = {
     ["Cinderbrew Meadery"] = { 2335 },
     ["City of Threads"] = { 2343, 2344 },
     ["Darkflame Cleft"] = { 2303, 2304 },
+    ["Operation: Floodgate"] = { 2387, 2388 },
     ["Priory of the Sacred Flame"] = { 2308, 2309 },
     ["The Dawnbreaker"] = { 2359 },
     ["The Rookery"] = range(2315, 2320),
@@ -623,6 +624,15 @@ addon.Instances = {
         },
     },
     ["Darkflame Cleft"] = {
+        tier = 31,
+        difficulties = {
+            ["5"] = true,
+            ["5H"] = true,
+            ["5M"] = true,
+            ["Challenge Mode"] = true,
+        },
+    },
+    ["Operation: Floodgate"] = {
         tier = 31,
         difficulties = {
             ["5"] = true,
