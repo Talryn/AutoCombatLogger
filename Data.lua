@@ -109,6 +109,7 @@ addon.ZoneMappings = {
     ["Cinderbrew Meadery"] = { 2335 },
     ["City of Threads"] = { 2343, 2344 },
     ["Darkflame Cleft"] = { 2303, 2304 },
+    ["Eco-Dome Al'dani"] = { 2449 },
     ["Operation: Floodgate"] = { 2387, 2388 },
     ["Priory of the Sacred Flame"] = { 2308, 2309 },
     ["The Dawnbreaker"] = { 2359 },
@@ -686,7 +687,7 @@ addon.Instances = {
             ["Challenge Mode"] = true,
         },
     },
-    ["Eco-dome Al'dani"] = {
+    ["Eco-Dome Al'dani"] = {
         tier = 34,
         difficulties = {
             ["5"] = true,
