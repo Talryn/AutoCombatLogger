@@ -119,6 +119,20 @@ addon.ZoneMappings = {
     ["Nerub-ar Palace"] = { 2291, 2292, 2293, 2294, 2295, 2296, 2298 },
     ["Liberation of Undermine"] = { 2346, 2374, 2406, 2407, 2408, 2409, 2411, 2428 },
     ["Manaforge Omega"] = { 2460, 2462, 2463, 2464, 2465, 2466, 2467, 2471, 2468, 2469, 2470, 2461 },
+
+    -- Midnight
+    ["Den of Nalorakk"] = { 2513, 2514 },
+    ["Murder Row"] = { 2433 },
+    ["Maisara Caverns"] = { 2501 },
+    ["Nexus Point Xenas"] = { 2556 },
+    ["Seat of the Triumvirate"] = { 903 },
+    ["The Blinding Vale"] = { 2500 },
+    ["Voidscar Arena"] = { 2572, 2573, 2574 },
+    ["Windrunner Spire"] = { 2492, 2493, 2494, 2496, 2497, 2498, 2499 },
+
+    ["Voidspire"] = { 2529, 2530 },
+    ["Dreamrift"] = { 2531, 2532 },
+    ["March on Quel'Danas"] = { 2533, 2534 },
 }
 
 addon.InstanceDifficulties = {
@@ -703,7 +717,79 @@ addon.Instances = {
             ["5M"] = true,
             ["Challenge Mode"] = true,
         },
-    }
+    },
+    ["Den of Nalorakk"] = {
+        tier = 35,
+        difficulties = {
+            ["5"] = true,
+            ["5H"] = true,
+            ["5M"] = true,
+            ["Challenge Mode"] = true,
+        },
+    },
+    ["Murder Row"] = {
+        tier = 35,
+        difficulties = {
+            ["5"] = true,
+            ["5H"] = true,
+            ["5M"] = true,
+            ["Challenge Mode"] = true,
+        },
+    },
+    ["Maisara Row"] = {
+        tier = 35,
+        difficulties = {
+            ["5"] = true,
+            ["5H"] = true,
+            ["5M"] = true,
+            ["Challenge Mode"] = true,
+        },
+    },
+    ["Nexus Point Xenas"] = {
+        tier = 35,
+        difficulties = {
+            ["5"] = true,
+            ["5H"] = true,
+            ["5M"] = true,
+            ["Challenge Mode"] = true,
+        },
+    },
+    ["Seat of the Triumvirate"] = {
+        tier = 35,
+        difficulties = {
+            ["5"] = true,
+            ["5H"] = true,
+            ["5M"] = true,
+            ["Challenge Mode"] = true,
+        },
+    },
+    ["The Blinding Vale"] = {
+        tier = 35,
+        difficulties = {
+            ["5"] = true,
+            ["5H"] = true,
+            ["5M"] = true,
+            ["Challenge Mode"] = true,
+        },
+    },
+    ["Voidscar Arena"] = {
+        tier = 35,
+        difficulties = {
+            ["5"] = true,
+            ["5H"] = true,
+            ["5M"] = true,
+            ["Challenge Mode"] = true,
+        },
+    },
+    ["Windrunner Spire"] = {
+        tier = 35,
+        difficulties = {
+            ["5"] = true,
+            ["5H"] = true,
+            ["5M"] = true,
+            ["Challenge Mode"] = true,
+        },
+    },
 }
 
 -- Raids to track and the possible raid sizes.
@@ -1065,6 +1151,33 @@ addon.Raids = {
     },
     ["Manaforge Omega"] = {
         tier = 34,
+        difficulties = {
+            ["Mythic 20"] = true,
+            ["Heroic"] = true,
+            ["Normal"] = true,
+            ["LFR30"] = true,
+        },
+    },
+    ["Voidspire"] = {
+        tier = 35,
+        difficulties = {
+            ["Mythic 20"] = true,
+            ["Heroic"] = true,
+            ["Normal"] = true,
+            ["LFR30"] = true,
+        },
+    },
+    ["Dreamrift"] = {
+        tier = 35,
+        difficulties = {
+            ["Mythic 20"] = true,
+            ["Heroic"] = true,
+            ["Normal"] = true,
+            ["LFR30"] = true,
+        },
+    },
+    ["March on Quel'Danas"] = {
+        tier = 35,
         difficulties = {
             ["Mythic 20"] = true,
             ["Heroic"] = true,
