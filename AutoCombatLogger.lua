@@ -2,8 +2,12 @@ local ADDON_NAME, addon = ...
 
 local ipairs = _G.ipairs
 
-local AutoCombatLogger = _G.LibStub("AceAddon-3.0"):NewAddon("AutoCombatLogger", "AceConsole-3.0", "AceEvent-3.0",
-    "AceTimer-3.0")
+local AutoCombatLogger = _G.LibStub("AceAddon-3.0"):NewAddon(
+    "AutoCombatLogger",
+    "AceConsole-3.0",
+    "AceEvent-3.0",
+    "AceTimer-3.0"
+)
 
 local L = _G.LibStub("AceLocale-3.0"):GetLocale("AutoCombatLogger", true)
 local LDB = _G.LibStub("LibDataBroker-1.1")
@@ -748,31 +752,41 @@ function AutoCombatLogger:OnDisable()
     end
 end
 
+function AutoCombatLogger:SetZoneTimer(seconds, force)
+    if force then
+        self:CancelTimer(addon.zoneTimer)
+        addon.zoneTimer = nil
+    end
+    if not addon.zoneTimer then
+        addon.zoneTimer = self:ScheduleTimer("ProcessZoneChange", seconds or 3)
+    end
+end
+
 function AutoCombatLogger:PLAYER_DIFFICULTY_CHANGED()
     -- Just to be safe, wait a few seconds and then check the status
-    self:ScheduleTimer("ProcessZoneChange", 3)
+    self:SetZoneTimer(3)
 end
 
 function AutoCombatLogger:CHALLENGE_MODE_START()
     -- Just to be safe, wait a second and then check the status
-    self:ScheduleTimer("ProcessZoneChange", 1)
+    self:SetZoneTimer(1)
 end
 
 function AutoCombatLogger:CHALLENGE_MODE_RESET()
     -- Just to be safe, wait a few seconds and then check the status
-    self:ScheduleTimer("ProcessZoneChange", 3)
+    self:SetZoneTimer(3)
 end
 
 function AutoCombatLogger:CHALLENGE_MODE_COMPLETED()
     -- Just to be safe, wait a few seconds and then check the status
-    self:ScheduleTimer("ProcessZoneChange", 3)
+    self:SetZoneTimer(3)
 end
 
 function AutoCombatLogger:ZONE_CHANGED_NEW_AREA()
     if DEBUG == true then
         self:Print("Zone Changed New Area")
     end
-    self:ProcessZoneChange()
+    self:SetZoneTimer(1)
 end
 
 function AutoCombatLogger:PLAYER_ENTERING_WORLD()
@@ -841,9 +855,7 @@ function AutoCombatLogger:ProcessZoneChange()
     if addon.newMapApi then
         uiMapID = C_Map.GetBestMapForUnit("player")
         if not uiMapID or uiMapID == 0 or uiMapID == -1 then
-            if not addon.zoneTimer then
-                addon.zoneTimer = self:ScheduleTimer("ProcessZoneChange", 5)
-            end
+            self:SetZoneTimer(5, true)
             return
         end
     end
