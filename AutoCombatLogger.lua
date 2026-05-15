@@ -645,7 +645,6 @@ function AutoCombatLogger:OnInitialize()
 
     DEBUG = self.db.profile.debug
 
-
     -- Register the options table
     local displayName = addon.addonTitle
     local config = _G.LibStub("AceConfig-3.0")
@@ -959,16 +958,14 @@ function AutoCombatLogger:EnableCombatLogging(reason)
     if _G.LoggingCombat() then return end
 
     if self.db.profile.verbose then
-        self:Print(L["Enabling combat logging"] .. (DEBUG and (" [" .. reason .. "]") or ""))
-    else
-        self:Print(L["Enabling combat logging"])
+        self:Print(L["Enabling combat logging"] .. (DEBUG and (" [" .. _G.tostring(reason) .. "]") or ""))
     end
     _G.LoggingCombat(true)
 end
 
 function AutoCombatLogger:DelayedDisableLogging()
     addon.DelayEndTimer = nil
-    if self.db.profile.verbose then
+    if DEBUG then
         self:Print("End of delayed disabling of combat logging...")
     end
     self:ProcessZoneChange()
@@ -981,7 +978,7 @@ function AutoCombatLogger:ShouldDelay(reason, variable)
         if not addon.DelayEndTimer then
             addon.previousReason = ""
             addon.DelayEndTimer = self:ScheduleTimer("DelayedDisableLogging", variable)
-            if self.db.profile.verbose then
+            if DEBUG then
                 self:Print("Delaying disabling combat logging...")
             end
         end
@@ -1000,9 +997,11 @@ function AutoCombatLogger:DisableCombatLogging()
         return
     end
 
-    addon.previousReason = ""
+    if self.db.profile.verbose then
+        self:Print(L["Disabling combat logging"] .. (DEBUG and (" [" .. _G.tostring(addon.previousReason) .. "]") or ""))
+    end
 
-    self:Print(L["Disabling combat logging"])
+    addon.previousReason = ""
     _G.LoggingCombat(false)
 end
 
