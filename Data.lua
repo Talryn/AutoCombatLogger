@@ -133,6 +133,9 @@ addon.ZoneMappings = {
     ["Voidspire"] = { 2529, 2530 },
     ["Dreamrift"] = { 2531, 2532 },
     ["March on Quel'Danas"] = { 2533, 2534 },
+
+    ["Altar of Fangs"] = { 2588, 2589, 2590 },
+    ["The Venomous Abyss"] = { 2606, 2607, 2608, 2609, 2610 },
 }
 
 addon.InstanceDifficulties = {
@@ -790,6 +793,15 @@ addon.Instances = {
             ["Challenge Mode"] = true,
         },
     },
+    ["Altar of Fangs"] = {
+        tier = 35.2,
+        difficulties = {
+            ["5"] = true,
+            ["5H"] = true,
+            ["5M"] = true,
+            ["Challenge Mode"] = true,
+        },
+    },
 }
 
 -- Raids to track and the possible raid sizes.
@@ -1178,6 +1190,15 @@ addon.Raids = {
     },
     ["March on Quel'Danas"] = {
         tier = 35,
+        difficulties = {
+            ["Mythic 20"] = true,
+            ["Heroic"] = true,
+            ["Normal"] = true,
+            ["LFR30"] = true,
+        },
+    },
+    ["The Venomous Abyss"] = {
+        tier = 35.2,
         difficulties = {
             ["Mythic 20"] = true,
             ["Heroic"] = true,
