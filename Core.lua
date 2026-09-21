@@ -43,6 +43,7 @@ addon.Wrath = versionInRange(addon.CURRENT_UI_VERSION, 30000, 40000)
 addon.Cataclysm = versionInRange(addon.CURRENT_UI_VERSION, 40000, 50000)
 addon.Mists = versionInRange(addon.CURRENT_UI_VERSION, 50000, 60000)
 addon.Retail = versionInRange(addon.CURRENT_UI_VERSION, 90000)
+addon.Forever = versionInRange(addon.CURRENT_UI_VERSION, 16000, 20000)
 
 function addon.IsGameOptionsVisible()
     local optionsFrame = _G.SettingsPanel or _G.InterfaceOptionsFrame

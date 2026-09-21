@@ -799,7 +799,7 @@ function AutoCombatLogger:PLAYER_ENTERING_WORLD()
 end
 
 local function IsMapGarrisonMap(uiMapID)
-    if not C_Garrison then return false end
+    if not C_Garrison or addon.Forever then return false end
     local plots = C_Garrison.GetGarrisonPlotsInstancesForMap(uiMapID) or {}
     return #plots > 0
 end
