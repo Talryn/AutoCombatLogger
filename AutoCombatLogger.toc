@@ -1,10 +1,4 @@
-## Interface: 120100
-## Interface-Retail: 110207, 120000, 120001, 120100
-## Interface-Classic: 11508, 11507
-## Interface-BCC: 20505
-## Interface-Wrath: 30405
-## Interface-Cata: 40402
-## Interface-Mists: 50502, 50503
+## Interface: 11508, 11509, 16001, 20505, 20506, 30405, 38002, 40402, 50503, 50504, 120100, 120105, 120007
 ## Title: Auto Combat Logger
 ## Notes: Automatically enables or disables combat logging based on location.
 ## Author: Talryn
