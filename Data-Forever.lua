@@ -21,6 +21,10 @@ addon.ZoneMappings = {
     ["Naxxramas"] = { 533 },
     ["Scarlet Enclave"] = { 2856 }, -- Season of Discovery
 
+    -- Forever Raids
+    --["Hyjal Summit"] = {},
+    --["Barrow Deeps"] = {},
+
     -- Classic Dungeons
     ["Blackfathom Deeps"] = { 48 },
     ["Blackrock Depths"] = { 230 },
@@ -42,6 +46,17 @@ addon.ZoneMappings = {
     ["Uldaman"] = { 70 },
     ["Wailing Caverns"] = { 43 },
     ["Zul'Farrak"] = { 209 },
+
+    -- Forever Dungeons
+    --["Alcaz Prison"] = { },
+    --["Blackmaw Hold"] = { },
+    --["City of Dalaran"] = { },
+    --["Excavation Site: Wetlands"] = { },
+    --["Hall of Thanes"] = { },
+    --["Krol'dok Stronghold"] = { },
+    ["Ruins of Lordaeron"] = { 2999 },
+    --["Shaper’s Terrace"] = { },
+    --["The Drowned City"] = { },
 
     -- Classic Battlegrounds
     ["Alterac Valley"] = { 30 },
@@ -239,6 +254,61 @@ addon.Instances = {
             ["5"] = true,
         },
     },
+    -- Forever
+    --["Alcaz Prison"] = {
+    --    tier = 1,
+    --    difficulties = {
+    --        ["5"] = true,
+    --    },
+    --},
+    --["Blackmaw Hold"] = {
+    --    tier = 1,
+    --    difficulties = {
+    --        ["5"] = true,
+    --    },
+    --},
+    --["City of Dalaran"] = {
+    --    tier = 1,
+    --    difficulties = {
+    --        ["5"] = true,
+    --    },
+    --},
+    --["Excavation Site: Wetlands"] = {
+    --    tier = 1,
+    --    difficulties = {
+    --        ["5"] = true,
+    --    },
+    --},
+    --["Krol'dok Stronghold"] = {
+    --    tier = 1,
+    --    difficulties = {
+    --        ["5"] = true,
+    --    },
+    --},
+    --["Hall of Thanes"] = {
+    --    tier = 1,
+    --    difficulties = {
+    --        ["5"] = true,
+    --    },
+    --},
+    ["Ruins of Lordaeron"] = {
+        tier = 1,
+        difficulties = {
+            ["5"] = true,
+        },
+    },
+    --["Shaper’s Terrace"] = {
+    --    tier = 1,
+    --    difficulties = {
+    --        ["5"] = true,
+    --    },
+    --},
+    --["The Drowned City"] = {
+    --    tier = 1,
+    --    difficulties = {
+    --        ["5"] = true,
+    --    },
+    --},
 }
 
 -- Raids to track and the possible raid sizes.
@@ -294,6 +364,19 @@ addon.Raids = {
             ["40"] = true,
         },
     }
+    -- Forever Raids
+    --["Hyjal Summit"] = {
+    --    tier = 1,
+    --    difficulties = {
+    --        ["20"] = true,
+    --    },
+    --},
+    --["Barrow Deeps"] = {
+    --    tier = 1,
+    --    difficulties = {
+    --        ["10"] = true,
+    --    },
+    --},
 }
 
 addon.Battlegrounds = {
