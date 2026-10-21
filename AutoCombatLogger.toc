@@ -22,5 +22,6 @@ Data-TBC.lua
 Data-Wrath.lua
 Data-Cataclysm.lua
 Data-Mists.lua
+Data-Forever.lua
 Data.lua
 AutoCombatLogger.lua
