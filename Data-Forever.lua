@@ -52,7 +52,7 @@ addon.ZoneMappings = {
     --["Blackmaw Hold"] = { },
     --["City of Dalaran"] = { },
     --["Excavation Site: Wetlands"] = { },
-    --["Hall of Thanes"] = { },
+    ["Hall of Thanes"] = { 3065 },
     --["Krol'dok Stronghold"] = { },
     ["Ruins of Lordaeron"] = { 2999 },
     --["Shaper’s Terrace"] = { },
@@ -285,12 +285,12 @@ addon.Instances = {
     --        ["5"] = true,
     --    },
     --},
-    --["Hall of Thanes"] = {
-    --    tier = 1,
-    --    difficulties = {
-    --        ["5"] = true,
-    --    },
-    --},
+    ["Hall of Thanes"] = {
+        tier = 1,
+        difficulties = {
+            ["5"] = true,
+        },
+    },
     ["Ruins of Lordaeron"] = {
         tier = 1,
         difficulties = {
@@ -363,7 +363,7 @@ addon.Raids = {
         difficulties = {
             ["40"] = true,
         },
-    }
+    },
     -- Forever Raids
     --["Hyjal Summit"] = {
     --    tier = 1,
