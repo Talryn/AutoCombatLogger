@@ -50,8 +50,8 @@ addon.ZoneMappings = {
     -- Forever Dungeons
     --["Alcaz Prison"] = { },
     --["Blackmaw Hold"] = { },
-    --["City of Dalaran"] = { },
-    --["Excavation Site: Wetlands"] = { },
+    ["City of Dalaran"] = { 2959 },
+    ["Excavation Site: Wetlands"] = { 2998 },
     ["Hall of Thanes"] = { 3065 },
     --["Krol'dok Stronghold"] = { },
     ["Ruins of Lordaeron"] = { 2999 },
@@ -267,18 +267,18 @@ addon.Instances = {
     --        ["5"] = true,
     --    },
     --},
-    --["City of Dalaran"] = {
-    --    tier = 1,
-    --    difficulties = {
-    --        ["5"] = true,
-    --    },
-    --},
-    --["Excavation Site: Wetlands"] = {
-    --    tier = 1,
-    --    difficulties = {
-    --        ["5"] = true,
-    --    },
-    --},
+    ["City of Dalaran"] = {
+        tier = 1,
+        difficulties = {
+            ["5"] = true,
+        },
+    },
+    ["Excavation Site: Wetlands"] = {
+        tier = 1,
+        difficulties = {
+            ["5"] = true,
+        },
+    },
     --["Krol'dok Stronghold"] = {
     --    tier = 1,
     --    difficulties = {
