@@ -1207,6 +1207,15 @@ addon.Raids = {
             ["LFR30"] = true,
         },
     },
+    ["The Unbinding of Kith’ix"] = {
+        tier = 35.3,
+        difficulties = {
+            ["Mythic 20"] = true,
+            ["Heroic"] = true,
+            ["Normal"] = true,
+            ["LFR30"] = true,
+        },
+    },
 }
 
 addon.Battlegrounds = {
