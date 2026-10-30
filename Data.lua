@@ -136,6 +136,7 @@ addon.ZoneMappings = {
 
     ["Altar of Fangs"] = { 2588, 2589, 2590 },
     ["The Venomous Abyss"] = { 2606, 2607, 2608, 2609, 2610 },
+    ["The Unbinding of Kith’ix"] = { 2669, 2670 },
 }
 
 addon.InstanceDifficulties = {
