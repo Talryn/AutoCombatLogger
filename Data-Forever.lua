@@ -48,15 +48,15 @@ addon.ZoneMappings = {
     ["Zul'Farrak"] = { 209 },
 
     -- Forever Dungeons
-    --["Alcaz Prison"] = { },
-    --["Blackmaw Hold"] = { },
+    ["Alcaz Prison"] = { 2994 },
+    ["Blackmaw Hold"] = { 2974 },
     ["City of Dalaran"] = { 2959 },
     ["Excavation Site: Wetlands"] = { 2998 },
     ["Hall of Thanes"] = { 3065 },
-    --["Krol'dok Stronghold"] = { },
+    ["Krol'dok Stronghold"] = { 3039 },
     ["Ruins of Lordaeron"] = { 2999 },
-    --["Shaper’s Terrace"] = { },
-    --["The Drowned City"] = { },
+    ["Shaper’s Terrace"] = { 3001 },
+    ["The Drowned City"] = { 2970 },
 
     -- Classic Battlegrounds
     ["Alterac Valley"] = { 30 },
@@ -255,18 +255,18 @@ addon.Instances = {
         },
     },
     -- Forever
-    --["Alcaz Prison"] = {
-    --    tier = 1,
-    --    difficulties = {
-    --        ["5"] = true,
-    --    },
-    --},
-    --["Blackmaw Hold"] = {
-    --    tier = 1,
-    --    difficulties = {
-    --        ["5"] = true,
-    --    },
-    --},
+    ["Alcaz Prison"] = {
+       tier = 1,
+       difficulties = {
+           ["5"] = true,
+       },
+    },
+    ["Blackmaw Hold"] = {
+       tier = 1,
+       difficulties = {
+           ["5"] = true,
+       },
+    },
     ["City of Dalaran"] = {
         tier = 1,
         difficulties = {
@@ -279,12 +279,12 @@ addon.Instances = {
             ["5"] = true,
         },
     },
-    --["Krol'dok Stronghold"] = {
-    --    tier = 1,
-    --    difficulties = {
-    --        ["5"] = true,
-    --    },
-    --},
+    ["Krol'dok Stronghold"] = {
+       tier = 1,
+       difficulties = {
+           ["5"] = true,
+       },
+    },
     ["Hall of Thanes"] = {
         tier = 1,
         difficulties = {
@@ -297,18 +297,18 @@ addon.Instances = {
             ["5"] = true,
         },
     },
-    --["Shaper’s Terrace"] = {
-    --    tier = 1,
-    --    difficulties = {
-    --        ["5"] = true,
-    --    },
-    --},
-    --["The Drowned City"] = {
-    --    tier = 1,
-    --    difficulties = {
-    --        ["5"] = true,
-    --    },
-    --},
+    ["Shaper’s Terrace"] = {
+       tier = 1,
+       difficulties = {
+           ["5"] = true,
+       },
+    },
+    ["The Drowned City"] = {
+       tier = 1,
+       difficulties = {
+           ["5"] = true,
+       },
+    },
 }
 
 -- Raids to track and the possible raid sizes.
