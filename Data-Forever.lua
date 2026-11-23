@@ -36,8 +36,8 @@ addon.ZoneMappings = {
     ["Razorfen Downs"] = { 129 },
     ["Razorfen Kraul"] = { 47 },
     ["Scarlet Halls"] = { 1001 },
-    ["Scarlet Monastery"] = { 1004 },
-    ["Scholomance"] = { 329 },
+    ["Scarlet Monastery"] = { 189 },
+    ["Scholomance"] = { 289 },
     ["Shadowfang Keep"] = { 33 },
     ["Stratholme"] = { 329 },
     ["The Deadmines"] = { 36 },
@@ -187,7 +187,7 @@ addon.Instances = {
             ["5"] = true,
         },
     },
-    ["Scaret Halls"] = {
+    ["Scarlet Halls"] = {
         tier = 1,
         difficulties = {
             ["5"] = true,
