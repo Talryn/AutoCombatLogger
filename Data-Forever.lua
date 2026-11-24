@@ -148,6 +148,7 @@ addon.Instances = {
         tier = 1,
         difficulties = {
             ["5"] = true,
+            ["10"] = true,
         },
     },
     ["Dire Maul"] = {
